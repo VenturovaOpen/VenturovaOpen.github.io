@@ -73,6 +73,40 @@ tr:nth-child(even){background:rgba(255,255,255,.05);}
 .btn:hover{transform:scale(1.08);}
 
 footer{text-align:center;padding:40px;opacity:.7;}
+
+/* BOTONES FIJOS PARA MÓVIL */
+.mobile-nav{
+  display:none;
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:var(--black);
+  padding:10px 0;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-around;
+  gap:5px;
+  z-index:10;
+  border-top:2px solid var(--yellow);
+}
+.mobile-nav button{
+  flex:1 1 auto;
+  padding:10px;
+  font-weight:600;
+  border-radius:15px;
+  background:var(--glass);
+  color:#fff;
+  border:none;
+  transition:.3s;
+}
+.mobile-nav button:hover, .mobile-nav button.active{background:var(--yellow); color:#000;}
+
+/* MEDIA QUERY: SOLO EN MÓVIL */
+@media (max-width:768px){
+  nav{display:none;} /* oculta nav superior en móvil */
+  .mobile-nav{display:flex;}
+}
 </style>
 </head>
 <body>
@@ -106,6 +140,16 @@ footer{text-align:center;padding:40px;opacity:.7;}
     <p>Plataforma competitiva de <b>Racing Master</b> LATAM. Compite, sube en el ranking y gana recompensas.</p>
     <p>Únete a la comunidad más seria y profesional de pilotos.</p>
     <a class="btn" onclick="playClick()">Inscribirse (Próximamente)</a>
+  </div>
+
+  <!-- BARRA INFERIOR MÓVIL -->
+  <div class="mobile-nav">
+    <button onclick="switchSection('inicio')">Inicio</button>
+    <button onclick="switchSection('ranking')">Ranking</button>
+    <button onclick="switchSection('torneos')">Torneos</button>
+    <button onclick="switchSection('inscripcion')">Inscripción</button>
+    <button onclick="switchSection('fechas')">Fechas</button>
+    <button onclick="switchSection('redes')">Redes</button>
   </div>
 </section>
 
@@ -191,7 +235,9 @@ function switchSection(sectionId){
   document.querySelectorAll('section').forEach(sec=>sec.classList.remove('active'));
   document.getElementById(sectionId).classList.add('active');
   document.querySelectorAll('nav button').forEach(btn=>btn.classList.remove('active'));
-  document.querySelector(`nav button[data-section="${sectionId}"]`).classList.add('active');
+  document.querySelector(`nav button[data-section="${sectionId}"]`)?.classList.add('active');
+  document.querySelectorAll('.mobile-nav button').forEach(btn=>btn.classList.remove('active'));
+  document.querySelector(`.mobile-nav button[onclick*="${sectionId}"]`)?.classList.add('active');
   playClick();
 }
 
