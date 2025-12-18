@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Venturova Open</title>
     <style>
-        /* --- Colores principales --- */
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #0D1117; /* Fondo azul oscuro */
-            color: #F0F6FC; /* Texto claro */
+            background-color: #0D1117;
+            color: #F0F6FC;
             overflow-x: hidden;
         }
 
@@ -32,7 +31,7 @@
             object-fit: cover;
         }
 
-        /* --- Encabezado y botones de redes --- */
+        /* --- Encabezado y redes --- */
         header {
             display: flex;
             justify-content: flex-end;
@@ -60,7 +59,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
             text-align: center;
             padding: 20px;
         }
@@ -68,7 +67,6 @@
         main h1 {
             font-size: 4em;
             margin: 0;
-            color: #F0F6FC;
             animation: textMove 5s infinite alternate;
         }
 
@@ -79,14 +77,13 @@
             animation: textMove 6s infinite alternate;
         }
 
-        /* --- Animaciones de texto --- */
         @keyframes textMove {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-15px); }
             100% { transform: translateY(0px); }
         }
 
-        /* --- Botones principales --- */
+        /* --- Botones --- */
         .btn {
             margin-top: 30px;
             background-color: #58A6FF;
@@ -103,22 +100,49 @@
         .btn:hover {
             background-color: #1F6FEB;
         }
+
+        /* --- Sección de torneo --- */
+        .torneo {
+            background-color: rgba(13,17,23,0.85);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 40px;
+            max-width: 800px;
+            width: 90%;
+        }
+
+        .torneo h2 {
+            margin-top: 0;
+            color: #58A6FF;
+        }
+
+        .torneo ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .torneo li {
+            margin: 10px 0;
+            color: #F0F6FC;
+        }
+
+        .torneo li span {
+            color: #79C0FF;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
-    <!-- --- Fondo con video o imagen --- -->
+    <!-- --- Fondo --- -->
     <div class="background-container">
-        <!-- Video de fondo -->
         <video autoplay muted loop>
             <source src="videos/fondo_drift.mp4" type="video/mp4">
         </video>
-
-        <!-- Imagen de respaldo -->
         <img src="imagenes/fondo_drift.jpg" alt="Fondo Venturova">
     </div>
 
-    <!-- --- Encabezado con redes --- -->
+    <!-- --- Redes sociales --- -->
     <header>
         <a href="https://www.tiktok.com/@venturova.open?_r=1&_t=ZS-92JXx6n2C9Z" target="_blank">TikTok</a>
         <a href="https://youtube.com/@venturovaopen?si=VnVTWJwh8v-qmG11" target="_blank">YouTube</a>
@@ -126,9 +150,32 @@
 
     <!-- --- Contenido principal --- -->
     <main>
-        <h1>Bienvenido a Venturova Open</h1>
-        <p>Ranking, torneos y recompensas al instante</p>
+        <h1>Venturova Open</h1>
+        <p>¡Participa en nuestros torneos y sube en el ranking!</p>
         <button class="btn">Ver Ranking</button>
+
+        <!-- --- Información del torneo --- -->
+        <div class="torneo">
+            <h2>Ranking Actual</h2>
+            <ul>
+                <li>1° <span>Jugador1</span> - 1200 pts</li>
+                <li>2° <span>Jugador2</span> - 1150 pts</li>
+                <li>3° <span>Jugador3</span> - 1100 pts</li>
+            </ul>
+
+            <h2>Recompensas</h2>
+            <ul>
+                <li>Primer lugar: <span>$500</span></li>
+                <li>Segundo lugar: <span>$300</span></li>
+                <li>Tercer lugar: <span>$150</span></li>
+            </ul>
+
+            <h2>Inscripciones</h2>
+            <ul>
+                <li>Diario: <span>$5</span></li>
+                <li>Mensual: <span>$20</span></li>
+            </ul>
+        </div>
     </main>
 
 </body>
