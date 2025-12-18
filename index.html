@@ -1,123 +1,135 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Venturova Open</title>
-  <style>
-    /* Paleta de colores */
-    :root {
-      --fondo: #0B1C2D;       /* azul oscuro */
-      --accion: #E10600;      /* rojo intenso */
-      --premio: #F5C542;      /* dorado */
-      --texto: #FFFFFF;       /* blanco */
-      --subtexto: #AFCFE8;    /* azul claro para contraste */
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venturova Open</title>
+    <style>
+        /* --- Colores principales --- */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #0D1117; /* Fondo azul oscuro */
+            color: #F0F6FC; /* Texto claro */
+            overflow-x: hidden;
+        }
 
-    /* Reset básico */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Arial', sans-serif;
-    }
+        /* --- Fondo con video o imagen --- */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
 
-    body {
-      background-color: var(--fondo);
-      color: var(--texto);
-    }
+        .background-container video,
+        .background-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-    .container {
-      text-align: center;
-      padding: 50px 20px;
-    }
+        /* --- Encabezado y botones de redes --- */
+        header {
+            display: flex;
+            justify-content: flex-end;
+            padding: 20px;
+            gap: 15px;
+        }
 
-    /* Logo */
-    .logo {
-      font-size: 3rem;
-      font-weight: bold;
-      margin-bottom: 20px;
-      color: var(--premio);
-    }
+        header a {
+            text-decoration: none;
+            background-color: #58A6FF;
+            color: #0D1117;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
 
-    /* Texto principal */
-    .titulo {
-      font-size: 4rem;
-      font-weight: bold;
-      color: var(--accion);
-      text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-      margin-bottom: 20px;
-    }
+        header a:hover {
+            background-color: #1F6FEB;
+        }
 
-    .subtitulo {
-      font-size: 2rem;
-      color: var(--subtexto);
-      margin-bottom: 40px;
-    }
+        /* --- Contenido principal --- */
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
 
-    /* Botón principal */
-    .btn-registro {
-      background-color: var(--accion);
-      color: var(--texto);
-      padding: 20px 40px;
-      font-size: 1.5rem;
-      font-weight: bold;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
+        main h1 {
+            font-size: 4em;
+            margin: 0;
+            color: #F0F6FC;
+            animation: textMove 5s infinite alternate;
+        }
 
-    .btn-registro:hover {
-      background-color: #B10000;
-      transform: scale(1.05);
-    }
+        main p {
+            font-size: 1.5em;
+            margin-top: 20px;
+            color: #79C0FF;
+            animation: textMove 6s infinite alternate;
+        }
 
-    /* Imagenes de coches y premios */
-    .imagenes {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 50px;
-      flex-wrap: wrap;
-    }
+        /* --- Animaciones de texto --- */
+        @keyframes textMove {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
 
-    .imagenes img {
-      width: 300px;
-      border-radius: 15px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-      transition: transform 0.3s ease;
-    }
+        /* --- Botones principales --- */
+        .btn {
+            margin-top: 30px;
+            background-color: #58A6FF;
+            color: #0D1117;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
 
-    .imagenes img:hover {
-      transform: scale(1.05);
-    }
-
-    /* Footer con premios */
-    .footer {
-      margin-top: 60px;
-      font-size: 1.2rem;
-      color: var(--premio);
-    }
-  </style>
+        .btn:hover {
+            background-color: #1F6FEB;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="logo">VENTUROVA OPEN</div>
-    <div class="titulo">GANA DINERO CORRIENDO</div>
-    <div class="subtitulo">Compite en nuestro torneo online</div>
-    <button class="btn-registro">Registrarse Ahora</button>
 
-    <div class="imagenes">
-      <img src="coche1.png" alt="Coche de carrera">
-      <img src="coche2.png" alt="Coche de carrera">
-      <img src="trofeo.png" alt="Trofeo">
+    <!-- --- Fondo con video o imagen --- -->
+    <div class="background-container">
+        <!-- Video de fondo -->
+        <video autoplay muted loop>
+            <source src="videos/fondo_drift.mp4" type="video/mp4">
+        </video>
+
+        <!-- Imagen de respaldo -->
+        <img src="imagenes/fondo_drift.jpg" alt="Fondo Venturova">
     </div>
 
-    <div class="footer">
-      ¡Premios reales, emoción real!
-    </div>
-  </div>
+    <!-- --- Encabezado con redes --- -->
+    <header>
+        <a href="https://www.tiktok.com/@venturova.open?_r=1&_t=ZS-92JXx6n2C9Z" target="_blank">TikTok</a>
+        <a href="https://youtube.com/@venturovaopen?si=VnVTWJwh8v-qmG11" target="_blank">YouTube</a>
+    </header>
+
+    <!-- --- Contenido principal --- -->
+    <main>
+        <h1>Bienvenido a Venturova Open</h1>
+        <p>Ranking, torneos y recompensas al instante</p>
+        <button class="btn">Ver Ranking</button>
+    </main>
+
 </body>
 </html>
