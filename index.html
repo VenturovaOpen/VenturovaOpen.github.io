@@ -1,308 +1,352 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Venturova Open | Torneos Racing Master LATAM</title>
-
-  <!-- FUENTES PROFESIONALES -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Venturova Open</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --yellow:#f5c400;
-      --black:#0b0b0b;
-      --glass:rgba(0,0,0,.55);
+    /* =========================
+       VARIABLES DE COLOR
+    ========================= */
+    :root {
+      --gold: #FFC800; /* amarillo oro brillante */
+      --black: #1C1C1C;
+      --gray-dark: #2E2E2E;
+      --gray-light: #555;
+      --accent: #FFDA50; /* acento cálido para botones y detalles */
+      --white: #FFFFFF;
     }
 
-    *{box-sizing:border-box;margin:0;padding:0}
+    /* =========================
+       RESET Y TIPOGRAFÍA
+    ========================= */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--black);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: var(--gold); }
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background-color: var(--gold);
+      color: var(--black);
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+    button:hover { background-color: var(--accent); }
 
-    body{
-      font-family:'Rajdhani',sans-serif;
-      background:var(--black);
-      color:#fff;
-      overflow-x:hidden;
+    /* =========================
+       LAYOUT PRINCIPAL
+    ========================= */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--gray-dark);
+      padding: 10px 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+    header h1 {
+      color: var(--gold);
+      font-size: 1.8rem;
+    }
+    nav a {
+      margin-left: 15px;
+      font-weight: 600;
+    }
+    main { padding: 20px; }
+    section {
+      margin-bottom: 40px;
+      padding: 20px;
+      background-color: var(--gray-dark);
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.3s;
+    }
+    section:hover { transform: translateY(-3px); }
+    h2 { color: var(--gold); margin-bottom: 15px; }
+
+    /* =========================
+       BOTONES DE REDES
+    ========================= */
+    .social-buttons {
+      display: flex;
+      gap: 10px;
     }
 
-    /* VIDEO DE FONDO */
-    #bgVideo{
-      position:fixed;
-      top:0;left:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      z-index:-2;
-      filter:brightness(.35);
+    /* =========================
+       MINI-JUEGO
+    ========================= */
+    #gameContainer {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      height: 400px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #222 0%, #111 100%);
+      border: 3px solid var(--gold);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    #player {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background-color: var(--gold);
+      border-radius: 6px;
+      left: 50px;
+      bottom: 180px;
+      transition: all 0.1s linear;
+    }
+    .obstacle {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-color: var(--accent);
+      border-radius: 6px;
+      right: 0;
+    }
+    .powerup {
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      background-color: #4BCFFA;
+      border-radius: 50%;
+      right: 0;
     }
 
-    .overlay{
-      position:fixed;
-      inset:0;
-      background:linear-gradient(to bottom, rgba(0,0,0,.6), rgba(0,0,0,.85));
-      z-index:-1;
+    /* =========================
+       RANKING
+    ========================= */
+    .ranking {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .ranking-item {
+      display: flex;
+      justify-content: space-between;
+      background-color: var(--gray-light);
+      padding: 10px;
+      border-radius: 8px;
+      color: var(--black);
+      font-weight: 600;
     }
 
-    header{
-      display:flex;
-      align-items:center;
-      gap:20px;
-      padding:20px 40px;
+    /* =========================
+       PANEL OCULTO ADMIN
+    ========================= */
+    #adminPanel {
+      display: none;
+      background-color: #111;
+      padding: 20px;
+      border-radius: 12px;
+      color: var(--white);
     }
-
-    /* LOGO */
-    .logo{
-      width:70px;
-      height:70px;
-      border-radius:50%;
-      padding:4px;
-      background:conic-gradient(var(--yellow), #fff, var(--yellow));
-      animation:spin 8s linear infinite;
+    #adminPanel table {
+      width: 100%;
+      border-collapse: collapse;
     }
-
-    .logo img{
-      width:100%;
-      height:100%;
-      border-radius:50%;
-      background:#000;
+    #adminPanel th, #adminPanel td {
+      border: 1px solid var(--gray-light);
+      padding: 8px;
+      text-align: center;
     }
+    #adminPanel th { background-color: var(--gold); color: var(--black); }
 
-    @keyframes spin{
-      from{transform:rotate(0)}
-      to{transform:rotate(360deg)}
-    }
-
-    .brand h1{
-      font-family:'Orbitron',sans-serif;
-      font-size:2.4rem;
-      color:var(--yellow);
-      animation:pulse 3s ease-in-out infinite;
-    }
-
-    .brand p{
-      opacity:.8;
-    }
-
-    @keyframes pulse{
-      0%,100%{text-shadow:0 0 5px var(--yellow)}
-      50%{text-shadow:0 0 20px var(--yellow)}
-    }
-
-    section{
-      padding:80px 10%;
-    }
-
-    .card{
-      background:var(--glass);
-      backdrop-filter:blur(8px);
-      border-radius:20px;
-      padding:30px;
-      box-shadow:0 0 30px rgba(0,0,0,.6);
-    }
-
-    h2{
-      font-family:'Orbitron',sans-serif;
-      color:var(--yellow);
-      margin-bottom:20px;
-      font-size:2rem;
-    }
-
-    /* SLIDER DE IMÁGENES */
-    .slider{
-      position:relative;
-      height:300px;
-      border-radius:20px;
-      overflow:hidden;
-      margin-bottom:40px;
-    }
-
-    .slider img{
-      position:absolute;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      opacity:0;
-      animation:slide 20s infinite;
-    }
-
-    .slider img:nth-child(1){animation-delay:0s}
-    .slider img:nth-child(2){animation-delay:5s}
-    .slider img:nth-child(3){animation-delay:10s}
-    .slider img:nth-child(4){animation-delay:15s}
-
-    @keyframes slide{
-      0%{opacity:0;transform:scale(1)}
-      10%{opacity:1}
-      40%{opacity:1;transform:scale(1.05)}
-      50%{opacity:0}
-      100%{opacity:0}
-    }
-
-    /* RANKING */
-    table{
-      width:100%;
-      border-collapse:collapse;
-    }
-
-    th,td{
-      padding:14px;
-      text-align:center;
-    }
-
-    th{
-      background:var(--yellow);
-      color:#000;
-    }
-
-    tr:nth-child(even){
-      background:rgba(255,255,255,.05);
-    }
-
-    /* BOTONES */
-    .btn{
-      display:inline-block;
-      margin-top:20px;
-      padding:14px 30px;
-      border-radius:30px;
-      background:var(--yellow);
-      color:#000;
-      font-weight:700;
-      text-decoration:none;
-      transition:.3s;
-    }
-
-    .btn:hover{
-      transform:scale(1.08);
-    }
-
-    footer{
-      text-align:center;
-      padding:40px;
-      opacity:.7;
-    }
   </style>
 </head>
 <body>
-
-  <!-- VIDEO -->
-  <video id="bgVideo" autoplay muted playsinline></video>
-  <div class="overlay"></div>
-
+  <!-- ================= HEADER ================= -->
   <header>
-    <div class="logo">
-      <img src="logo.jpeg" alt="Venturova Open Logo">
-    </div>
-    <div class="brand">
-      <h1>Venturova Open</h1>
-      <p>Torneos Racing Master | LATAM</p>
-    </div>
+    <h1>Venturova Open</h1>
+    <nav>
+      <a href="#game">Mini-Juego</a>
+      <a href="#ranking">Ranking</a>
+      <a href="#tournaments">Torneos</a>
+      <div class="social-buttons">
+        <a href="https://youtube.com/@venturova11?si=3mxNVjsvUieVG-x8" target="_blank">YouTube</a>
+      </div>
+    </nav>
   </header>
 
-  <section>
-    <div class="slider">
-      <img src="visual.jpeg">
-      <img src="visual1.jpg">
-      <img src="visual2.jpg">
-      <img src="visual3.jpg">
-    </div>
+  <!-- ================= MAIN ================= -->
+  <main>
+    <!-- ================= MINI-JUEGO ================= -->
+    <section id="game">
+      <h2>Mini-Juego Arcade</h2>
+      <div id="gameContainer">
+        <div id="player"></div>
+      </div>
+      <p>Usa W/S o flechas arriba/abajo (PC) o botones táctiles (móvil) para moverte. Evita obstáculos y recoge power-ups.</p>
+      <p>Puntos: <span id="score">0</span></p>
+    </section>
 
-    <div class="card">
-      <h2>¿Qué es Venturova Open?</h2>
-      <p>
-        Venturova Open es una plataforma de torneos competitivos de <b>Racing Master</b>
-        enfocada en Latinoamérica. Un proyecto creado para pilotos que buscan competir
-        con seriedad, ranking real y crecimiento continuo.
-      </p>
-      <p>
-        El objetivo es profesionalizar la competencia y construir una comunidad sólida,
-        sostenible y atractiva a largo plazo.
-      </p>
-    </div>
-  </section>
+    <!-- ================= RANKING ================= -->
+    <section id="ranking">
+      <h2>Ranking Global</h2>
+      <div class="ranking" id="rankingList">
+        <!-- Se llenará dinámicamente -->
+      </div>
+    </section>
 
-  <section>
-    <div class="card">
-      <h2>Formato de Torneos</h2>
-      <ul>
-        <li>Torneos organizados y programados</li>
-        <li>Sistema de ranking propio</li>
-        <li>Temporadas competitivas</li>
-        <li>Clasificación por puntos</li>
-        <li>Enfoque 100% LATAM</li>
-      </ul>
-    </div>
-  </section>
+    <!-- ================= TORNEOS ================= -->
+    <section id="tournaments">
+      <h2>Torneos Automáticos</h2>
+      <p>Inscríbete en torneos y compite por recompensas exclusivas. Próximamente integración de pagos y premios.</p>
+    </section>
 
-  <section>
-    <div class="card">
-      <h2>Inscripción</h2>
-      <p><b>Precio estimado actual:</b></p>
-      <h3>≈ 5.000 COP</h3>
-      <p>
-        Inscripción accesible pensada para mantener la organización,
-        mejorar premios y asegurar continuidad del proyecto.
-      </p>
-      <a class="btn" href="#">Inscribirse (Próximamente)</a>
-    </div>
-  </section>
-
-  <section>
-    <div class="card">
-      <h2>Ranking (Preliminar)</h2>
+    <!-- ================= PANEL OCULTO ADMIN ================= -->
+    <div id="adminPanel">
+      <h2>Panel Oculto de Administración</h2>
       <table>
-        <tr>
-          <th>Posición</th>
-          <th>Piloto</th>
-          <th>Puntos</th>
-        </tr>
-        <tr><td>1</td><td>N/A</td><td>N/A</td></tr>
-        <tr><td>2</td><td>N/A</td><td>N/A</td></tr>
-        <tr><td>3</td><td>N/A</td><td>N/A</td></tr>
-        <tr><td>4</td><td>N/A</td><td>N/A</td></tr>
-        <tr><td>5</td><td>N/A</td><td>N/A</td></tr>
+        <thead>
+          <tr>
+            <th>Jugador</th>
+            <th>Torneo</th>
+            <th>Recompensa</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody id="adminTableBody">
+          <!-- Llenado dinámico -->
+        </tbody>
       </table>
-      <p style="margin-top:15px;opacity:.7">
-        * El ranking se activará oficialmente con el inicio de los torneos.
-      </p>
     </div>
-  </section>
+  </main>
 
-  <section>
-    <div class="card">
-      <h2>Fechas y Estado</h2>
-      <p><b>Torneos oficiales:</b> 2026</p>
-      <p>
-        Actualmente el proyecto se encuentra en fase de preparación,
-        ajustes de formato y construcción de comunidad.
-      </p>
-    </div>
-  </section>
-
-  <section>
-    <div class="card">
-      <h2>Redes Oficiales</h2>
-      <p>TikTok: <b>@venturova.open</b></p>
-      <p>YouTube: <b>@VenturovaOpen</b></p>
-    </div>
-  </section>
-
-  <footer>
-    Venturova Open © 2025–2026 | Proyecto competitivo Racing Master LATAM
-  </footer>
-
-  <!-- ROTACIÓN DE VIDEOS -->
+  <!-- ================= SCRIPTS ================= -->
   <script>
-    const videos = ['video1.mp4','video2.mp4','video3.mp4'];
-    let index = 0;
-    const video = document.getElementById('bgVideo');
+    // ================= MINIJUEGO =================
+    const player = document.getElementById('player');
+    const gameContainer = document.getElementById('gameContainer');
+    const scoreElement = document.getElementById('score');
+    const rankingList = document.getElementById('rankingList');
+    let score = 0;
+    let playerPos = 180;
+    const obstacles = [];
+    const powerups = [];
 
-    video.src = videos[index];
+    // Controles
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'ArrowUp' || e.key === 'w') movePlayer(20);
+      if(e.key === 'ArrowDown' || e.key === 's') movePlayer(-20);
+    });
 
-    video.onended = () => {
-      index = (index + 1) % videos.length;
-      video.src = videos[index];
-      video.play();
-    };
+    function movePlayer(delta) {
+      playerPos += delta;
+      if(playerPos < 0) playerPos = 0;
+      if(playerPos > gameContainer.clientHeight - 40) playerPos = gameContainer.clientHeight - 40;
+      player.style.bottom = playerPos + 'px';
+    }
+
+    // Generar obstáculos
+    function spawnObstacle() {
+      const obstacle = document.createElement('div');
+      obstacle.classList.add('obstacle');
+      obstacle.style.top = Math.random() * (gameContainer.clientHeight - 30) + 'px';
+      gameContainer.appendChild(obstacle);
+      obstacles.push({el: obstacle, x: gameContainer.clientWidth});
+    }
+
+    // Generar power-ups
+    function spawnPowerup() {
+      const powerup = document.createElement('div');
+      powerup.classList.add('powerup');
+      powerup.style.top = Math.random() * (gameContainer.clientHeight - 25) + 'px';
+      gameContainer.appendChild(powerup);
+      powerups.push({el: powerup, x: gameContainer.clientWidth});
+    }
+
+    // Actualizar juego
+    function gameLoop() {
+      // Obstáculos
+      obstacles.forEach((o, i) => {
+        o.x -= 5;
+        if(o.x < -30) { o.el.remove(); obstacles.splice(i,1); score += 1; scoreElement.textContent = score; }
+        o.el.style.right = o.x + 'px';
+        if(checkCollision(player, o.el)) { alert('Game Over! Puntos: ' + score); resetGame(); }
+      });
+
+      // Power-ups
+      powerups.forEach((p, i) => {
+        p.x -= 5;
+        if(p.x < -25) { p.el.remove(); powerups.splice(i,1); }
+        p.el.style.right = p.x + 'px';
+        if(checkCollision(player, p.el)) { score += 5; scoreElement.textContent = score; p.el.remove(); powerups.splice(i,1); }
+      });
+
+      // Spawn aleatorio
+      if(Math.random() < 0.02) spawnObstacle();
+      if(Math.random() < 0.01) spawnPowerup();
+
+      requestAnimationFrame(gameLoop);
+    }
+
+    function checkCollision(a, b) {
+      const aRect = a.getBoundingClientRect();
+      const bRect = b.getBoundingClientRect();
+      return !(aRect.right < bRect.left || aRect.left > bRect.right || aRect.bottom < bRect.top || aRect.top > bRect.bottom);
+    }
+
+    function resetGame() {
+      obstacles.forEach(o => o.el.remove());
+      powerups.forEach(p => p.el.remove());
+      obstacles.length = 0;
+      powerups.length = 0;
+      score = 0;
+      scoreElement.textContent = score;
+      playerPos = 180;
+      player.style.bottom = playerPos + 'px';
+    }
+
+    // Iniciar juego
+    gameLoop();
+
+    // ================= RANKING EJEMPLO =================
+    const rankingData = [
+      {player: "Jugador1", score: 150},
+      {player: "Jugador2", score: 120},
+      {player: "Jugador3", score: 100},
+      {player: "Jugador4", score: 80},
+      {player: "Jugador5", score: 50}
+    ];
+
+    function renderRanking() {
+      rankingList.innerHTML = '';
+      rankingData.sort((a,b) => b.score - a.score).forEach((r,i) => {
+        const div = document.createElement('div');
+        div.classList.add('ranking-item');
+        div.innerHTML = `<span>#${i+1} ${r.player}</span><span>${r.score} pts</span>`;
+        rankingList.appendChild(div);
+      });
+    }
+    renderRanking();
+
+    // ================= PANEL ADMIN OCULTO =================
+    const adminEmail = 'venturovaopen@gmail.com';
+    const currentUserEmail = prompt("Ingresa tu correo para panel admin (solo visible para ti):");
+    if(currentUserEmail === adminEmail) {
+      document.getElementById('adminPanel').style.display = 'block';
+      // Ejemplo de datos admin
+      const adminData = [
+        {player:'Jugador1', tournament:'Torneo 1', reward:'Skin dorada', status:'Pendiente'},
+        {player:'Jugador2', tournament:'Torneo 1', reward:'100 pts', status:'Pagado'}
+      ];
+      const tbody = document.getElementById('adminTableBody');
+      adminData.forEach(d => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${d.player}</td><td>${d.tournament}</td><td>${d.reward}</td><td>${d.status}</td>`;
+        tbody.appendChild(tr);
+      });
+    }
+
   </script>
-
 </body>
 </html>
