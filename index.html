@@ -1,149 +1,263 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Venturova Open</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  *{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif;}
-  body{background:#0a0a0a;color:#fff;overflow-x:hidden;}
-  
-  /* Header */
-  header{display:flex;justify-content:space-between;align-items:center;padding:15px 30px;background:rgba(20,20,20,0.9);position:fixed;width:100%;top:0;z-index:10;}
-  header h1{font-size:24px;color:#fff;}
-  .transport-buttons a{margin-left:15px;color:#fff;text-decoration:none;font-weight:bold;transition:0.3s;}
-  .transport-buttons a:hover{color:#f39c12;}
-  
-  /* Fondo */
-  .background-video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-1;opacity:0.6;}
-  
-  /* Secciones */
-  main{padding-top:120px;text-align:center;}
-  .animated-title{font-size:48px;color:#f39c12;margin-bottom:20px;animation:neon 1.5s ease-in-out infinite alternate;}
-  @keyframes neon{0%{text-shadow:0 0 5px #f39c12,0 0 10px #f39c12,0 0 20px #f39c12;}50%{text-shadow:0 0 10px #f39c12,0 0 20px #f39c12,0 0 30px #f39c12;}100%{text-shadow:0 0 5px #f39c12,0 0 10px #f39c12,0 0 20px #f39c12;}}
-  
-  /* Formulario */
-  .form-container{background:rgba(0,0,0,0.6);padding:25px;border-radius:15px;display:inline-block;margin-bottom:40px;}
-  .form-container input,.form-container button{display:block;margin:10px auto;padding:10px;font-size:16px;border-radius:8px;border:none;width:250px;}
-  .form-container button{background:#f39c12;color:#000;font-weight:bold;cursor:pointer;transition:0.3s;}
-  .form-container button:hover{background:#e67e22;}
-  
-  /* Rankings */
-  .rankings{margin:40px auto;max-width:700px;background:rgba(30,30,30,0.8);border-radius:15px;padding:20px;}
-  .rankings h2{margin-bottom:15px;color:#f1c40f;}
-  .rankings table{width:100%;border-collapse:collapse;}
-  .rankings th, .rankings td{border:1px solid #444;padding:10px;text-align:center;}
-  .rankings th{background:#f39c12;color:#000;}
-  
-  /* Información */
-  .info-section{max-width:800px;margin:40px auto;padding:20px;background:rgba(20,20,20,0.7);border-radius:15px;text-align:left;}
-  .info-section h2{color:#f39c12;margin-bottom:15px;}
-  .info-section p{margin-bottom:10px;line-height:1.5;}
-  
-  /* Chat */
-  .chat-container{position:fixed;right:20px;bottom:20px;width:300px;background:rgba(0,0,0,0.8);border-radius:15px;overflow:hidden;display:flex;flex-direction:column;}
-  .chat-messages{flex:1;padding:10px;overflow-y:auto;height:250px;}
-  .chat-input{display:flex;border-top:1px solid #444;}
-  .chat-input input{flex:1;padding:10px;border:none;border-radius:0;background:#111;color:#fff;}
-  .chat-input button{padding:10px;background:#f39c12;border:none;cursor:pointer;transition:0.3s;}
-  .chat-input button:hover{background:#e67e22;}
-  
-  ::-webkit-scrollbar{width:8px;}
-  ::-webkit-scrollbar-thumb{background:#f39c12;border-radius:4px;}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Venturova Open</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Reset básico */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Orbitron', sans-serif; }
+
+    body {
+      background: #0a0a0a;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* Encabezado y botones de transporte */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: rgba(20,20,20,0.9);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 10;
+    }
+
+    header h1 { font-size: 24px; color: #fff; }
+
+    .transport-buttons a {
+      margin-left: 15px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .transport-buttons a:hover { color: #f39c12; }
+
+    /* Fondo dinámico */
+    .background-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 0.6;
+    }
+
+    /* Sección principal */
+    main {
+      padding-top: 100px;
+      text-align: center;
+    }
+
+    .animated-title {
+      font-size: 48px;
+      color: #f39c12;
+      margin-bottom: 20px;
+      animation: neon 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes neon {
+      0% { text-shadow: 0 0 5px #f39c12, 0 0 10px #f39c12, 0 0 20px #f39c12; }
+      50% { text-shadow: 0 0 10px #f39c12, 0 0 20px #f39c12, 0 0 30px #f39c12; }
+      100% { text-shadow: 0 0 5px #f39c12, 0 0 10px #f39c12, 0 0 20px #f39c12; }
+    }
+
+    /* Formulario de registro */
+    .form-container {
+      background: rgba(0,0,0,0.6);
+      padding: 25px;
+      border-radius: 15px;
+      display: inline-block;
+      margin-bottom: 40px;
+    }
+
+    .form-container input, .form-container button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      width: 250px;
+    }
+
+    .form-container button {
+      background: #f39c12;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .form-container button:hover {
+      background: #e67e22;
+    }
+
+    /* Rankings */
+    .rankings {
+      margin: 40px auto;
+      max-width: 600px;
+      background: rgba(30,30,30,0.8);
+      border-radius: 15px;
+      padding: 20px;
+    }
+
+    .rankings h2 { margin-bottom: 15px; color: #f1c40f; }
+    .rankings ul { list-style: none; }
+    .rankings li { padding: 8px 0; border-bottom: 1px solid #444; }
+
+    /* Chat visual */
+    .chat-container {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      width: 300px;
+      background: rgba(0,0,0,0.8);
+      border-radius: 15px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      height: 250px;
+    }
+
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #444;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 0;
+      background: #111;
+      color: #fff;
+    }
+
+    .chat-input button {
+      padding: 10px;
+      background: #f39c12;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .chat-input button:hover { background: #e67e22; }
+
+    /* Sección información adicional */
+    .info-section {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: rgba(20,20,20,0.7);
+      border-radius: 15px;
+      text-align: left;
+    }
+
+    .info-section h2 { color: #f39c12; margin-bottom: 15px; }
+    .info-section p { margin-bottom: 10px; line-height: 1.5; }
+
+    /* Scroll personalizado */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-thumb { background: #f39c12; border-radius: 4px; }
+  </style>
 </head>
 <body>
 
-<!-- Fondo dinámico -->
-<video class="background-video" autoplay muted loop>
-  <source src="tu-video-de-fondo.mp4" type="video/mp4">
-</video>
+  <!-- Fondo dinámico -->
+  <video class="background-video" autoplay muted loop>
+    <source src="tu-video-de-fondo.mp4" type="video/mp4">
+  </video>
 
-<!-- Header -->
-<header>
-  <h1>Venturova Open</h1>
-  <div class="transport-buttons">
-    <a href="https://www.tiktok.com/@venturova.open?_r=1&_t=ZS-92JXx6n2C9Z" target="_blank">TikTok</a>
-    <a href="https://youtube.com/@venturovaopen?si=VnVTWJwh8v-qmG11" target="_blank">YouTube</a>
+  <!-- Header con botones -->
+  <header>
+    <h1>Venturova Open</h1>
+    <div class="transport-buttons">
+      <a href="https://www.tiktok.com/@venturova.open?_r=1&_t=ZS-92JXx6n2C9Z" target="_blank">TikTok</a>
+      <a href="https://youtube.com/@venturovaopen?si=VnVTWJwh8v-qmG11" target="_blank">YouTube</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="animated-title">¡Bienvenido al Torneo!</div>
+
+    <!-- Formulario -->
+    <div class="form-container">
+      <input type="text" placeholder="User Name" id="username">
+      <input type="email" placeholder="Correo electrónico" id="email">
+      <button onclick="registrar()">Registrarse</button>
+    </div>
+
+    <!-- Rankings -->
+    <div class="rankings">
+      <h2>Rankings</h2>
+      <ul id="ranking-list">
+        <li>#1 Juan</li>
+        <li>#2 María</li>
+        <li>#3 Carlos</li>
+        <li>#4 Ana</li>
+      </ul>
+    </div>
+
+    <!-- Información adicional -->
+    <div class="info-section">
+      <h2>Próximos Torneos 2026</h2>
+      <p>Participa en los torneos más emocionantes de Latinoamérica.</p>
+      <p>Reglas, premios y horarios detallados para cada evento.</p>
+    </div>
+  </main>
+
+  <!-- Chat -->
+  <div class="chat-container">
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-input">
+      <input type="text" id="chatInput" placeholder="Escribe un mensaje...">
+      <button onclick="enviarMensaje()">Enviar</button>
+    </div>
   </div>
-</header>
 
-<main>
-  <div class="animated-title">¡Bienvenido al Torneo!</div>
-
-  <!-- Formulario -->
-  <div class="form-container">
-    <input type="text" placeholder="User Name" id="username">
-    <input type="email" placeholder="Correo electrónico" id="email">
-    <button onclick="registrar()">Registrarse</button>
-  </div>
-
-  <!-- Rankings -->
-  <div class="rankings">
-    <h2>Rankings</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Jugador</th>
-          <th>Puntos</th>
-        </tr>
-      </thead>
-      <tbody id="ranking-list">
-        <tr><td>1</td><td>Juan</td><td>1500</td></tr>
-        <tr><td>2</td><td>María</td><td>1400</td></tr>
-        <tr><td>3</td><td>Carlos</td><td>1300</td></tr>
-        <tr><td>4</td><td>Ana</td><td>1250</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Información adicional -->
-  <div class="info-section">
-    <h2>Próximos Torneos 2026</h2>
-    <p>Participa en los torneos más emocionantes de Latinoamérica.</p>
-    <p>Reglas, premios y horarios detallados para cada evento.</p>
-    <p>¡Inscríbete y demuestra tu habilidad en las pistas!</p>
-  </div>
-</main>
-
-<!-- Chat -->
-<div class="chat-container">
-  <div class="chat-messages" id="chatMessages"></div>
-  <div class="chat-input">
-    <input type="text" id="chatInput" placeholder="Escribe un mensaje...">
-    <button onclick="enviarMensaje()">Enviar</button>
-  </div>
-</div>
-
-<script>
-  // Registro
-  function registrar() {
-    const username = document.getElementById('username').value;
-    const email = document.getElementById('email').value;
-    if(username && email){
-      alert(`¡Registro exitoso!\nUsuario: ${username}\nCorreo: ${email}`);
-      document.getElementById('username').value = '';
-      document.getElementById('email').value = '';
-    } else {
-      alert('Por favor completa todos los campos.');
+  <script>
+    // Formulario
+    function registrar() {
+      const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
+      if(username && email){
+        alert(`¡Registro exitoso!\nUsuario: ${username}\nCorreo: ${email}`);
+        document.getElementById('username').value = '';
+        document.getElementById('email').value = '';
+      } else {
+        alert('Por favor completa todos los campos.');
+      }
     }
-  }
 
-  // Chat simple visual
-  const chatMessages = document.getElementById('chatMessages');
-  function enviarMensaje() {
-    const input = document.getElementById('chatInput');
-    if(input.value.trim() !== ''){
-      const msg = document.createElement('div');
-      msg.textContent = `Tú: ${input.value}`;
-      chatMessages.appendChild(msg);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-      input.value = '';
+    // Chat simple visual (simulado)
+    const chatMessages = document.getElementById('chatMessages');
+    function enviarMensaje() {
+      const input = document.getElementById('chatInput');
+      if(input.value.trim() !== ''){
+        const msg = document.createElement('div');
+        msg.textContent = `Tú: ${input.value}`;
+        chatMessages.appendChild(msg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        input.value = '';
+      }
     }
-  }
-</script>
+  </script>
 
 </body>
 </html>
