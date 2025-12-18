@@ -1,262 +1,320 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Venturova Open</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Venturova Open | Torneos Racing Master LATAM</title>
+
+  <!-- FUENTES PROFESIONALES -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
-    /* Reset básico */
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Orbitron', sans-serif; }
-
-    body {
-      background: #0a0a0a;
-      color: #fff;
-      overflow-x: hidden;
+    :root{
+      --yellow:#f5c400;
+      --black:#0b0b0b;
+      --glass:rgba(0,0,0,.55);
     }
 
-    /* Encabezado y botones de transporte */
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 30px;
-      background: rgba(20,20,20,0.9);
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 10;
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    body{
+      font-family:'Rajdhani',sans-serif;
+      background:var(--black);
+      color:#fff;
+      overflow-x:hidden;
     }
 
-    header h1 { font-size: 24px; color: #fff; }
-
-    .transport-buttons a {
-      margin-left: 15px;
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      transition: 0.3s;
+    /* VIDEO DE FONDO */
+    #bgVideo{
+      position:fixed;
+      top:0;left:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      z-index:-2;
+      filter:brightness(.35);
     }
 
-    .transport-buttons a:hover { color: #f39c12; }
-
-    /* Fondo dinámico */
-    .background-video {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-      opacity: 0.6;
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:linear-gradient(to bottom, rgba(0,0,0,.6), rgba(0,0,0,.85));
+      z-index:-1;
     }
 
-    /* Sección principal */
-    main {
-      padding-top: 100px;
-      text-align: center;
+    header{
+      display:flex;
+      align-items:center;
+      gap:20px;
+      padding:20px 40px;
     }
 
-    .animated-title {
-      font-size: 48px;
-      color: #f39c12;
-      margin-bottom: 20px;
-      animation: neon 1.5s ease-in-out infinite alternate;
+    /* LOGO */
+    .logo{
+      width:70px;
+      height:70px;
+      border-radius:50%;
+      padding:4px;
+      background:conic-gradient(var(--yellow), #fff, var(--yellow));
+      animation:spin 8s linear infinite;
     }
 
-    @keyframes neon {
-      0% { text-shadow: 0 0 5px #f39c12, 0 0 10px #f39c12, 0 0 20px #f39c12; }
-      50% { text-shadow: 0 0 10px #f39c12, 0 0 20px #f39c12, 0 0 30px #f39c12; }
-      100% { text-shadow: 0 0 5px #f39c12, 0 0 10px #f39c12, 0 0 20px #f39c12; }
+    .logo img{
+      width:100%;
+      height:100%;
+      border-radius:50%;
+      background:#000;
     }
 
-    /* Formulario de registro */
-    .form-container {
-      background: rgba(0,0,0,0.6);
-      padding: 25px;
-      border-radius: 15px;
-      display: inline-block;
-      margin-bottom: 40px;
+    @keyframes spin{
+      from{transform:rotate(0)}
+      to{transform:rotate(360deg)}
     }
 
-    .form-container input, .form-container button {
-      display: block;
-      margin: 10px auto;
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: none;
-      width: 250px;
+    .brand h1{
+      font-family:'Orbitron',sans-serif;
+      font-size:2.4rem;
+      color:var(--yellow);
+      animation:pulse 3s ease-in-out infinite;
     }
 
-    .form-container button {
-      background: #f39c12;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
+    .brand p{
+      opacity:.8;
     }
 
-    .form-container button:hover {
-      background: #e67e22;
+    @keyframes pulse{
+      0%,100%{text-shadow:0 0 5px var(--yellow)}
+      50%{text-shadow:0 0 20px var(--yellow)}
     }
 
-    /* Rankings */
-    .rankings {
-      margin: 40px auto;
-      max-width: 600px;
-      background: rgba(30,30,30,0.8);
-      border-radius: 15px;
-      padding: 20px;
+    section{
+      padding:80px 10%;
     }
 
-    .rankings h2 { margin-bottom: 15px; color: #f1c40f; }
-    .rankings ul { list-style: none; }
-    .rankings li { padding: 8px 0; border-bottom: 1px solid #444; }
-
-    /* Chat visual */
-    .chat-container {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      width: 300px;
-      background: rgba(0,0,0,0.8);
-      border-radius: 15px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
+    .card{
+      background:var(--glass);
+      backdrop-filter:blur(8px);
+      border-radius:20px;
+      padding:30px;
+      box-shadow:0 0 30px rgba(0,0,0,.6);
     }
 
-    .chat-messages {
-      flex: 1;
-      padding: 10px;
-      overflow-y: auto;
-      height: 250px;
+    h2{
+      font-family:'Orbitron',sans-serif;
+      color:var(--yellow);
+      margin-bottom:20px;
+      font-size:2rem;
     }
 
-    .chat-input {
-      display: flex;
-      border-top: 1px solid #444;
+    /* SLIDER DE IMÁGENES */
+    .slider{
+      position:relative;
+      height:300px;
+      border-radius:20px;
+      overflow:hidden;
+      margin-bottom:40px;
     }
 
-    .chat-input input {
-      flex: 1;
-      padding: 10px;
-      border: none;
-      border-radius: 0;
-      background: #111;
-      color: #fff;
+    .slider img{
+      position:absolute;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      opacity:0;
+      animation:slide 20s infinite;
     }
 
-    .chat-input button {
-      padding: 10px;
-      background: #f39c12;
-      border: none;
-      cursor: pointer;
-      transition: 0.3s;
+    .slider img:nth-child(1){animation-delay:0s}
+    .slider img:nth-child(2){animation-delay:5s}
+    .slider img:nth-child(3){animation-delay:10s}
+    .slider img:nth-child(4){animation-delay:15s}
+
+    @keyframes slide{
+      0%{opacity:0;transform:scale(1)}
+      10%{opacity:1}
+      40%{opacity:1;transform:scale(1.05)}
+      50%{opacity:0}
+      100%{opacity:0}
     }
 
-    .chat-input button:hover { background: #e67e22; }
-
-    /* Sección información adicional */
-    .info-section {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 20px;
-      background: rgba(20,20,20,0.7);
-      border-radius: 15px;
-      text-align: left;
+    /* RANKING */
+    table{
+      width:100%;
+      border-collapse:collapse;
     }
 
-    .info-section h2 { color: #f39c12; margin-bottom: 15px; }
-    .info-section p { margin-bottom: 10px; line-height: 1.5; }
+    th,td{
+      padding:14px;
+      text-align:center;
+    }
 
-    /* Scroll personalizado */
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-thumb { background: #f39c12; border-radius: 4px; }
+    th{
+      background:var(--yellow);
+      color:#000;
+    }
+
+    tr:nth-child(even){
+      background:rgba(255,255,255,.05);
+    }
+
+    /* BOTONES */
+    .btn{
+      display:inline-block;
+      margin-top:20px;
+      padding:14px 30px;
+      border-radius:30px;
+      background:var(--yellow);
+      color:#000;
+      font-weight:700;
+      text-decoration:none;
+      transition:.3s;
+    }
+
+    .btn:hover{
+      transform:scale(1.08);
+    }
+
+    footer{
+      text-align:center;
+      padding:40px;
+      opacity:.7;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Fondo dinámico -->
-  <video class="background-video" autoplay muted loop>
-    <source src="tu-video-de-fondo.mp4" type="video/mp4">
-  </video>
+  <!-- VIDEO -->
+  <video id="bgVideo" autoplay muted playsinline></video>
+  <div class="overlay"></div>
 
-  <!-- Header con botones -->
   <header>
-    <h1>Venturova Open</h1>
-    <div class="transport-buttons">
-      <a href="https://www.tiktok.com/@venturova.open?_r=1&_t=ZS-92JXx6n2C9Z" target="_blank">TikTok</a>
-      <a href="https://youtube.com/@venturovaopen?si=VnVTWJwh8v-qmG11" target="_blank">YouTube</a>
+    <div class="logo">
+      <img src="logo.jpeg" alt="Venturova Open Logo">
+    </div>
+    <div class="brand">
+      <h1>Venturova Open</h1>
+      <p>Torneos Racing Master | LATAM</p>
     </div>
   </header>
 
-  <main>
-    <div class="animated-title">¡Bienvenido al Torneo!</div>
-
-    <!-- Formulario -->
-    <div class="form-container">
-      <input type="text" placeholder="User Name" id="username">
-      <input type="email" placeholder="Correo electrónico" id="email">
-      <button onclick="registrar()">Registrarse</button>
+  <section>
+    <div class="slider">
+      <img src="visual.jpeg">
+      <img src="visual1.jpg">
+      <img src="visual2.jpg">
+      <img src="visual3.jpg">
     </div>
 
-    <!-- Rankings -->
-    <div class="rankings">
-      <h2>Rankings</h2>
-      <ul id="ranking-list">
-        <li>#1 Juan</li>
-        <li>#2 María</li>
-        <li>#3 Carlos</li>
-        <li>#4 Ana</li>
+    <div class="card">
+      <h2>¿Qué es Venturova Open?</h2>
+      <p>
+        Venturova Open es una plataforma de torneos competitivos de <b>Racing Master</b>
+        enfocada en Latinoamérica. Un proyecto creado para pilotos que buscan competir
+        con seriedad, ranking real y crecimiento continuo.
+      </p>
+      <p>
+        El objetivo es profesionalizar la competencia y construir una comunidad sólida,
+        sostenible y atractiva a largo plazo.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="card">
+      <h2>Formato de Torneos</h2>
+      <ul>
+        <li>Torneos organizados y programados</li>
+        <li>Sistema de ranking propio</li>
+        <li>Temporadas competitivas</li>
+        <li>Clasificación por puntos</li>
+        <li>Enfoque 100% LATAM</li>
       </ul>
     </div>
+  </section>
 
-    <!-- Información adicional -->
-    <div class="info-section">
-      <h2>Próximos Torneos 2026</h2>
-      <p>Participa en los torneos más emocionantes de Latinoamérica.</p>
-      <p>Reglas, premios y horarios detallados para cada evento.</p>
+  <section>
+    <div class="card">
+      <h2>Inscripción</h2>
+      <p><b>Precio estimado actual:</b></p>
+      <h3>≈ 5.000 COP</h3>
+      <p>
+        Inscripción accesible pensada para mantener la organización,
+        mejorar premios y asegurar continuidad del proyecto.
+      </p>
+      <a class="btn" href="#">Inscribirse (Próximamente)</a>
     </div>
-  </main>
+  </section>
 
-  <!-- Chat -->
-  <div class="chat-container">
-    <div class="chat-messages" id="chatMessages"></div>
-    <div class="chat-input">
-      <input type="text" id="chatInput" placeholder="Escribe un mensaje...">
-      <button onclick="enviarMensaje()">Enviar</button>
+  <section>
+    <div class="card">
+      <h2>Ranking (Preliminar)</h2>
+      <table>
+        <tr>
+          <th>Posición</th>
+          <th>Piloto</th>
+          <th>Puntos</th>
+        </tr>
+        <tr><td>1</td><td>N/A</td><td>N/A</td></tr>
+        <tr><td>2</td><td>N/A</td><td>N/A</td></tr>
+        <tr><td>3</td><td>N/A</td><td>N/A</td></tr>
+        <tr><td>4</td><td>N/A</td><td>N/A</td></tr>
+        <tr><td>5</td><td>N/A</td><td>N/A</td></tr>
+      </table>
+      <p style="margin-top:15px;opacity:.7">
+        * El ranking se activará oficialmente con el inicio de los torneos.
+      </p>
     </div>
-  </div>
+  </section>
 
+  <section>
+    <div class="card">
+      <h2>Fechas y Estado</h2>
+      <p><b>Torneos oficiales:</b> 2026</p>
+      <p>
+        Actualmente el proyecto se encuentra en fase de preparación,
+        ajustes de formato y construcción de comunidad.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="card">
+      <h2>Redes Oficiales</h2>
+      <p>TikTok: <b>@venturova.open</b></p>
+      <p>YouTube: <b>@VenturovaOpen</b></p>
+    </div>
+  </section>
+
+  <footer>
+    Venturova Open © 2025–2026 | Proyecto competitivo Racing Master LATAM
+  </footer>
+
+  <!-- ROTACIÓN DE VIDEOS -->
   <script>
-    // Formulario
-    function registrar() {
-      const username = document.getElementById('username').value;
-      const email = document.getElementById('email').value;
-      if(username && email){
-        alert(`¡Registro exitoso!\nUsuario: ${username}\nCorreo: ${email}`);
-        document.getElementById('username').value = '';
-        document.getElementById('email').value = '';
-      } else {
-        alert('Por favor completa todos los campos.');
-      }
-    }
+    const videos = ['video1.mp4','video2.mp4','video3.mp4'];
+    let index = 0;
+    const video = document.getElementById('bgVideo');
 
-    // Chat simple visual (simulado)
-    const chatMessages = document.getElementById('chatMessages');
-    function enviarMensaje() {
-      const input = document.getElementById('chatInput');
-      if(input.value.trim() !== ''){
-        const msg = document.createElement('div');
-        msg.textContent = `Tú: ${input.value}`;
-        chatMessages.appendChild(msg);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-        input.value = '';
-      }
-    }
+    video.src = videos[index];
+
+    video.onended = () => {
+      index = (index + 1) % videos.length;
+      video.src = videos[index];
+      video.play();
+    };
+  </script>
+
+  <!-- SONIDO DE CLICK -->
+  <audio id="clickSound" src="assets/sounds/click.mp3"></audio>
+  <script>
+    const clickSound = document.getElementById('clickSound');
+    const buttons = document.querySelectorAll('button, .btn');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        clickSound.currentTime = 0;
+        clickSound.play();
+      });
+    });
   </script>
 
 </body>
