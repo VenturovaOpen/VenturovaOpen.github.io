@@ -1,14 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Venturova Open | Torneos Racing Master LATAM</title>
-
-<!-- FUENTES PROFESIONALES -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
-
-<style>
+<title>Venturova Open | Torneos Racing Master LATAM</title><!-- FUENTES PROFESIONALES --><link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet"><style>
 :root{
   --yellow:#f5c400;
   --black:#0b0b0b;
@@ -19,9 +13,9 @@
 body{font-family:'Rajdhani',sans-serif;background:var(--black);color:#fff;overflow-x:hidden;}
 
 #bgVideo{
-  position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-2; filter:brightness(.35);
+  position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-2; filter:brightness(0.5);
 }
-.overlay{position:fixed; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,.6), rgba(0,0,0,.85)); z-index:-1;}
+.overlay{position:fixed; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,.4), rgba(0,0,0,.7)); z-index:-1;}
 
 header{
   display:flex; align-items:center; gap:20px; padding:20px 40px;
@@ -34,30 +28,19 @@ header{
 .brand p{opacity:.8;}
 @keyframes pulse{0%,100%{text-shadow:0 0 5px var(--yellow)}50%{text-shadow:0 0 20px var(--yellow)}}
 
-/* NAVEGACIÓN */
 nav{margin-left:auto; display:flex; gap:15px;}
-nav button{
-  background:none; border:none; color:#fff; font-weight:600; padding:10px 18px; border-radius:20px; cursor:pointer; transition:.3s;
-}
+nav button{background:none; border:none; color:#fff; font-weight:600; padding:10px 18px; border-radius:20px; cursor:pointer; transition:.3s;}
 nav button:hover, nav button.active{background:var(--yellow); color:#000;}
 
 section{padding:80px 10%; display:none; transition:.5s;}
 section.active{display:block;}
 
-.card{
-  background:var(--glass); backdrop-filter:blur(8px);
-  border-radius:20px; padding:30px;
-  box-shadow:0 0 30px rgba(0,0,0,.6); margin-bottom:40px;
-}
+.card{background:var(--glass); backdrop-filter:blur(8px); border-radius:20px; padding:30px; box-shadow:0 0 30px rgba(0,0,0,.6); margin-bottom:40px;}
 
 h2{font-family:'Orbitron',sans-serif;color:var(--yellow);margin-bottom:20px;font-size:2rem;}
 
-/* SLIDER DE IMÁGENES */
 .slider{position:relative; height:300px; border-radius:20px; overflow:hidden; margin-bottom:40px;}
-.slider img{
-  position:absolute; width:100%; height:100%; object-fit:cover; opacity:0;
-  animation:slide 20s infinite;
-}
+.slider img{position:absolute; width:100%; height:100%; object-fit:cover; opacity:0; animation:slide 20s infinite;}
 .slider img:nth-child(1){animation-delay:0s}
 .slider img:nth-child(2){animation-delay:5s}
 .slider img:nth-child(3){animation-delay:10s}
@@ -74,47 +57,14 @@ tr:nth-child(even){background:rgba(255,255,255,.05);}
 
 footer{text-align:center;padding:40px;opacity:.7;}
 
-/* BOTONES FIJOS PARA MÓVIL */
-.mobile-nav{
-  display:none;
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  background:var(--black);
-  padding:10px 0;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:space-around;
-  gap:5px;
-  z-index:10;
-  border-top:2px solid var(--yellow);
-}
-.mobile-nav button{
-  flex:1 1 auto;
-  padding:10px;
-  font-weight:600;
-  border-radius:15px;
-  background:var(--glass);
-  color:#fff;
-  border:none;
-  transition:.3s;
-}
+.mobile-nav{display:none;position:fixed;bottom:0;left:0;width:100%;background:var(--black);padding:10px 0;display:flex;flex-wrap:wrap;justify-content:space-around;gap:5px;z-index:10;border-top:2px solid var(--yellow);}
+.mobile-nav button{flex:1 1 auto;padding:10px;font-weight:600;border-radius:15px;background:var(--glass);color:#fff;border:none;transition:.3s;}
 .mobile-nav button:hover, .mobile-nav button.active{background:var(--yellow); color:#000;}
+@media (max-width:768px){nav{display:none;} .mobile-nav{display:flex;}}
+</style></head>
+<body><video id="bgVideo" autoplay muted playsinline></video>
 
-/* MEDIA QUERY: SOLO EN MÓVIL */
-@media (max-width:768px){
-  nav{display:none;} /* oculta nav superior en móvil */
-  .mobile-nav{display:flex;}
-}
-</style>
-</head>
-<body>
-
-<video id="bgVideo" autoplay muted playsinline></video>
-<div class="overlay"></div>
-
-<header>
+<div class="overlay"></div><header>
   <div class="logo"><img src="logo.jpeg" alt="Logo"></div>
   <div class="brand"><h1>Venturova Open</h1><p>Torneos Racing Master | LATAM</p></div>
   <nav>
@@ -125,10 +75,7 @@ footer{text-align:center;padding:40px;opacity:.7;}
     <button data-section="fechas" onclick="switchSection('fechas')">Fechas y Estado</button>
     <button data-section="redes" onclick="switchSection('redes')">Redes</button>
   </nav>
-</header>
-
-<!-- SECCIONES -->
-<section id="inicio" class="active">
+</header><section id="inicio" class="active">
   <div class="slider">
     <img src="visual.jpeg">
     <img src="visual1.jpg">
@@ -141,9 +88,7 @@ footer{text-align:center;padding:40px;opacity:.7;}
     <p>Únete a la comunidad más seria y profesional de pilotos.</p>
     <a class="btn" onclick="playClick()">Inscribirse (Próximamente)</a>
   </div>
-</section>
-
-<section id="ranking">
+</section><section id="ranking">
   <div class="card">
     <h2>Ranking Preliminar</h2>
     <table>
@@ -168,9 +113,7 @@ footer{text-align:center;padding:40px;opacity:.7;}
     </ul>
     <p>Recompensas diseñadas para incentivar la participación constante y justa.</p>
   </div>
-</section>
-
-<section id="torneos">
+</section><section id="torneos">
   <div class="card">
     <h2>Formato de Torneos</h2>
     <ul>
@@ -181,56 +124,41 @@ footer{text-align:center;padding:40px;opacity:.7;}
       <li>Enfoque 100% LATAM</li>
     </ul>
   </div>
-</section>
-
-<section id="inscripcion">
+</section><section id="inscripcion">
   <div class="card">
     <h2>Inscripción</h2>
     <p><b>Precio estimado:</b> ≈ 5.000 COP</p>
     <p>Inscripción accesible para mantener organización, premios y continuidad del proyecto.</p>
     <a class="btn" onclick="playClick()">Inscribirse (Próximamente)</a>
   </div>
-</section>
-
-<section id="fechas">
+</section><section id="fechas">
   <div class="card">
     <h2>Fechas y Estado</h2>
     <p><b>Torneos oficiales:</b> 2026</p>
     <p>Actualmente en fase de preparación, ajustes de formato y construcción de comunidad.</p>
   </div>
-</section>
-
-<section id="redes">
+</section><section id="redes">
   <div class="card">
     <h2>Redes Oficiales</h2>
     <p>TikTok: <b>@venturova.open</b></p>
     <p>YouTube: <b>@VenturovaOpen</b></p>
   </div>
-</section>
-
-<!-- BARRA INFERIOR MÓVIL VISIBLE EN TODAS LAS SECCIONES -->
-<div class="mobile-nav">
+</section><div class="mobile-nav">
   <button onclick="switchSection('inicio')">Inicio</button>
   <button onclick="switchSection('ranking')">Ranking</button>
   <button onclick="switchSection('torneos')">Torneos</button>
   <button onclick="switchSection('inscripcion')">Inscripción</button>
   <button onclick="switchSection('fechas')">Fechas</button>
   <button onclick="switchSection('redes')">Redes</button>
-</div>
-
-<footer>
+</div><footer>
   Venturova Open © 2025–2026 | Proyecto competitivo Racing Master LATAM
-</footer>
-
-<script>
-/* ROTACIÓN DE VIDEOS */
+</footer><script>
 const videos = ['video1.mp4','video2.mp4','video3.mp4'];
 let index = 0;
 const video = document.getElementById('bgVideo');
 video.src = videos[index];
 video.onended = () => { index=(index+1)%videos.length; video.src=videos[index]; video.play(); }
 
-/* NAVEGACIÓN ENTRE SECCIONES */
 function switchSection(sectionId){
   document.querySelectorAll('section').forEach(sec=>sec.classList.remove('active'));
   document.getElementById(sectionId).classList.add('active');
@@ -241,10 +169,8 @@ function switchSection(sectionId){
   playClick();
 }
 
-/* SONIDO DE CLICK */
 const clickSound = new Audio('click.mp3');
-function playClick(){ clickSound.play(); }
-</script>
-
-</body>
+clickSound.preload = 'auto';
+function playClick(){ clickSound.currentTime = 0; clickSound.play(); }
+</script></body>
 </html>
