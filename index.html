@@ -1,399 +1,149 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Venturova Open | Torneos Racing Master LATAM</title>
-
-  <!-- FUENTES PROFESIONALES -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
-
-  <!-- FIREBASE SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics.js"></script>
-
-  <style>
-    :root{
-      --yellow:#FFD700;
-      --black:#0b0b0b;
-      --glass:rgba(0,0,0,.55);
-      --btn-hover:#ffea00;
-    }
-
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      font-family:'Rajdhani',sans-serif;
-      background:var(--black);
-      color:#fff;
-      overflow-x:hidden;
-    }
-
-    /* VIDEO DE FONDO */
-    #bgVideo{
-      position:fixed;
-      top:0;left:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      z-index:-2;
-      filter:brightness(.35);
-    }
-
-    .overlay{
-      position:fixed;
-      inset:0;
-      background:linear-gradient(to bottom, rgba(0,0,0,.6), rgba(0,0,0,.85));
-      z-index:-1;
-    }
-
-    header{
-      display:flex;
-      align-items:center;
-      gap:20px;
-      padding:20px 40px;
-    }
-
-    /* LOGO */
-    .logo{
-      width:70px;
-      height:70px;
-      border-radius:50%;
-      padding:4px;
-      background:conic-gradient(var(--yellow), #fff, var(--yellow));
-      animation:spin 8s linear infinite;
-    }
-
-    .logo img{
-      width:100%;
-      height:100%;
-      border-radius:50%;
-      background:#000;
-    }
-
-    @keyframes spin{
-      from{transform:rotate(0)}
-      to{transform:rotate(360deg)}
-    }
-
-    .brand h1{
-      font-family:'Orbitron',sans-serif;
-      font-size:2.4rem;
-      color:var(--yellow);
-      animation:pulse 3s ease-in-out infinite;
-    }
-
-    .brand p{
-      opacity:.8;
-    }
-
-    @keyframes pulse{
-      0%,100%{text-shadow:0 0 5px var(--yellow)}
-      50%{text-shadow:0 0 20px var(--yellow)}
-    }
-
-    section{
-      padding:80px 10%;
-    }
-
-    .card{
-      background:var(--glass);
-      backdrop-filter:blur(8px);
-      border-radius:20px;
-      padding:30px;
-      box-shadow:0 0 30px rgba(0,0,0,.6);
-      margin-bottom:50px;
-    }
-
-    h2{
-      font-family:'Orbitron',sans-serif;
-      color:var(--yellow);
-      margin-bottom:20px;
-      font-size:2rem;
-    }
-
-    /* SLIDER DE IMÁGENES */
-    .slider{
-      position:relative;
-      height:300px;
-      border-radius:20px;
-      overflow:hidden;
-      margin-bottom:40px;
-    }
-
-    .slider img{
-      position:absolute;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      opacity:0;
-      animation:slide 20s infinite;
-    }
-
-    .slider img:nth-child(1){animation-delay:0s}
-    .slider img:nth-child(2){animation-delay:5s}
-    .slider img:nth-child(3){animation-delay:10s}
-    .slider img:nth-child(4){animation-delay:15s}
-
-    @keyframes slide{
-      0%{opacity:0;transform:scale(1)}
-      10%{opacity:1}
-      40%{opacity:1;transform:scale(1.05)}
-      50%{opacity:0}
-      100%{opacity:0}
-    }
-
-    /* RANKING */
-    table{
-      width:100%;
-      border-collapse:collapse;
-    }
-
-    th,td{
-      padding:14px;
-      text-align:center;
-    }
-
-    th{
-      background:var(--yellow);
-      color:#000;
-    }
-
-    tr:nth-child(even){
-      background:rgba(255,255,255,.05);
-    }
-
-    /* BOTONES */
-    .btn{
-      display:inline-block;
-      margin-top:20px;
-      padding:14px 30px;
-      border-radius:30px;
-      background:var(--yellow);
-      color:#000;
-      font-weight:700;
-      text-decoration:none;
-      transition:.3s;
-      cursor:pointer;
-    }
-
-    .btn:hover{
-      background:var(--btn-hover);
-      transform:scale(1.08);
-    }
-
-    /* FORMULARIOS */
-    .form-card{
-      display:flex;
-      flex-direction:column;
-      gap:15px;
-    }
-
-    .form-card input{
-      padding:12px 15px;
-      border-radius:12px;
-      border:none;
-      outline:none;
-      font-size:1rem;
-      transition:.3s;
-    }
-
-    .form-card input:focus{
-      box-shadow:0 0 10px var(--yellow);
-    }
-
-    .form-card button{
-      margin-top:10px;
-    }
-
-    /* MENSAJES */
-    .msg{
-      color:#ff6b6b;
-      font-weight:700;
-      animation:blink 1.5s infinite;
-    }
-
-    @keyframes blink{
-      0%,100%{opacity:1}
-      50%{opacity:.2}
-    }
-
-    footer{
-      text-align:center;
-      padding:40px;
-      opacity:.7;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venturova Open</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif;}
+  body{background:#0a0a0a;color:#fff;overflow-x:hidden;}
+  
+  /* Header */
+  header{display:flex;justify-content:space-between;align-items:center;padding:15px 30px;background:rgba(20,20,20,0.9);position:fixed;width:100%;top:0;z-index:10;}
+  header h1{font-size:24px;color:#fff;}
+  .transport-buttons a{margin-left:15px;color:#fff;text-decoration:none;font-weight:bold;transition:0.3s;}
+  .transport-buttons a:hover{color:#f39c12;}
+  
+  /* Fondo */
+  .background-video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-1;opacity:0.6;}
+  
+  /* Secciones */
+  main{padding-top:120px;text-align:center;}
+  .animated-title{font-size:48px;color:#f39c12;margin-bottom:20px;animation:neon 1.5s ease-in-out infinite alternate;}
+  @keyframes neon{0%{text-shadow:0 0 5px #f39c12,0 0 10px #f39c12,0 0 20px #f39c12;}50%{text-shadow:0 0 10px #f39c12,0 0 20px #f39c12,0 0 30px #f39c12;}100%{text-shadow:0 0 5px #f39c12,0 0 10px #f39c12,0 0 20px #f39c12;}}
+  
+  /* Formulario */
+  .form-container{background:rgba(0,0,0,0.6);padding:25px;border-radius:15px;display:inline-block;margin-bottom:40px;}
+  .form-container input,.form-container button{display:block;margin:10px auto;padding:10px;font-size:16px;border-radius:8px;border:none;width:250px;}
+  .form-container button{background:#f39c12;color:#000;font-weight:bold;cursor:pointer;transition:0.3s;}
+  .form-container button:hover{background:#e67e22;}
+  
+  /* Rankings */
+  .rankings{margin:40px auto;max-width:700px;background:rgba(30,30,30,0.8);border-radius:15px;padding:20px;}
+  .rankings h2{margin-bottom:15px;color:#f1c40f;}
+  .rankings table{width:100%;border-collapse:collapse;}
+  .rankings th, .rankings td{border:1px solid #444;padding:10px;text-align:center;}
+  .rankings th{background:#f39c12;color:#000;}
+  
+  /* Información */
+  .info-section{max-width:800px;margin:40px auto;padding:20px;background:rgba(20,20,20,0.7);border-radius:15px;text-align:left;}
+  .info-section h2{color:#f39c12;margin-bottom:15px;}
+  .info-section p{margin-bottom:10px;line-height:1.5;}
+  
+  /* Chat */
+  .chat-container{position:fixed;right:20px;bottom:20px;width:300px;background:rgba(0,0,0,0.8);border-radius:15px;overflow:hidden;display:flex;flex-direction:column;}
+  .chat-messages{flex:1;padding:10px;overflow-y:auto;height:250px;}
+  .chat-input{display:flex;border-top:1px solid #444;}
+  .chat-input input{flex:1;padding:10px;border:none;border-radius:0;background:#111;color:#fff;}
+  .chat-input button{padding:10px;background:#f39c12;border:none;cursor:pointer;transition:0.3s;}
+  .chat-input button:hover{background:#e67e22;}
+  
+  ::-webkit-scrollbar{width:8px;}
+  ::-webkit-scrollbar-thumb{background:#f39c12;border-radius:4px;}
+</style>
 </head>
 <body>
 
-  <!-- VIDEO -->
-  <video id="bgVideo" autoplay muted playsinline></video>
-  <div class="overlay"></div>
+<!-- Fondo dinámico -->
+<video class="background-video" autoplay muted loop>
+  <source src="tu-video-de-fondo.mp4" type="video/mp4">
+</video>
 
-  <header>
-    <div class="logo">
-      <img src="logo.jpeg" alt="Venturova Open Logo">
-    </div>
-    <div class="brand">
-      <h1>Venturova Open</h1>
-      <p>Torneos Racing Master | LATAM</p>
-    </div>
-  </header>
+<!-- Header -->
+<header>
+  <h1>Venturova Open</h1>
+  <div class="transport-buttons">
+    <a href="https://www.tiktok.com/@venturova.open?_r=1&_t=ZS-92JXx6n2C9Z" target="_blank">TikTok</a>
+    <a href="https://youtube.com/@venturovaopen?si=VnVTWJwh8v-qmG11" target="_blank">YouTube</a>
+  </div>
+</header>
 
-  <!-- SECCIÓN DE REGISTRO -->
-  <section>
-    <div class="card">
-      <h2>Registro / Inicio de Sesión</h2>
-      <div class="form-card">
-        <input type="text" id="name" placeholder="Nombre completo" required />
-        <input type="email" id="email" placeholder="Correo electrónico" required />
-        <button class="btn" id="registerBtn">Registrarse / Entrar</button>
-        <p class="msg" id="msg"></p>
-      </div>
-    </div>
-  </section>
+<main>
+  <div class="animated-title">¡Bienvenido al Torneo!</div>
 
-  <!-- SECCIÓN INFORMATIVA -->
-  <section>
-    <div class="slider">
-      <img src="visual.jpeg">
-      <img src="visual1.jpg">
-      <img src="visual2.jpg">
-      <img src="visual3.jpg">
-    </div>
+  <!-- Formulario -->
+  <div class="form-container">
+    <input type="text" placeholder="User Name" id="username">
+    <input type="email" placeholder="Correo electrónico" id="email">
+    <button onclick="registrar()">Registrarse</button>
+  </div>
 
-    <div class="card">
-      <h2>¿Qué es Venturova Open?</h2>
-      <p>
-        Venturova Open es una plataforma de torneos competitivos de <b>Racing Master</b>
-        enfocada en Latinoamérica. Un proyecto creado para pilotos que buscan competir
-        con seriedad, ranking real y crecimiento continuo.
-      </p>
-      <p>
-        El objetivo es profesionalizar la competencia y construir una comunidad sólida,
-        sostenible y atractiva a largo plazo.
-      </p>
-    </div>
-  </section>
-
-  <!-- FORMULARIO CONTACTO / INSCRIPCIÓN -->
-  <section>
-    <div class="card">
-      <h2>Inscripción</h2>
-      <p><b>Precio estimado actual:</b></p>
-      <h3>≈ 5.000 COP</h3>
-      <p>
-        Inscripción accesible pensada para mantener la organización,
-        mejorar premios y asegurar continuidad del proyecto.
-      </p>
-      <a class="btn" href="#">Inscribirse (Próximamente)</a>
-    </div>
-  </section>
-
-  <!-- RANKING -->
-  <section>
-    <div class="card">
-      <h2>Ranking (Preliminar)</h2>
-      <table>
+  <!-- Rankings -->
+  <div class="rankings">
+    <h2>Rankings</h2>
+    <table>
+      <thead>
         <tr>
-          <th>Posición</th>
-          <th>Piloto</th>
+          <th>#</th>
+          <th>Jugador</th>
           <th>Puntos</th>
         </tr>
-        <tr><td>1</td><td>N/A</td><td>N/A</td></tr>
-        <tr><td>2</td><td>N/A</td><td>N/A</td></tr>
-        <tr><td>3</td><td>N/A</td><td>N/A</td></tr>
-        <tr><td>4</td><td>N/A</td><td>N/A</td></tr>
-        <tr><td>5</td><td>N/A</td><td>N/A</td></tr>
-      </table>
-      <p style="margin-top:15px;opacity:.7">
-        * El ranking se activará oficialmente con el inicio de los torneos.
-      </p>
-    </div>
-  </section>
+      </thead>
+      <tbody id="ranking-list">
+        <tr><td>1</td><td>Juan</td><td>1500</td></tr>
+        <tr><td>2</td><td>María</td><td>1400</td></tr>
+        <tr><td>3</td><td>Carlos</td><td>1300</td></tr>
+        <tr><td>4</td><td>Ana</td><td>1250</td></tr>
+      </tbody>
+    </table>
+  </div>
 
-  <!-- REDES -->
-  <section>
-    <div class="card">
-      <h2>Redes Oficiales</h2>
-      <p>YouTube: <b>@venturova11</b></p>
-    </div>
-  </section>
+  <!-- Información adicional -->
+  <div class="info-section">
+    <h2>Próximos Torneos 2026</h2>
+    <p>Participa en los torneos más emocionantes de Latinoamérica.</p>
+    <p>Reglas, premios y horarios detallados para cada evento.</p>
+    <p>¡Inscríbete y demuestra tu habilidad en las pistas!</p>
+  </div>
+</main>
 
-  <footer>
-    Venturova Open © 2025–2026 | Proyecto competitivo Racing Master LATAM
-  </footer>
+<!-- Chat -->
+<div class="chat-container">
+  <div class="chat-messages" id="chatMessages"></div>
+  <div class="chat-input">
+    <input type="text" id="chatInput" placeholder="Escribe un mensaje...">
+    <button onclick="enviarMensaje()">Enviar</button>
+  </div>
+</div>
 
-  <!-- ROTACIÓN DE VIDEOS -->
-  <script>
-    const videos = ['video1.mp4','video2.mp4','video3.mp4'];
-    let index = 0;
-    const video = document.getElementById('bgVideo');
-    video.src = videos[index];
-    video.onended = () => {
-      index = (index + 1) % videos.length;
-      video.src = videos[index];
-      video.play();
-    };
-  </script>
+<script>
+  // Registro
+  function registrar() {
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    if(username && email){
+      alert(`¡Registro exitoso!\nUsuario: ${username}\nCorreo: ${email}`);
+      document.getElementById('username').value = '';
+      document.getElementById('email').value = '';
+    } else {
+      alert('Por favor completa todos los campos.');
+    }
+  }
 
-  <!-- FIREBASE CONFIG -->
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyBuD-Kdb-g-o-dXP60RMrF5D8ss4QvTotY",
-      authDomain: "venturovaweb.firebaseapp.com",
-      projectId: "venturovaweb",
-      storageBucket: "venturovaweb.firebasestorage.app",
-      messagingSenderId: "541923508024",
-      appId: "1:541923508024:web:7c3c5f4f0fc658a3064bcd",
-      measurementId: "G-LZMWH0CKXM"
-    };
+  // Chat simple visual
+  const chatMessages = document.getElementById('chatMessages');
+  function enviarMensaje() {
+    const input = document.getElementById('chatInput');
+    if(input.value.trim() !== ''){
+      const msg = document.createElement('div');
+      msg.textContent = `Tú: ${input.value}`;
+      chatMessages.appendChild(msg);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      input.value = '';
+    }
+  }
+</script>
 
-    // Inicializar Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const analytics = firebase.getAnalytics(app);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-
-    const registerBtn = document.getElementById('registerBtn');
-    const nameInput = document.getElementById('name');
-    const emailInput = document.getElementById('email');
-    const msg = document.getElementById('msg');
-
-    registerBtn.addEventListener('click', async () => {
-      const name = nameInput.value.trim();
-      const email = emailInput.value.trim();
-      msg.textContent = '';
-
-      if(!name || !email){
-        msg.textContent = 'Por favor complete todos los campos.';
-        return;
-      }
-
-      try {
-        let userCredential = await auth.signInWithEmailLink(email, window.location.href)
-          .catch(async ()=>{
-            return await auth.createUserWithEmailAndPassword(email, 'TempPass123');
-          });
-
-        const user = userCredential.user;
-
-        await db.collection('users').doc(user.uid).set({
-          name,
-          email,
-          createdAt: new Date(),
-          progress: {}
-        }, {merge:true});
-
-        msg.style.color = '#00ff9d';
-        msg.textContent = 'Usuario registrado/iniciado correctamente!';
-      } catch (err) {
-        msg.style.color = '#ff6b6b';
-        msg.textContent = 'Ocurrió un error: ' + err.message;
-      }
-    });
-  </script>
 </body>
 </html>
