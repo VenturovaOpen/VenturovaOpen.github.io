@@ -97,6 +97,7 @@
       border-radius:20px;
       padding:30px;
       box-shadow:0 0 30px rgba(0,0,0,.6);
+      margin-bottom:40px;
     }
 
     h2{
@@ -168,6 +169,7 @@
       font-weight:700;
       text-decoration:none;
       transition:.3s;
+      cursor:pointer;
     }
 
     .btn:hover{
@@ -178,6 +180,17 @@
       text-align:center;
       padding:40px;
       opacity:.7;
+    }
+
+    input, select{
+      width:100%;
+      padding:12px;
+      margin-top:10px;
+      margin-bottom:15px;
+      border-radius:10px;
+      border:none;
+      outline:none;
+      font-size:1rem;
     }
   </style>
 </head>
@@ -235,13 +248,16 @@
   <section>
     <div class="card">
       <h2>Inscripción</h2>
-      <p><b>Precio estimado actual:</b></p>
-      <h3>≈ 5.000 COP</h3>
-      <p>
-        Inscripción accesible pensada para mantener la organización,
-        mejorar premios y asegurar continuidad del proyecto.
-      </p>
-      <a class="btn" href="#">Inscribirse (Próximamente)</a>
+      <input type="text" id="username" placeholder="User Name">
+      <input type="email" id="email" placeholder="Correo electrónico">
+      <select id="country">
+        <option value="">Selecciona tu país</option>
+        <option>Colombia</option>
+        <option>México</option>
+        <option>Argentina</option>
+        <option>Otro</option>
+      </select>
+      <button class="btn" id="registerBtn">Inscribirse</button>
     </div>
   </section>
 
@@ -249,19 +265,17 @@
     <div class="card">
       <h2>Ranking (Preliminar)</h2>
       <table>
-        <tr>
-          <th>Posición</th>
-          <th>Piloto</th>
-          <th>Puntos</th>
-        </tr>
-        <tr><td>1</td><td>N/A</td><td>N/A</td></tr>
-        <tr><td>2</td><td>N/A</td><td>N/A</td></tr>
-        <tr><td>3</td><td>N/A</td><td>N/A</td></tr>
-        <tr><td>4</td><td>N/A</td><td>N/A</td></tr>
-        <tr><td>5</td><td>N/A</td><td>N/A</td></tr>
+        <thead>
+          <tr>
+            <th>Posición</th>
+            <th>Piloto</th>
+            <th>Puntos</th>
+          </tr>
+        </thead>
+        <tbody id="rankingTable"></tbody>
       </table>
       <p style="margin-top:15px;opacity:.7">
-        * El ranking se activará oficialmente con el inicio de los torneos.
+        * El ranking se actualizará automáticamente según los puntos de los torneos.
       </p>
     </div>
   </section>
@@ -289,32 +303,97 @@
     Venturova Open © 2025–2026 | Proyecto competitivo Racing Master LATAM
   </footer>
 
-  <!-- ROTACIÓN DE VIDEOS -->
-  <script>
+  <!-- SCRIPTS -->
+  <script type="module">
+    // Firebase v9 modular
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics.js";
+    import { getFirestore, collection, addDoc, getDocs, query, orderBy, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBuD-Kdb-g-o-dXP60RMrF5D8ss4QvTotY",
+      authDomain: "venturovaweb.firebaseapp.com",
+      projectId: "venturovaweb",
+      storageBucket: "venturovaweb.firebasestorage.app",
+      messagingSenderId: "541923508024",
+      appId: "1:541923508024:web:ad6c62ba03c2a5a9064bcd",
+      measurementId: "G-JCR1S3SP7S"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getFirestore(app);
+
+    // ROTACIÓN DE VIDEOS
     const videos = ['video1.mp4','video2.mp4','video3.mp4'];
     let index = 0;
     const video = document.getElementById('bgVideo');
-
     video.src = videos[index];
-
     video.onended = () => {
       index = (index + 1) % videos.length;
       video.src = videos[index];
       video.play();
     };
-  </script>
 
-  <!-- SONIDO DE CLICK -->
-  <audio id="clickSound" src="assets/sounds/click.mp3"></audio>
-  <script>
-    const clickSound = document.getElementById('clickSound');
-    const buttons = document.querySelectorAll('button, .btn');
-    buttons.forEach(btn => {
+    // SONIDO DE CLICK
+    const clickSound = new Audio('assets/sounds/click.mp3');
+    document.querySelectorAll('button, .btn').forEach(btn => {
       btn.addEventListener('click', () => {
         clickSound.currentTime = 0;
         clickSound.play();
       });
     });
+
+    // INSCRIPCIÓN AUTOMÁTICA
+    document.getElementById('registerBtn').addEventListener('click', async () => {
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const country = document.getElementById('country').value;
+
+      if(!username || !email || !country){
+        alert("Completa todos los campos");
+        return;
+      }
+
+      try {
+        const docRef = await addDoc(collection(db, "players"), {
+          username,
+          email,
+          country,
+          points: 0,
+          registeredAt: new Date()
+        });
+        alert("Registro exitoso 🎉");
+        document.getElementById('username').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('country').value = '';
+        loadRanking(); // Actualiza el ranking al registrarse
+      } catch(e) {
+        console.error("Error registrando jugador: ", e);
+      }
+    });
+
+    // RANKING AUTOMÁTICO
+    async function loadRanking(){
+      const rankingTable = document.getElementById('rankingTable');
+      rankingTable.innerHTML = "";
+      const q = query(collection(db, "players"), orderBy("points", "desc"));
+      const querySnapshot = await getDocs(q);
+      let position = 1;
+      querySnapshot.forEach(docSnap => {
+        const player = docSnap.data();
+        rankingTable.innerHTML += `<tr>
+          <td>${position}</td>
+          <td>${player.username}</td>
+          <td>${player.points}</td>
+        </tr>`;
+        position++;
+      });
+    }
+
+    // Cargar ranking al iniciar
+    loadRanking();
+
   </script>
 
 </body>
