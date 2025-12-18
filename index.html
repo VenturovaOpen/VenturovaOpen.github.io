@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VenturovaOpen - Rasing Master</title>
     <style>
-        /* Colores principales */
         :root {
             --color-oro: #FFD700;
             --color-negro: #000000;
@@ -15,12 +14,25 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: var(--color-negro);
             color: var(--color-blanco);
+            position: relative;
+            z-index: 0;
+        }
+
+        /* GIF de fondo */
+        #fondoGIF {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.6; /* Para que el contenido sea legible */
         }
 
         header {
-            background-color: var(--color-oro);
+            background-color: rgba(255, 215, 0, 0.85);
             color: var(--color-negro);
             padding: 20px;
             text-align: center;
@@ -32,7 +44,7 @@
         }
 
         nav {
-            background-color: #222;
+            background-color: rgba(34, 34, 34, 0.9);
             padding: 10px 0;
             text-align: center;
         }
@@ -55,7 +67,7 @@
         }
 
         section {
-            margin-bottom: 40px;
+            margin-bottom: 50px;
         }
 
         section h2 {
@@ -70,8 +82,30 @@
             line-height: 1.6;
         }
 
+        /* Tabla de clasificación */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            border: 1px solid var(--color-oro);
+            padding: 10px;
+            text-align: center;
+        }
+
+        table th {
+            background-color: var(--color-oro);
+            color: var(--color-negro);
+        }
+
+        table tr:nth-child(even) {
+            background-color: rgba(255, 215, 0, 0.2);
+        }
+
         footer {
-            background-color: #111;
+            background-color: rgba(17, 17, 17, 0.9);
             color: var(--color-blanco);
             text-align: center;
             padding: 15px;
@@ -80,6 +114,9 @@
 </head>
 <body>
 
+<!-- GIF de fondo -->
+<img src="TU_GIF.gif" id="fondoGIF" alt="Fondo animado de Rasing Master">
+
 <header>
     <h1>VenturovaOpen</h1>
     <p>Proyectos y torneos de Rasing Master</p>
@@ -87,7 +124,7 @@
 
 <nav>
     <a href="#torneos">Torneos 2026</a>
-    <a href="#ranking">Sistema de Ranking</a>
+    <a href="#ranking">Clasificación</a>
     <a href="#contacto">Contacto</a>
 </nav>
 
@@ -98,8 +135,35 @@
     </section>
 
     <section id="ranking">
-        <h2>Sistema de Ranking</h2>
-        <p>Participa y acumula puntos para escalar posiciones. Nuestro sistema de ranking es justo y competitivo, diseñado para los jugadores más dedicados.</p>
+        <h2>Tabla de Clasificación</h2>
+        <p>Los mejores jugadores y sus puntos acumulados:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Posición</th>
+                    <th>Jugador</th>
+                    <th>Puntos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Jugador1</td>
+                    <td>1200</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Jugador2</td>
+                    <td>1100</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Jugador3</td>
+                    <td>950</td>
+                </tr>
+                <!-- Puedes agregar más jugadores aquí -->
+            </tbody>
+        </table>
     </section>
 
     <section id="contacto">
