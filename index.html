@@ -1,236 +1,308 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Venturova Open</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Venturova Open | Torneos Racing Master LATAM</title>
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+  <!-- FUENTES PROFESIONALES -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
 
-body {
-  font-family: 'Arial', sans-serif;
-  background: #000;
-  color: #fff;
-  overflow-x: hidden;
-}
+  <style>
+    :root{
+      --yellow:#f5c400;
+      --black:#0b0b0b;
+      --glass:rgba(0,0,0,.55);
+    }
 
-/* ===== VIDEO FONDO ===== */
-.video-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -2;
-}
+    *{box-sizing:border-box;margin:0;padding:0}
 
-.video-bg video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+    body{
+      font-family:'Rajdhani',sans-serif;
+      background:var(--black);
+      color:#fff;
+      overflow-x:hidden;
+    }
 
-.video-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.6);
-  z-index: -1;
-}
+    /* VIDEO DE FONDO */
+    #bgVideo{
+      position:fixed;
+      top:0;left:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      z-index:-2;
+      filter:brightness(.35);
+    }
 
-/* ===== HEADER ===== */
-header {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:linear-gradient(to bottom, rgba(0,0,0,.6), rgba(0,0,0,.85));
+      z-index:-1;
+    }
 
-header h1 {
-  font-size: 3.5rem;
-  animation: floatText 3s ease-in-out infinite;
-}
+    header{
+      display:flex;
+      align-items:center;
+      gap:20px;
+      padding:20px 40px;
+    }
 
-header p {
-  margin-top: 15px;
-  font-size: 1.2rem;
-  opacity: 0.9;
-  animation: pulse 2.5s infinite;
-}
+    /* LOGO */
+    .logo{
+      width:70px;
+      height:70px;
+      border-radius:50%;
+      padding:4px;
+      background:conic-gradient(var(--yellow), #fff, var(--yellow));
+      animation:spin 8s linear infinite;
+    }
 
-/* Animaciones constantes */
-@keyframes floatText {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
-  100% { transform: translateY(0); }
-}
+    .logo img{
+      width:100%;
+      height:100%;
+      border-radius:50%;
+      background:#000;
+    }
 
-@keyframes pulse {
-  0% { opacity: 0.6; }
-  50% { opacity: 1; }
-  100% { opacity: 0.6; }
-}
+    @keyframes spin{
+      from{transform:rotate(0)}
+      to{transform:rotate(360deg)}
+    }
 
-/* ===== MENU ===== */
-nav {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  display: flex;
-  gap: 15px;
-  z-index: 10;
-}
+    .brand h1{
+      font-family:'Orbitron',sans-serif;
+      font-size:2.4rem;
+      color:var(--yellow);
+      animation:pulse 3s ease-in-out infinite;
+    }
 
-nav button {
-  background: transparent;
-  border: 1px solid #fff;
-  color: #fff;
-  padding: 8px 15px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
+    .brand p{
+      opacity:.8;
+    }
 
-nav button:hover {
-  background: #fff;
-  color: #000;
-}
+    @keyframes pulse{
+      0%,100%{text-shadow:0 0 5px var(--yellow)}
+      50%{text-shadow:0 0 20px var(--yellow)}
+    }
 
-/* ===== SECCIONES ===== */
-section {
-  min-height: 100vh;
-  padding: 80px 10%;
-  display: none;
-}
+    section{
+      padding:80px 10%;
+    }
 
-section.active {
-  display: block;
-  animation: fadeIn 0.8s ease;
-}
+    .card{
+      background:var(--glass);
+      backdrop-filter:blur(8px);
+      border-radius:20px;
+      padding:30px;
+      box-shadow:0 0 30px rgba(0,0,0,.6);
+    }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+    h2{
+      font-family:'Orbitron',sans-serif;
+      color:var(--yellow);
+      margin-bottom:20px;
+      font-size:2rem;
+    }
 
-/* ===== GALERÍA ===== */
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-  gap: 20px;
-}
+    /* SLIDER DE IMÁGENES */
+    .slider{
+      position:relative;
+      height:300px;
+      border-radius:20px;
+      overflow:hidden;
+      margin-bottom:40px;
+    }
 
-.gallery img {
-  width: 100%;
-  border-radius: 10px;
-  transition: transform 0.4s;
-}
+    .slider img{
+      position:absolute;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      opacity:0;
+      animation:slide 20s infinite;
+    }
 
-.gallery img:hover {
-  transform: scale(1.05);
-}
+    .slider img:nth-child(1){animation-delay:0s}
+    .slider img:nth-child(2){animation-delay:5s}
+    .slider img:nth-child(3){animation-delay:10s}
+    .slider img:nth-child(4){animation-delay:15s}
 
-/* ===== RANKING ===== */
-.ranking {
-  max-width: 500px;
-  margin: auto;
-}
+    @keyframes slide{
+      0%{opacity:0;transform:scale(1)}
+      10%{opacity:1}
+      40%{opacity:1;transform:scale(1.05)}
+      50%{opacity:0}
+      100%{opacity:0}
+    }
 
-.ranking div {
-  background: rgba(255,255,255,0.08);
-  margin: 10px 0;
-  padding: 15px;
-  border-left: 4px solid #fff;
-}
+    /* RANKING */
+    table{
+      width:100%;
+      border-collapse:collapse;
+    }
 
-/* ===== FOOTER ===== */
-footer {
-  text-align: center;
-  padding: 20px;
-  background: rgba(0,0,0,0.8);
-}
-</style>
+    th,td{
+      padding:14px;
+      text-align:center;
+    }
+
+    th{
+      background:var(--yellow);
+      color:#000;
+    }
+
+    tr:nth-child(even){
+      background:rgba(255,255,255,.05);
+    }
+
+    /* BOTONES */
+    .btn{
+      display:inline-block;
+      margin-top:20px;
+      padding:14px 30px;
+      border-radius:30px;
+      background:var(--yellow);
+      color:#000;
+      font-weight:700;
+      text-decoration:none;
+      transition:.3s;
+    }
+
+    .btn:hover{
+      transform:scale(1.08);
+    }
+
+    footer{
+      text-align:center;
+      padding:40px;
+      opacity:.7;
+    }
+  </style>
 </head>
-
 <body>
 
-<!-- VIDEO FONDO -->
-<div class="video-bg">
+  <!-- VIDEO -->
   <video id="bgVideo" autoplay muted playsinline></video>
-</div>
-<div class="video-overlay"></div>
+  <div class="overlay"></div>
 
-<!-- MENU -->
-<nav>
-  <button onclick="showSection('inicio')">Inicio</button>
-  <button onclick="showSection('galeria')">Galería</button>
-  <button onclick="showSection('ranking')">Ranking</button>
-</nav>
+  <header>
+    <div class="logo">
+      <img src="logo.jpeg" alt="Venturova Open Logo">
+    </div>
+    <div class="brand">
+      <h1>Venturova Open</h1>
+      <p>Torneos Racing Master | LATAM</p>
+    </div>
+  </header>
 
-<!-- INICIO -->
-<header id="inicio" class="active">
-  <h1>Venturova Open</h1>
-  <p>Torneos Racing Latinoamérica · 2026</p>
-</header>
+  <section>
+    <div class="slider">
+      <img src="visual.jpeg">
+      <img src="visual1.jpg">
+      <img src="visual2.jpg">
+      <img src="visual3.jpg">
+    </div>
 
-<!-- GALERÍA -->
-<section id="galeria">
-  <h2>Galería</h2><br>
-  <div class="gallery">
-    <img src="images/drift.jpg">
-    <img src="images/Ferrari.jpg">
-    <img src="images/good.jpg">
-    <img src="images/f1.jpeg">
-  </div>
-</section>
+    <div class="card">
+      <h2>¿Qué es Venturova Open?</h2>
+      <p>
+        Venturova Open es una plataforma de torneos competitivos de <b>Racing Master</b>
+        enfocada en Latinoamérica. Un proyecto creado para pilotos que buscan competir
+        con seriedad, ranking real y crecimiento continuo.
+      </p>
+      <p>
+        El objetivo es profesionalizar la competencia y construir una comunidad sólida,
+        sostenible y atractiva a largo plazo.
+      </p>
+    </div>
+  </section>
 
-<!-- RANKING -->
-<section id="ranking">
-  <h2>Ranking (Próximamente)</h2><br>
-  <div class="ranking">
-    <div>🥇 Piloto #1 — 0 pts</div>
-    <div>🥈 Piloto #2 — 0 pts</div>
-    <div>🥉 Piloto #3 — 0 pts</div>
-  </div>
-</section>
+  <section>
+    <div class="card">
+      <h2>Formato de Torneos</h2>
+      <ul>
+        <li>Torneos organizados y programados</li>
+        <li>Sistema de ranking propio</li>
+        <li>Temporadas competitivas</li>
+        <li>Clasificación por puntos</li>
+        <li>Enfoque 100% LATAM</li>
+      </ul>
+    </div>
+  </section>
 
-<footer>
-  © 2026 Venturova Open
-</footer>
+  <section>
+    <div class="card">
+      <h2>Inscripción</h2>
+      <p><b>Precio estimado actual:</b></p>
+      <h3>≈ 5.000 COP</h3>
+      <p>
+        Inscripción accesible pensada para mantener la organización,
+        mejorar premios y asegurar continuidad del proyecto.
+      </p>
+      <a class="btn" href="#">Inscribirse (Próximamente)</a>
+    </div>
+  </section>
 
-<!-- SCRIPTS -->
-<script>
-/* Videos rotativos */
-const videos = [
-  "videos/video1.mp4",
-  "videos/video2.mp4",
-  "videos/video3.mp4"
-];
-let v = 0;
-const bgVideo = document.getElementById("bgVideo");
+  <section>
+    <div class="card">
+      <h2>Ranking (Preliminar)</h2>
+      <table>
+        <tr>
+          <th>Posición</th>
+          <th>Piloto</th>
+          <th>Puntos</th>
+        </tr>
+        <tr><td>1</td><td>N/A</td><td>N/A</td></tr>
+        <tr><td>2</td><td>N/A</td><td>N/A</td></tr>
+        <tr><td>3</td><td>N/A</td><td>N/A</td></tr>
+        <tr><td>4</td><td>N/A</td><td>N/A</td></tr>
+        <tr><td>5</td><td>N/A</td><td>N/A</td></tr>
+      </table>
+      <p style="margin-top:15px;opacity:.7">
+        * El ranking se activará oficialmente con el inicio de los torneos.
+      </p>
+    </div>
+  </section>
 
-function nextVideo() {
-  bgVideo.src = videos[v];
-  bgVideo.play();
-  v = (v + 1) % videos.length;
-}
-bgVideo.addEventListener("ended", nextVideo);
-nextVideo();
+  <section>
+    <div class="card">
+      <h2>Fechas y Estado</h2>
+      <p><b>Torneos oficiales:</b> 2026</p>
+      <p>
+        Actualmente el proyecto se encuentra en fase de preparación,
+        ajustes de formato y construcción de comunidad.
+      </p>
+    </div>
+  </section>
 
-/* Navegación */
-function showSection(id) {
-  document.querySelectorAll("section, header").forEach(s => s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-}
-</script>
+  <section>
+    <div class="card">
+      <h2>Redes Oficiales</h2>
+      <p>TikTok: <b>@venturova.open</b></p>
+      <p>YouTube: <b>@VenturovaOpen</b></p>
+    </div>
+  </section>
+
+  <footer>
+    Venturova Open © 2025–2026 | Proyecto competitivo Racing Master LATAM
+  </footer>
+
+  <!-- ROTACIÓN DE VIDEOS -->
+  <script>
+    const videos = ['video1.mp4','video2.mp4','video3.mp4'];
+    let index = 0;
+    const video = document.getElementById('bgVideo');
+
+    video.src = videos[index];
+
+    video.onended = () => {
+      index = (index + 1) % videos.length;
+      video.src = videos[index];
+      video.play();
+    };
+  </script>
 
 </body>
 </html>
