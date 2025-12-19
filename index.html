@@ -1,117 +1,175 @@
-=====================================================
-
-VENTUROVA OPEN – MODELO BASE TOTAL
-
-Arquitectura MÁXIMA en UN SOLO ARCHIVO
-
-Frontend + Backend + DB + Auth + Ranking
-
-Arranque: docker compose up -d
-
-=====================================================
-
-version: "3.9"
-
-services:
-
-api: image: node:20 container_name: venturova_api working_dir: /app command: > sh -c " cat << 'EOF' > index.js // =============================== // Venturova Open API – PRO // =============================== import express from 'express'; import cors from 'cors'; import jwt from 'jsonwebtoken'; import pkg from 'pg'; const { Pool } = pkg;
-
-const app = express();
-  app.use(cors());
-  app.use(express.json());
-
-  const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-  const JWT_SECRET = process.env.JWT_SECRET;
-
-  // -------- INIT DB --------
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS players (
-      id SERIAL PRIMARY KEY,
-      nickname TEXT UNIQUE NOT NULL,
-      points INT DEFAULT 0,
-      races INT DEFAULT 0
-    );
-  `);
-
-  // -------- PUBLIC --------
-  app.get('/api/status', (_,res)=>{
-    res.json({
-      season:'Mensual',
-      inscriptionUSD:15,
-      racesPerWeek:3,
-      carsLimited:true
-    });
-  });
-
-  app.get('/api/rewards',(_,res)=>{
-    res.json([
-      {pos:1,usd:330},{pos:2,usd:190},{pos:3,usd:120},
-      {pos:4,usd:68},{pos:5,usd:38},{pos:6,usd:25},
-      {pos:7,usd:15},{pos:8,usd:14}
-    ]);
-  });
-
-  app.get('/api/ranking', async (_,res)=>{
-    const r = await pool.query('SELECT nickname,points,races FROM players ORDER BY points DESC');
-    res.json(r.rows);
-  });
-
-  app.post('/api/register', async (req,res)=>{
-    const { nickname } = req.body;
-    try{
-      await pool.query('INSERT INTO players(nickname) VALUES($1)',[nickname]);
-      res.json({ok:true});
-    }catch{
-      res.status(409).json({error:'Jugador ya registrado'});
+<!DOCTYPE html><html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Venturova Open | Torneos Racing Master LATAM</title>  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">  <style>
+    :root{
+      --yellow:#f5c400;
+      --black:#0b0b0b;
+      --glass:rgba(0,0,0,.55);
     }
-  });
 
-  // -------- ADMIN --------
-  function auth(req,res,next){
-    try{
-      jwt.verify(req.headers.authorization, JWT_SECRET);
-      next();
-    }catch{res.sendStatus(403)}
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    body{
+      font-family:'Rajdhani',sans-serif;
+      background:var(--black);
+      color:#fff;
+      overflow-x:hidden;
+    }
+
+    #bgVideo{
+      position:fixed;
+      top:0;left:0;
+      width:100%;height:100%;
+      object-fit:cover;
+      z-index:-2;
+      filter:brightness(.5);
+    }
+
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:linear-gradient(to bottom, rgba(0,0,0,.5), rgba(0,0,0,.8));
+      z-index:-1;
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      gap:20px;
+      padding:20px 30px;
+    }
+
+    .brand h1{
+      font-family:'Orbitron',sans-serif;
+      color:var(--yellow);
+      font-size:2rem;
+    }
+
+    section{padding:70px 8%}
+
+    .card{
+      background:var(--glass);
+      backdrop-filter:blur(8px);
+      border-radius:18px;
+      padding:28px;
+      margin-bottom:40px;
+    }
+
+    h2{
+      font-family:'Orbitron',sans-serif;
+      color:var(--yellow);
+      margin-bottom:18px;
+    }
+
+    .nav-bottom{
+      position:fixed;
+      bottom:0;left:0;right:0;
+      background:#000;
+      display:flex;
+      justify-content:space-around;
+      padding:12px 0;
+      z-index:10;
+    }
+
+    .nav-bottom button{
+      background:none;
+      border:none;
+      color:#fff;
+      font-size:1rem;
+    }
+
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:12px;text-align:center}
+    th{background:var(--yellow);color:#000}
+    tr:nth-child(even){background:rgba(255,255,255,.05)}
+
+    input,button{padding:12px;border-radius:8px;border:none}
+    .btn{background:var(--yellow);font-weight:700}
+  </style></head>
+<body><video id="bgVideo" autoplay muted playsinline loop></video>
+
+<div class="overlay"></div><header>
+  <div class="brand">
+    <h1>Venturova Open</h1>
+    <p>Torneos competitivos Racing Master LATAM</p>
+  </div>
+</header><section id="inicio" class="page">
+  <div class="card">
+    <h2>Esto no es para jugar por jugar</h2>
+    <p>
+      Venturova Open es un campeonato mensual donde compites con dinero real en juego.
+      No gana el más rápido una vez, gana el que demuestra constancia, cabeza y control.
+    </p>
+  </div>
+</section><section id="registro" class="page" hidden>
+  <div class="card">
+    <h2>Registro</h2>
+    <p><b>Inscripción mensual:</b> 12–15 USD aprox</p>
+    <p>Carros limitados. Igualdad total. Importa tu habilidad.</p>
+    <p>70% del pozo va a los jugadores. 8 finalistas premiados.</p><input id="nickname" placeholder="Tu nickname" />
+<button class="btn" onclick="registerPlayer()">Registrarme</button>
+
+  </div>
+</section><section id="ranking" class="page" hidden>
+  <div class="card">
+    <h2>Ranking</h2>
+    <p>
+      Temporada mensual · 3 carreras por semana · sistema por puntos.
+      Gana el más constante, no el más explosivo.
+    </p><table>
+  <thead>
+    <tr><th>Puesto</th><th>Piloto</th><th>Puntos</th><th>Carreras</th></tr>
+  </thead>
+  <tbody id="rankingBody"></tbody>
+</table>
+
+  </div>
+</section><div class="nav-bottom">
+  <button onclick="go('inicio')">Inicio</button>
+  <button onclick="go('registro')">Registro</button>
+  <button onclick="go('ranking')">Ranking</button>
+</div><script>
+  const App = {
+    api: 'https://TU_BACKEND_REAL/api'
+  };
+
+  const clickSound = new Audio('click.mp3');
+  clickSound.preload='auto';
+  document.addEventListener('click',()=>{clickSound.currentTime=0;clickSound.play()});
+
+  function go(id){
+    document.querySelectorAll('.page').forEach(p=>p.hidden=true);
+    document.getElementById(id).hidden=false;
   }
 
-  app.post('/api/admin/add',auth, async(req,res)=>{
-    const { nickname, points } = req.body;
-    await pool.query(
-      'UPDATE players SET points = points + $1, races = races + 1 WHERE nickname=$2',
-      [points,nickname]
-    );
-    res.json({ok:true});
-  });
+  async function loadRanking(){
+    const body = document.getElementById('rankingBody');
+    body.innerHTML='';
+    try{
+      const r = await fetch(App.api+'/ranking');
+      const data = await r.json();
+      data.forEach((p,i)=>{
+        body.innerHTML+=`<tr><td>${i+1}</td><td>${p.nickname}</td><td>${p.points}</td><td>${p.races}</td></tr>`;
+      });
+    }catch{
+      body.innerHTML='<tr><td colspan="4">Ranking no disponible</td></tr>';
+    }
+  }
 
-  app.listen(3000,()=>console.log('API ON'));
-  EOF
+  async function registerPlayer(){
+    const nick = document.getElementById('nickname').value.trim();
+    if(!nick) return alert('Nick requerido');
+    try{
+      await fetch(App.api+'/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nickname:nick})});
+      alert('Registro exitoso');
+    }catch{
+      alert('Error al registrar');
+    }
+  }
 
-  npm init -y && npm install express cors pg jsonwebtoken && node index.js
-  "
-ports:
-  - "3000:3000"
-environment:
-  - DATABASE_URL=postgresql://venturova:venturova@db:5432/venturova
-  - JWT_SECRET=venturova_super_secret
-depends_on:
-  - db
-
-db: image: postgres:15 container_name: venturova_db restart: always environment: POSTGRES_USER: venturova POSTGRES_PASSWORD: venturova POSTGRES_DB: venturova volumes: - venturova_data:/var/lib/postgresql/data
-
-volumes: venturova_data:
-
-=====================================================
-
-RESULTADO:
-
-✔ Backend real
-
-✔ Base de datos real
-
-✔ Ranking persistente
-
-✔ Seguridad JWT
-
-✔ Todo en UN SOLO ARCHIVO
-
-=====================================================
+  document.getElementById('bgVideo').src='video1.mp4';
+  loadRanking();
+</script></body>
+</html>
