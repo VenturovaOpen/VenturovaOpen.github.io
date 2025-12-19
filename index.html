@@ -1,236 +1,175 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Venturova Open | Racing Master LATAM</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Racing Master Tournament | Official</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Barlow:ital,wght@1,700;1,900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-yellow: #f5ff00; /* Amarillo Racing Master */
+            --dark-bg: #0a0a0a;
+            --card-bg: #141414;
+            --accent-red: #ff3c00;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+        body {
+            font-family: 'Barlow', sans-serif;
+            background-color: var(--dark-bg);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            background-image: radial-gradient(circle at top right, #1a1a1a, #000);
+            line-height: 1.6;
+        }
 
-<style>
-:root{
-  --white:#ffffff;
-  --gray:#bfbfbf;
-  --dark:#0a0a0a;
-  --glass:rgba(0,0,0,.55);
-}
+        /* Header con inclinación dinámica */
+        header {
+            background: linear-gradient(90deg, #000 0%, #1a1a1a 100%);
+            padding: 40px 20px;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--primary-yellow);
+            border-bottom: 4px solid var(--primary-yellow);
+            text-shadow: 3px 3px 0px var(--accent-red);
+        }
 
-*{margin:0;padding:0;box-sizing:border-box}
+        section {
+            padding: 40px 10%;
+            max-width: 1200px;
+            margin: auto;
+        }
 
-body{
-  font-family:'Rajdhani',sans-serif;
-  background:var(--dark);
-  color:var(--white);
-  overflow-x:hidden;
-}
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            border-left: 8px solid var(--primary-yellow);
+            padding-left: 15px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
 
-/* ===== VIDEO ===== */
-#bgVideo{
-  position:fixed;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  z-index:-2;
-  filter:brightness(.55) contrast(1.05);
-}
+        /* Contenedores Estilo Grid */
+        .ranking, .rewards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
 
-.overlay{
-  position:fixed;
-  inset:0;
-  background:linear-gradient(
-    to bottom,
-    rgba(0,0,0,.45),
-    rgba(0,0,0,.9)
-  );
-  z-index:-1;
-}
+        /* Tarjetas con efecto oblicuo */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+            clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%); /* Efecto Racing */
+        }
 
-/* ===== HEADER ===== */
-header{
-  padding:30px 40px;
-  display:flex;
-  align-items:center;
-  gap:20px;
-}
+        .card:hover {
+            border-color: var(--primary-yellow);
+            transform: translateY(-5px);
+            background: #1f1f1f;
+        }
 
-header h1{
-  font-family:'Orbitron',sans-serif;
-  font-size:2.4rem;
-  letter-spacing:2px;
-}
+        .card h3 {
+            color: var(--primary-yellow);
+            font-size: 2rem;
+            margin: 0;
+        }
 
-header p{
-  color:var(--gray);
-}
+        .card.top-rank {
+            background: linear-gradient(135deg, #222 0%, #000 100%);
+            border-left: 5px solid var(--primary-yellow);
+        }
 
-/* ===== SECCIONES ===== */
-section{
-  padding:70px 8%;
-}
+        /* Botón de Acción Principal */
+        .button {
+            background-color: var(--primary-yellow);
+            color: #000;
+            border: none;
+            padding: 18px 45px;
+            font-size: 1.2rem;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            text-transform: uppercase;
+            cursor: pointer;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+            transition: 0.2s;
+            display: inline-block;
+            margin-top: 20px;
+        }
 
-.card{
-  background:var(--glass);
-  backdrop-filter:blur(10px);
-  border-radius:22px;
-  padding:35px;
-  margin-bottom:40px;
-  box-shadow:0 0 35px rgba(0,0,0,.6);
-  animation:fade 1s ease;
-}
+        .button:hover {
+            background-color: #fff;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(245, 255, 0, 0.4);
+        }
 
-@keyframes fade{
-  from{opacity:0;transform:translateY(15px)}
-  to{opacity:1;transform:translateY(0)}
-}
+        video, img {
+            width: 100%;
+            border: 2px solid #333;
+            filter: grayscale(20%);
+            transition: 0.5s;
+        }
 
-h2{
-  font-family:'Orbitron',sans-serif;
-  margin-bottom:18px;
-  font-size:2rem;
-}
+        video:hover, img:hover {
+            filter: grayscale(0%);
+            border-color: var(--primary-yellow);
+        }
 
-p,li{
-  color:var(--gray);
-  line-height:1.6;
-}
+        #inscripcion {
+            text-align: center;
+            background: rgba(245, 255, 0, 0.05);
+            margin-top: 50px;
+            padding: 60px;
+        }
 
-ul{padding-left:20px}
-
-/* ===== BOTÓN ===== */
-.btn{
-  display:inline-block;
-  margin-top:25px;
-  padding:14px 34px;
-  border-radius:30px;
-  border:1px solid var(--white);
-  color:var(--white);
-  text-decoration:none;
-  font-weight:600;
-  transition:.3s;
-}
-
-.btn:hover{
-  background:var(--white);
-  color:#000;
-}
-
-/* ===== NAV INFERIOR ===== */
-.nav{
-  position:fixed;
-  bottom:0;
-  width:100%;
-  display:flex;
-  justify-content:space-around;
-  padding:14px 0;
-  background:rgba(0,0,0,.85);
-  border-top:1px solid #222;
-}
-
-.nav button{
-  background:none;
-  border:none;
-  color:var(--gray);
-  font-size:.9rem;
-  cursor:pointer;
-}
-
-.nav button.active{
-  color:var(--white);
-}
-
-/* ===== PÁGINAS ===== */
-[data-page]{display:none}
-[data-page].active{display:block}
-</style>
+    </style>
 </head>
-
 <body>
 
-<!-- VIDEO -->
-<video id="bgVideo" autoplay muted loop playsinline>
-  <source src="video1.mp4" type="video/mp4">
-</video>
-<div class="overlay"></div>
+<header>Racing Master <span style="color:#fff">Tournament</span></header>
 
-<header>
-  <div>
-    <h1>VENTUROVA OPEN</h1>
-    <p>Torneos competitivos Racing Master | LATAM</p>
-  </div>
-</header>
-
-<section>
-
-<!-- INICIO -->
-<div class="card active" data-page="inicio">
-  <h2>Esto no es casual</h2>
-  <p>
-    Venturova Open es un campeonato mensual donde no gana el más rápido una vez,
-    gana el que demuestra nivel real carrera tras carrera.
-  </p>
-  <p>
-    Aquí no vienes a probar suerte. Vienes a medir si tu habilidad vale dinero.
-  </p>
-</div>
-
-<!-- REGISTRO -->
-<div class="card" data-page="registro">
-  <h2>Registro</h2>
-  <ul>
-    <li>Formato mensual</li>
-    <li>3 carreras por semana</li>
-    <li>Sistema de puntos acumulativo</li>
-    <li>Carros limitados (igualdad total)</li>
-    <li>Inscripción: 12–15 USD</li>
-  </ul>
-  <a class="btn" href="#">Registrarse</a>
-</div>
-
-<!-- RANKING -->
-<div class="card" data-page="ranking">
-  <h2>Ranking</h2>
-  <p>
-    Cada carrera suma puntos. No importa una victoria aislada,
-    importa mantenerte arriba durante todo el mes.
-  </p>
-  <p>
-    El ranking define a los ganadores finales.
-  </p>
-</div>
-
-<!-- RECOMPENSAS -->
-<div class="card" data-page="recompensas">
-  <h2>Recompensas</h2>
-  <ul>
-    <li>1° — $330</li>
-    <li>2° — $190</li>
-    <li>3° — $120</li>
-    <li>4° — $68</li>
-    <li>5° — $38</li>
-    <li>6° — $25</li>
-    <li>7° — $15</li>
-    <li>8° — $14</li>
-  </ul>
-</div>
-
+<section id="info">
+    <h2>Misión: Dominar la Pista</h2>
+    <p style="font-size: 1.2rem; color: #ccc;">Prepárate para la experiencia definitiva. Inscríbete y compite con los mejores jugadores del continente.</p>
+    <div style="position: relative;">
+        <img src="banner.jpg" alt="Torneo Racing Master">
+    </div>
 </section>
 
-<div class="nav">
-  <button class="active" onclick="go('inicio',this)">Inicio</button>
-  <button onclick="go('registro',this)">Registro</button>
-  <button onclick="go('ranking',this)">Ranking</button>
-  <button onclick="go('recompensas',this)">Recompensas</button>
-</div>
+<section id="ranking">
+    <h2>Clasificación Global</h2>
+    <div class="ranking">
+        <div class="card top-rank">
+            <h3>01</h3>
+            <p>PILOTO: <strong>Player1</strong></p>
+            <p style="color: var(--primary-yellow)">PREMIO: $50 USD</p>
+        </div>
+        <div class="card">
+            <h3>02</h3>
+            <p>PILOTO: <strong>Player2</strong></p>
+            <p>PREMIO: $28 USD</p>
+        </div>
+        <div class="card">
+            <h3>03</h3>
+            <p>PILOTO: <strong>Player3</strong></p>
+            <p>PREMIO: $15 USD</p>
+        </div>
+    </div>
+</section>
 
-<script>
-function go(page,btn){
-  document.querySelectorAll('[data-page]').forEach(s=>s.classList.remove('active'));
-  document.querySelector(`[data-page="${page}"]`).classList.add('active');
-  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-}
-</script>
+<section id="inscripcion">
+    <h2 style="border:none; text-align:center;">¿Tienes lo que se necesita?</h2>
+    <p>Únete a la parrilla de salida ahora mismo.</p>
+    <button class="button" onclick="alert('Sistema de inscripción próximamente')">Inscribirse Ahora</button>
+</section>
 
 </body>
 </html>
