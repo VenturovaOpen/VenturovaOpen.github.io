@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Racing Master | Torneo Oficial</title>
+    <title>Venturova Open | Racing Master Tournament</title>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Rajdhani:wght@600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --accent-blue: #00d4ff; /* Azul Nitro */
+            --accent-blue: #00d4ff; 
             --deep-black: #050505;
             --glass-white: rgba(255, 255, 255, 0.05);
-            /* Degradado Pro para el Título */
-            --title-gradient: linear-gradient(180deg, #ffffff 30%, #a0a0a0 45%, var(--accent-blue) 50%, #004e5f 100%);
+            /* Degradado Pro para Venturova Open */
+            --title-gradient: linear-gradient(180deg, #ffffff 35%, #a0a0a0 48%, var(--accent-blue) 52%, #004e5f 100%);
         }
 
         body {
@@ -42,7 +42,7 @@
 
         .logo {
             font-weight: 900;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             text-transform: uppercase;
             font-style: italic;
             letter-spacing: -1px;
@@ -61,7 +61,7 @@
             text-decoration: none;
             text-transform: uppercase;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             transition: 0.3s;
         }
 
@@ -79,29 +79,40 @@
             padding: 0 20px;
         }
 
-        /* TÍTULO CORREGIDO: "ULTIMATE DRIVE" */
+        /* TÍTULO ACTUALIZADO: VENTUROVA OPEN */
         .hero h1 {
             font-family: 'Archivo Black', sans-serif;
-            font-size: clamp(3.5rem, 12vw, 8.5rem);
+            font-size: clamp(3rem, 10vw, 7.5rem);
             margin: 0;
-            line-height: 0.8;
+            line-height: 0.85;
             font-style: italic;
             text-transform: uppercase;
             background: var(--title-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.2));
-            letter-spacing: -3px;
+            filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.3));
+            letter-spacing: -2px;
             transform: skewX(-5deg);
         }
 
-        .hero p {
-            font-size: clamp(1rem, 3vw, 1.4rem);
-            color: var(--accent-blue);
+        .hero .subtitle {
+            font-size: clamp(1rem, 3vw, 1.8rem);
+            color: #fff;
             text-transform: uppercase;
-            letter-spacing: 8px;
-            margin-top: 15px;
-            font-weight: 700;
+            letter-spacing: 5px;
+            margin-top: 20px;
+            font-weight: 900;
+        }
+
+        .hero .game-name {
+            background: var(--accent-blue);
+            color: #000;
+            padding: 5px 15px;
+            font-size: 0.9rem;
+            font-weight: 900;
+            display: inline-block;
+            margin-top: 10px;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
         }
 
         /* --- SECCIÓN RANKING --- */
@@ -130,7 +141,6 @@
             background: var(--glass-white);
             border: 1px solid rgba(255,255,255,0.1);
             padding: 30px;
-            position: relative;
             transition: 0.3s;
             clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
         }
@@ -169,7 +179,6 @@
             box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
         }
 
-        /* RESPONSIVO */
         @media (max-width: 768px) {
             nav ul { display: none; }
             .hero h1 { letter-spacing: -1px; }
@@ -180,7 +189,7 @@
 <body>
 
     <nav>
-        <div class="logo">RACING<span>MASTER</span></div>
+        <div class="logo">VENTUROVA<span> OPEN</span></div>
         <ul>
             <li><a href="#hero">Inicio</a></li>
             <li><a href="#ranking">Ranking</a></li>
@@ -189,13 +198,14 @@
     </nav>
 
     <section id="hero" class="hero">
-        <h1>ULTIMATE<br>DRIVE</h1>
-        <p>CHAMPIONSHIP 2025</p>
+        <h1>VENTUROVA<br>OPEN</h1>
+        <div class="subtitle">TORNEO OFICIAL</div>
+        <div class="game-name">RACING MASTER</div>
         <a href="#inscripcion" class="btn-main">COMPETIR AHORA</a>
     </section>
 
     <section id="ranking">
-        <h2>Clasificación en Tiempo Real</h2>
+        <h2>Clasificación General</h2>
         <div class="ranking-container">
             <div class="card">
                 <h3>#01 Player1</h3>
@@ -216,8 +226,8 @@
     </section>
 
     <footer id="inscripcion" style="text-align: center; padding: 100px 20px; background: #000;">
-        <h2 style="border:none; text-align:center;">¿Estás listo para correr?</h2>
-        <button class="btn-main" onclick="alert('Inscripciones próximamente')">UNIRSE AL TORNEO</button>
+        <h2 style="border:none; text-align:center;">Únete a la parrilla de salida</h2>
+        <button class="btn-main" onclick="alert('Inscripciones próximamente')">REGISTRARSE</button>
     </footer>
 
 </body>
