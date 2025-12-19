@@ -30,107 +30,91 @@
     .overlay{
       position:fixed;
       inset:0;
-      background:linear-gradient(to bottom, rgba(0,0,0,.5), rgba(0,0,0,.8));
+      background:linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.85));
       z-index:-1;
     }
 
     header{
       display:flex;
-      align-items:center;
-      gap:20px;
-      padding:20px 30px;
-    }
+      align-items
+</head>
+<body>
 
-    .brand h1{
-      font-family:'Orbitron',sans-serif;
-      color:var(--yellow);
-      font-size:2rem;
-    }
+<video id="bgVideo" autoplay muted playsinline loop></video>
+<div class="overlay"></div>
 
-    section{padding:70px 8%}
-
-    .card{
-      background:var(--glass);
-      backdrop-filter:blur(8px);
-      border-radius:18px;
-      padding:28px;
-      margin-bottom:40px;
-    }
-
-    h2{
-      font-family:'Orbitron',sans-serif;
-      color:var(--yellow);
-      margin-bottom:18px;
-    }
-
-    .nav-bottom{
-      position:fixed;
-      bottom:0;left:0;right:0;
-      background:#000;
-      display:flex;
-      justify-content:space-around;
-      padding:12px 0;
-      z-index:10;
-    }
-
-    .nav-bottom button{
-      background:none;
-      border:none;
-      color:#fff;
-      font-size:1rem;
-    }
-
-    table{width:100%;border-collapse:collapse}
-    th,td{padding:12px;text-align:center}
-    th{background:var(--yellow);color:#000}
-    tr:nth-child(even){background:rgba(255,255,255,.05)}
-
-    input,button{padding:12px;border-radius:8px;border:none}
-    .btn{background:var(--yellow);font-weight:700}
-  </style></head>
-<body><video id="bgVideo" autoplay muted playsinline loop></video>
-
-<div class="overlay"></div><header>
+<header>
   <div class="brand">
     <h1>Venturova Open</h1>
     <p>Torneos competitivos Racing Master LATAM</p>
   </div>
-</header><section id="inicio" class="page">
+</header>
+
+<section id="inicio" class="page">
   <div class="card">
-    <h2>Esto no es para jugar por jugar</h2>
+    <h2>Esto no es para todos</h2>
     <p>
-      Venturova Open es un campeonato mensual donde compites con dinero real en juego.
-      No gana el más rápido una vez, gana el que demuestra constancia, cabeza y control.
+      Venturova Open no es un torneo casual. Aquí se compite con presión real,
+      dinero real y resultados que se ganan con constancia.
+    </p>
+    <p>
+      Si buscas aprender, mejorar tu control y demostrar que puedes mantener
+      rendimiento durante todo un mes, este es tu lugar.
     </p>
   </div>
-</section><section id="registro" class="page" hidden>
+
+  <div class="card">
+    <h2>Cómo se vive Venturova Open</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px">
+      <img src="visual.jpg" style="width:100%;border-radius:14px;opacity:.9">
+      <img src="visual1.jpg" style="width:100%;border-radius:14px;opacity:.9">
+      <img src="visual2.jpg" style="width:100%;border-radius:14px;opacity:.9">
+    </div>
+  </div>
+</section>
+
+<section id="registro" class="page" hidden>
   <div class="card">
     <h2>Registro</h2>
     <p><b>Inscripción mensual:</b> 12–15 USD aprox</p>
     <p>Carros limitados. Igualdad total. Importa tu habilidad.</p>
-    <p>70% del pozo va a los jugadores. 8 finalistas premiados.</p><input id="nickname" placeholder="Tu nickname" />
-<button class="btn" onclick="registerPlayer()">Registrarme</button>
+    <p>70% del pozo va a los jugadores. 8 finalistas premiados.</p>
 
+    <input id="nickname" placeholder="Tu nickname" />
+    <button class="btn" onclick="registerPlayer()">Registrarme</button>
   </div>
-</section><section id="ranking" class="page" hidden>
+</section>
+
+<section id="ranking" class="page" hidden>
   <div class="card">
-    <h2>Ranking</h2>
+    <h2>Ranking Mensual</h2>
     <p>
-      Temporada mensual · 3 carreras por semana · sistema por puntos.
-      Gana el más constante, no el más explosivo.
-    </p><table>
-  <thead>
-    <tr><th>Puesto</th><th>Piloto</th><th>Puntos</th><th>Carreras</th></tr>
-  </thead>
-  <tbody id="rankingBody"></tbody>
-</table>
+      El ranking se construye carrera a carrera. No importa ganar una sola vez,
+      importa aparecer siempre, sumar puntos y no fallar.
+    </p>
+    <ul style="margin:15px 0 25px 20px;opacity:.9">
+      <li>3 carreras por semana</li>
+      <li>Puntos acumulativos</li>
+      <li>Temporada mensual</li>
+      <li>Carros limitados para igualdad total</li>
+    </ul>
 
+    <table>
+      <thead>
+        <tr><th>Puesto</th><th>Piloto</th><th>Puntos</th><th>Carreras</th></tr>
+      </thead>
+      <tbody id="rankingBody"></tbody>
+    </table>
   </div>
-</section><div class="nav-bottom">
+</section>
+
+<div class="nav-bottom">
   <button onclick="go('inicio')">Inicio</button>
   <button onclick="go('registro')">Registro</button>
   <button onclick="go('ranking')">Ranking</button>
-</div><script>
+</div>
+
+<script>
   const App = {
     api: 'https://TU_BACKEND_REAL/api'
   };
@@ -172,4 +156,4 @@
   document.getElementById('bgVideo').src='video1.mp4';
   loadRanking();
 </script></body>
-</html>
+                  </html>
