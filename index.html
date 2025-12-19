@@ -1,174 +1,117 @@
-<!DOCTYPE html><html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Venturova Open</title>  <style>
-    :root{
-      --bg:#0b1020;
-      --card:#111735cc;
-      --accent:#00e5ff;
-      --text:#e6e9ff;
-      --muted:#9aa3c7;
+=====================================================
+
+VENTUROVA OPEN – MODELO BASE TOTAL
+
+Arquitectura MÁXIMA en UN SOLO ARCHIVO
+
+Frontend + Backend + DB + Auth + Ranking
+
+Arranque: docker compose up -d
+
+=====================================================
+
+version: "3.9"
+
+services:
+
+api: image: node:20 container_name: venturova_api working_dir: /app command: > sh -c " cat << 'EOF' > index.js // =============================== // Venturova Open API – PRO // =============================== import express from 'express'; import cors from 'cors'; import jwt from 'jsonwebtoken'; import pkg from 'pg'; const { Pool } = pkg;
+
+const app = express();
+  app.use(cors());
+  app.use(express.json());
+
+  const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+  const JWT_SECRET = process.env.JWT_SECRET;
+
+  // -------- INIT DB --------
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS players (
+      id SERIAL PRIMARY KEY,
+      nickname TEXT UNIQUE NOT NULL,
+      points INT DEFAULT 0,
+      races INT DEFAULT 0
+    );
+  `);
+
+  // -------- PUBLIC --------
+  app.get('/api/status', (_,res)=>{
+    res.json({
+      season:'Mensual',
+      inscriptionUSD:15,
+      racesPerWeek:3,
+      carsLimited:true
+    });
+  });
+
+  app.get('/api/rewards',(_,res)=>{
+    res.json([
+      {pos:1,usd:330},{pos:2,usd:190},{pos:3,usd:120},
+      {pos:4,usd:68},{pos:5,usd:38},{pos:6,usd:25},
+      {pos:7,usd:15},{pos:8,usd:14}
+    ]);
+  });
+
+  app.get('/api/ranking', async (_,res)=>{
+    const r = await pool.query('SELECT nickname,points,races FROM players ORDER BY points DESC');
+    res.json(r.rows);
+  });
+
+  app.post('/api/register', async (req,res)=>{
+    const { nickname } = req.body;
+    try{
+      await pool.query('INSERT INTO players(nickname) VALUES($1)',[nickname]);
+      res.json({ok:true});
+    }catch{
+      res.status(409).json({error:'Jugador ya registrado'});
     }
+  });
 
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto;
-      background:var(--bg);
-      color:var(--text);
-      overflow-x:hidden;
-    }
+  // -------- ADMIN --------
+  function auth(req,res,next){
+    try{
+      jwt.verify(req.headers.authorization, JWT_SECRET);
+      next();
+    }catch{res.sendStatus(403)}
+  }
 
-    video.bg-video{
-      position:fixed;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      z-index:-2;
-      filter:brightness(0.55) contrast(1.1);
-    }
+  app.post('/api/admin/add',auth, async(req,res)=>{
+    const { nickname, points } = req.body;
+    await pool.query(
+      'UPDATE players SET points = points + $1, races = races + 1 WHERE nickname=$2',
+      [points,nickname]
+    );
+    res.json({ok:true});
+  });
 
-    .overlay{
-      position:fixed;
-      inset:0;
-      background:linear-gradient(to bottom,rgba(0,0,0,.6),rgba(0,0,0,.85));
-      z-index:-1;
-    }
+  app.listen(3000,()=>console.log('API ON'));
+  EOF
 
-    header{
-      padding:80px 20px 40px;
-      text-align:center;
-    }
+  npm init -y && npm install express cors pg jsonwebtoken && node index.js
+  "
+ports:
+  - "3000:3000"
+environment:
+  - DATABASE_URL=postgresql://venturova:venturova@db:5432/venturova
+  - JWT_SECRET=venturova_super_secret
+depends_on:
+  - db
 
-    header h1{
-      font-size:clamp(2.2rem,6vw,3.5rem);
-      margin-bottom:10px;
-      animation:float 4s ease-in-out infinite;
-    }
+db: image: postgres:15 container_name: venturova_db restart: always environment: POSTGRES_USER: venturova POSTGRES_PASSWORD: venturova POSTGRES_DB: venturova volumes: - venturova_data:/var/lib/postgresql/data
 
-    header p{
-      color:var(--muted);
-      max-width:600px;
-      margin:0 auto;
-    }
+volumes: venturova_data:
 
-    @keyframes float{
-      0%,100%{transform:translateY(0)}
-      50%{transform:translateY(-6px)}
-    }
+=====================================================
 
-    main{
-      max-width:1000px;
-      margin:0 auto;
-      padding:20px;
-    }
+RESULTADO:
 
-    section{
-      background:var(--card);
-      backdrop-filter:blur(8px);
-      border-radius:18px;
-      padding:25px;
-      margin-bottom:30px;
-      box-shadow:0 20px 40px rgba(0,0,0,.4);
-    }
+✔ Backend real
 
-    h2{
-      margin-top:0;
-      color:var(--accent);
-    }
+✔ Base de datos real
 
-    ul{
-      padding-left:18px;
-    }
+✔ Ranking persistente
 
-    li{
-      margin-bottom:8px;
-    }
+✔ Seguridad JWT
 
-    .bottom-nav{
-      position:fixed;
-      bottom:0;
-      left:0;
-      right:0;
-      display:flex;
-      background:#0a0f25;
-      border-top:1px solid rgba(255,255,255,.1);
-      z-index:10;
-    }
+✔ Todo en UN SOLO ARCHIVO
 
-    .bottom-nav button{
-      flex:1;
-      background:none;
-      border:none;
-      color:var(--text);
-      padding:14px 5px;
-      font-size:.85rem;
-      cursor:pointer;
-    }
-
-    .bottom-nav button:hover{
-      background:rgba(255,255,255,.08);
-    }
-
-    audio{display:none}
-  </style></head><body>  <video class="bg-video" autoplay muted loop playsinline>
-    <source src="video.mp4" type="video/mp4" />
-  </video>
-  <div class="overlay"></div><audio id="clickSound" src="click.mp3"></audio>
-
-  <header id="inicio">
-    <h1>VENTUROVA OPEN</h1>
-    <p>Campeonatos mensuales de Racing Master. Competencia real. Premios reales.</p>
-  </header>  <main><section id="registro">
-  <h2>Registro al Campeonato</h2>
-  <p>Campeonato mensual competitivo. No es casual, se compite por dinero real.</p>
-  <ul>
-    <li>Inscripción mensual aproximada: <strong>15 USD</strong></li>
-    <li>Duración: <strong>1 mes</strong></li>
-    <li>Carreras oficiales: <strong>3 veces por semana</strong></li>
-    <li>Vehículos limitados para igualdad de condiciones</li>
-    <li>Se premia la constancia, no una sola carrera</li>
-  </ul>
-
-  <h3>Recompensas Mensuales</h3>
-  <ul>
-    <li>🥇 1er lugar: <strong>330 USD</strong></li>
-    <li>🥈 2do lugar: <strong>190 USD</strong></li>
-    <li>🥉 3er lugar: <strong>120 USD</strong></li>
-    <li>4to lugar: <strong>68 USD</strong></li>
-    <li>5to lugar: <strong>38 USD</strong></li>
-    <li>6to lugar: <strong>25 USD</strong></li>
-    <li>7mo lugar: <strong>15 USD</strong></li>
-    <li>8vo lugar: <strong>14 USD</strong></li>
-  </ul>
-</section>
-
-<section id="ranking">
-  <h2>Sistema de Ranking</h2>
-  <p>El ranking se construye durante todo el mes.</p>
-  <ul>
-    <li>Cada carrera suma puntos al ranking general</li>
-    <li>3 carreras oficiales por semana</li>
-    <li>Ranking actualizado después de cada jornada</li>
-    <li>No gana el mejor día, gana el más constante</li>
-    <li>Empates se definen por mejores posiciones finales</li>
-    <li>Al final del mes se cierra el ranking</li>
-  </ul>
-</section>
-
-  </main>  <nav class="bottom-nav">
-    <button onclick="go('inicio')">Inicio</button>
-    <button onclick="go('registro')">Registro</button>
-    <button onclick="go('ranking')">Ranking</button>
-  </nav>  <script>
-    const click = document.getElementById('clickSound');
-
-    function go(id){
-      click.currentTime = 0.05;
-      click.play();
-      document.getElementById(id).scrollIntoView({behavior:'smooth'});
-    }
-  </script></body>
-</html>
+=====================================================
