@@ -8,18 +8,13 @@
   --black:#0b0b0b;
   --glass:rgba(0,0,0,.55);
 }
-
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Rajdhani',sans-serif;background:var(--black);color:#fff;overflow-x:hidden;}
 
-#bgVideo{
-  position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-2; filter:brightness(0.5);
-}
+#bgVideo{position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-2; filter:brightness(0.5);}
 .overlay{position:fixed; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,.4), rgba(0,0,0,.7)); z-index:-1;}
 
-header{
-  display:flex; align-items:center; gap:20px; padding:20px 40px;
-}
+header{display:flex; align-items:center; gap:20px; padding:20px 40px;}
 .logo{width:70px;height:70px;border-radius:50%;padding:4px;background:conic-gradient(var(--yellow),#fff,var(--yellow));animation:spin 8s linear infinite;}
 .logo img{width:100%;height:100%;border-radius:50%;background:#000;}
 @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
@@ -83,9 +78,9 @@ footer{text-align:center;padding:40px;opacity:.7;}
     <img src="visual3.jpg">
   </div>
   <div class="card">
-    <h2>Bienvenido a Venturova Open</h2>
-    <p>Plataforma competitiva de <b>Racing Master</b> LATAM. Compite, sube en el ranking y gana recompensas.</p>
-    <p>Únete a la comunidad más seria y profesional de pilotos.</p>
+    <h2>Venturova Open: Solo para pilotos de élite</h2>
+    <p>Este no es un torneo casual. Aquí compiten los mejores. Cada carrera, cada punto, cada movimiento cuenta.</p>
+    <p>¿Tienes lo que se necesita para estar en la cima del ranking? <b>Regístrate y demuestra tu habilidad.</b></p>
     <a class="btn" onclick="playClick()">Inscribirse (Próximamente)</a>
   </div>
 </section><section id="ranking">
@@ -99,43 +94,43 @@ footer{text-align:center;padding:40px;opacity:.7;}
       <tr><td>4</td><td>N/A</td><td>N/A</td></tr>
       <tr><td>5</td><td>N/A</td><td>N/A</td></tr>
     </table>
-    <p style="opacity:.7">* El ranking se activará con el inicio de los torneos.</p>
+    <p style="opacity:.7">* Solo los pilotos más habilidosos avanzarán en el ranking oficial cuando inicien los torneos.</p>
   </div>
   <div class="card">
     <h2>Recompensas & Sistema de Puntos</h2>
     <ul>
-      <li>1er lugar: 100 puntos + premio especial</li>
+      <li>1er lugar: 100 puntos + premio especial exclusivo</li>
       <li>2do lugar: 75 puntos + premio secundario</li>
-      <li>3er lugar: 50 puntos + reconocimiento digital</li>
-      <li>4to-10mo: 20 puntos</li>
+      <li>3er lugar: 50 puntos + reconocimiento digital y estatus en la comunidad</li>
+      <li>4to-10mo lugar: 20 puntos</li>
       <li>Puntos diarios por participación: 5 puntos</li>
       <li>Bonus por asistencia completa a la temporada: 50 puntos</li>
     </ul>
-    <p>Recompensas diseñadas para incentivar la participación constante y justa.</p>
+    <p>Solo los pilotos constantes y habilidosos alcanzarán las mejores recompensas.</p>
   </div>
 </section><section id="torneos">
   <div class="card">
     <h2>Formato de Torneos</h2>
     <ul>
-      <li>Torneos organizados y programados</li>
-      <li>Sistema de ranking propio</li>
-      <li>Temporadas competitivas</li>
-      <li>Clasificación por puntos</li>
-      <li>Enfoque 100% LATAM</li>
+      <li>Carreras organizadas y programadas con precisión</li>
+      <li>Sistema de ranking por habilidad y puntos acumulativos</li>
+      <li>Temporadas competitivas donde cada carrera importa</li>
+      <li>Clasificación estricta y penalizaciones justas</li>
+      <li>Enfoque 100% LATAM: solo los mejores avanzan al siguiente nivel</li>
     </ul>
   </div>
 </section><section id="inscripcion">
   <div class="card">
     <h2>Inscripción</h2>
     <p><b>Precio estimado:</b> ≈ 5.000 COP</p>
-    <p>Inscripción accesible para mantener organización, premios y continuidad del proyecto.</p>
+    <p>Inscribirse no es solo participar: es una inversión en tu crecimiento competitivo y en acceder a premios y reconocimiento real.</p>
     <a class="btn" onclick="playClick()">Inscribirse (Próximamente)</a>
   </div>
 </section><section id="fechas">
   <div class="card">
     <h2>Fechas y Estado</h2>
     <p><b>Torneos oficiales:</b> 2026</p>
-    <p>Actualmente en fase de preparación, ajustes de formato y construcción de comunidad.</p>
+    <p>Actualmente en fase de preparación, pero solo los pilotos más comprometidos se posicionarán en la cima cuando inicien las competencias.</p>
   </div>
 </section><section id="redes">
   <div class="card">
@@ -153,11 +148,11 @@ footer{text-align:center;padding:40px;opacity:.7;}
 </div><footer>
   Venturova Open © 2025–2026 | Proyecto competitivo Racing Master LATAM
 </footer><script>
-const videos = ['video1.mp4','video2.mp4','video3.mp4'];
-let index = 0;
-const video = document.getElementById('bgVideo');
-video.src = videos[index];
-video.onended = () => { index=(index+1)%videos.length; video.src=videos[index]; video.play(); }
+const videos=['video1.mp4','video2.mp4','video3.mp4'];
+let index=0;
+const video=document.getElementById('bgVideo');
+video.src=videos[index];
+video.onended=()=>{index=(index+1)%videos.length;video.src=videos[index];video.play();}
 
 function switchSection(sectionId){
   document.querySelectorAll('section').forEach(sec=>sec.classList.remove('active'));
@@ -169,8 +164,8 @@ function switchSection(sectionId){
   playClick();
 }
 
-const clickSound = new Audio('click.mp3');
-clickSound.preload = 'auto';
-function playClick(){ clickSound.currentTime = 0; clickSound.play(); }
+const clickSound=new Audio('click.mp3');
+clickSound.preload='auto';
+function playClick(){clickSound.currentTime=0;clickSound.play();}
 </script></body>
 </html>
