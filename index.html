@@ -1,159 +1,252 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Venturova Open | Torneos Racing Master LATAM</title>  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">  <style>
-    :root{
-      --yellow:#f5c400;
-      --black:#0b0b0b;
-      --glass:rgba(0,0,0,.55);
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venturova Open</title>
 
-    *{box-sizing:border-box;margin:0;padding:0}
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
 
-    body{
-      font-family:'Rajdhani',sans-serif;
-      background:var(--black);
-      color:#fff;
-      overflow-x:hidden;
-    }
+html,body{
+  height:100%;
+  background:#000;
+  color:#fff;
+  overflow-x:hidden;
+}
 
-    #bgVideo{
-      position:fixed;
-      top:0;left:0;
-      width:100%;height:100%;
-      object-fit:cover;
-      z-index:-2;
-      filter:brightness(.5);
-    }
+/* ===== VIDEO FONDO ===== */
+video{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-2;
+  filter: brightness(0.75) contrast(1.2) saturate(1.1);
+}
 
-    .overlay{
-      position:fixed;
-      inset:0;
-      background:linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.85));
-      z-index:-1;
-    }
+.overlay{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(
+    rgba(0,0,0,0.55),
+    rgba(0,0,0,0.85)
+  );
+  z-index:-1;
+}
 
-    header{
-      display:flex;
-      align-items
+/* ===== HEADER ===== */
+header{
+  padding:40px 20px;
+  text-align:center;
+}
+
+header h1{
+  font-size:3rem;
+  letter-spacing:2px;
+  text-shadow:0 0 25px rgba(255,0,0,.5);
+}
+
+header p{
+  margin-top:10px;
+  color:#ccc;
+  font-size:1.1rem;
+}
+
+/* ===== SECCIONES ===== */
+section{
+  max-width:1100px;
+  margin:auto;
+  padding:30px 20px 80px;
+}
+
+.card{
+  background:rgba(0,0,0,0.65);
+  border-radius:18px;
+  padding:30px;
+  margin-bottom:30px;
+  box-shadow:0 0 35px rgba(255,0,0,.18);
+}
+
+.card h2{
+  margin-bottom:15px;
+  text-shadow:0 0 12px rgba(255,0,0,.4);
+}
+
+.card p, .card li{
+  color:#ddd;
+  line-height:1.6;
+}
+
+ul{
+  padding-left:20px;
+}
+
+/* ===== BOTONES ===== */
+.btn{
+  display:inline-block;
+  margin-top:20px;
+  padding:14px 32px;
+  border-radius:30px;
+  background:linear-gradient(135deg,#e10600,#ff4242);
+  color:#fff;
+  text-decoration:none;
+  font-weight:bold;
+  box-shadow:0 0 25px rgba(255,0,0,.45);
+  transition:transform .2s, box-shadow .2s;
+}
+
+.btn:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 40px rgba(255,0,0,.7);
+}
+
+/* ===== RANKING ===== */
+.rank{
+  display:flex;
+  justify-content:space-between;
+  padding:10px 0;
+  border-bottom:1px solid #333;
+}
+
+/* ===== NAV INFERIOR (MÓVIL Y PC) ===== */
+.nav-bottom{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:rgba(0,0,0,.85);
+  display:flex;
+  justify-content:space-around;
+  padding:12px 0;
+  border-top:1px solid #222;
+}
+
+.nav-bottom button{
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:.9rem;
+  cursor:pointer;
+  opacity:.75;
+}
+
+.nav-bottom button.active{
+  opacity:1;
+  color:#ff3b3b;
+}
+
+/* ===== OCULTAR SECCIONES ===== */
+[data-page]{
+  display:none;
+}
+
+[data-page].active{
+  display:block;
+}
+</style>
 </head>
+
 <body>
 
-<video id="bgVideo" autoplay muted playsinline loop></video>
+<!-- VIDEO -->
+<video autoplay muted loop playsinline>
+  <source src="https://videos.pexels.com/video-files/10825393/10825393-hd_1920_1080_25fps.mp4" type="video/mp4">
+</video>
 <div class="overlay"></div>
 
 <header>
-  <div class="brand">
-    <h1>Venturova Open</h1>
-    <p>Torneos competitivos Racing Master LATAM</p>
-  </div>
+  <h1>VENTUROVA OPEN</h1>
+  <p>No es para divertirse. Es para ganar dinero.</p>
 </header>
 
-<section id="inicio" class="page">
-  <div class="card">
-    <h2>Esto no es para todos</h2>
-    <p>
-      Venturova Open no es un torneo casual. Aquí se compite con presión real,
-      dinero real y resultados que se ganan con constancia.
-    </p>
-    <p>
-      Si buscas aprender, mejorar tu control y demostrar que puedes mantener
-      rendimiento durante todo un mes, este es tu lugar.
-    </p>
-  </div>
+<section>
 
-  <div class="card">
-    <h2>Cómo se vive Venturova Open</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px">
-      <img src="visual.jpg" style="width:100%;border-radius:14px;opacity:.9">
-      <img src="visual1.jpg" style="width:100%;border-radius:14px;opacity:.9">
-      <img src="visual2.jpg" style="width:100%;border-radius:14px;opacity:.9">
-    </div>
-  </div>
+<!-- INICIO -->
+<div class="card active" data-page="inicio">
+  <h2>Bienvenido</h2>
+  <p>
+    Esto es un campeonato mensual competitivo.  
+    No gana el que más corre, gana el que **mejor juega de forma constante**.
+  </p>
+  <p>
+    Aquí no vienes a probar suerte.  
+    Vienes a demostrar que tu habilidad vale dinero.
+  </p>
+</div>
+
+<!-- REGISTRO -->
+<div class="card" data-page="registro">
+  <h2>Registro</h2>
+  <ul>
+    <li>Campeonato mensual</li>
+    <li>3 carreras por semana</li>
+    <li>Carros limitados (igualdad total)</li>
+    <li>Inscripción: <b>12–15 USD</b></li>
+    <li>80 jugadores máximo</li>
+  </ul>
+  <p>
+    El dinero no se gana por una carrera.  
+    Se gana por **disciplina y constancia**.
+  </p>
+  <a class="btn" href="#">Registrarse</a>
+</div>
+
+<!-- RECOMPENSAS -->
+<div class="card" data-page="recompensas">
+  <h2>Recompensas (Top 8)</h2>
+  <ul>
+    <li>🥇 1° — $330</li>
+    <li>🥈 2° — $190</li>
+    <li>🥉 3° — $120</li>
+    <li>4° — $68</li>
+    <li>5° — $38</li>
+    <li>6° — $25</li>
+    <li>7° — $15</li>
+    <li>8° — $14</li>
+  </ul>
+  <p>
+    Los últimos puestos no pierden su mensualidad.  
+    Los primeros sí ganan en serio.
+  </p>
+</div>
+
+<!-- RANKING -->
+<div class="card" data-page="ranking">
+  <h2>Ranking</h2>
+  <div class="rank"><span>#1 Venturova</span><span>120 pts</span></div>
+  <div class="rank"><span>#2 Apex</span><span>110 pts</span></div>
+  <div class="rank"><span>#3 DriftX</span><span>105 pts</span></div>
+  <p style="margin-top:10px;color:#aaa">
+    El ranking se suma por puntos en cada carrera.
+  </p>
+</div>
+
 </section>
 
-<section id="registro" class="page" hidden>
-  <div class="card">
-    <h2>Registro</h2>
-    <p><b>Inscripción mensual:</b> 12–15 USD aprox</p>
-    <p>Carros limitados. Igualdad total. Importa tu habilidad.</p>
-    <p>70% del pozo va a los jugadores. 8 finalistas premiados.</p>
-
-    <input id="nickname" placeholder="Tu nickname" />
-    <button class="btn" onclick="registerPlayer()">Registrarme</button>
-  </div>
-</section>
-
-<section id="ranking" class="page" hidden>
-  <div class="card">
-    <h2>Ranking Mensual</h2>
-    <p>
-      El ranking se construye carrera a carrera. No importa ganar una sola vez,
-      importa aparecer siempre, sumar puntos y no fallar.
-    </p>
-    <ul style="margin:15px 0 25px 20px;opacity:.9">
-      <li>3 carreras por semana</li>
-      <li>Puntos acumulativos</li>
-      <li>Temporada mensual</li>
-      <li>Carros limitados para igualdad total</li>
-    </ul>
-
-    <table>
-      <thead>
-        <tr><th>Puesto</th><th>Piloto</th><th>Puntos</th><th>Carreras</th></tr>
-      </thead>
-      <tbody id="rankingBody"></tbody>
-    </table>
-  </div>
-</section>
-
+<!-- NAV -->
 <div class="nav-bottom">
-  <button onclick="go('inicio')">Inicio</button>
-  <button onclick="go('registro')">Registro</button>
-  <button onclick="go('ranking')">Ranking</button>
+  <button class="active" onclick="go('inicio',this)">Inicio</button>
+  <button onclick="go('registro',this)">Registro</button>
+  <button onclick="go('recompensas',this)">Recompensas</button>
+  <button onclick="go('ranking',this)">Ranking</button>
 </div>
 
 <script>
-  const App = {
-    api: 'https://TU_BACKEND_REAL/api'
-  };
+function go(page,btn){
+  document.querySelectorAll('[data-page]').forEach(s=>s.classList.remove('active'));
+  document.querySelector(`[data-page="${page}"]`).classList.add('active');
+  document.querySelectorAll('.nav-bottom button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
 
-  const clickSound = new Audio('click.mp3');
-  clickSound.preload='auto';
-  document.addEventListener('click',()=>{clickSound.currentTime=0;clickSound.play()});
-
-  function go(id){
-    document.querySelectorAll('.page').forEach(p=>p.hidden=true);
-    document.getElementById(id).hidden=false;
-  }
-
-  async function loadRanking(){
-    const body = document.getElementById('rankingBody');
-    body.innerHTML='';
-    try{
-      const r = await fetch(App.api+'/ranking');
-      const data = await r.json();
-      data.forEach((p,i)=>{
-        body.innerHTML+=`<tr><td>${i+1}</td><td>${p.nickname}</td><td>${p.points}</td><td>${p.races}</td></tr>`;
-      });
-    }catch{
-      body.innerHTML='<tr><td colspan="4">Ranking no disponible</td></tr>';
-    }
-  }
-
-  async function registerPlayer(){
-    const nick = document.getElementById('nickname').value.trim();
-    if(!nick) return alert('Nick requerido');
-    try{
-      await fetch(App.api+'/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nickname:nick})});
-      alert('Registro exitoso');
-    }catch{
-      alert('Error al registrar');
-    }
-  }
-
-  document.getElementById('bgVideo').src='video1.mp4';
-  loadRanking();
-</script></body>
-                  </html>
+</body>
+</html>
