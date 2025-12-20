@@ -9,8 +9,10 @@
         :root {
             --accent-blue: #00d4ff;
             --racing-red: #ff0000;
-            --glass: rgba(0, 0, 0, 0.8);
-            --border-glow: 0 0 20px rgba(0, 212, 255, 0.4);
+            --gold: #ffd700;
+            --silver: #e0e0e0;
+            --bronze: #cd7f32;
+            --glass: rgba(0, 0, 0, 0.85);
         }
 
         body, html {
@@ -23,7 +25,7 @@
             scroll-behavior: smooth;
         }
 
-        /* --- VIDEO DE FONDO EN SECUENCIA --- */
+        /* --- VIDEO DE FONDO --- */
         #video-container {
             position: fixed;
             top: 0;
@@ -38,15 +40,13 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(0.25) contrast(1.1); /* Oscurecido profesional */
+            filter: brightness(0.25);
             position: absolute;
             opacity: 0;
             transition: opacity 1.5s ease-in-out;
         }
 
-        video.active {
-            opacity: 1;
-        }
+        video.active { opacity: 1; }
 
         /* --- NAVEGACIÓN --- */
         nav {
@@ -63,111 +63,109 @@
             backdrop-filter: blur(15px);
         }
 
-        .logo {
-            font-family: 'Archivo Black', sans-serif;
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            font-style: italic;
-        }
+        .logo-img { height: 50px; }
 
-        .logo span { color: var(--accent-blue); }
-
-        /* --- HERO SECTION --- */
-        .hero {
-            height: 100vh;
+        /* --- PODIO DE CLASIFICACIÓN --- */
+        .podium-container {
             display: flex;
-            flex-direction: column;
             justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 20px;
+            align-items: flex-end;
+            gap: 20px;
+            margin: 50px 0;
+            padding: 20px;
         }
 
-        .hero h1 {
-            font-family: 'Archivo Black', sans-serif;
-            font-size: clamp(3rem, 12vw, 8rem);
-            line-height: 0.85;
-            margin: 0;
+        .podium-item {
+            background: var(--glass);
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            padding: 20px;
+            width: 200px;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+        }
+
+        /* Primero (Centro) */
+        .first {
+            order: 2;
+            height: 250px;
+            border: 2px solid var(--gold);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            background: linear-gradient(to top, rgba(255, 215, 0, 0.1), transparent);
+        }
+
+        /* Segundo (Izquierda) */
+        .second {
+            order: 1;
+            height: 200px;
+            border: 2px solid var(--silver);
+        }
+
+        /* Tercero (Derecha) */
+        .third {
+            order: 3;
+            height: 180px;
+            border: 2px solid var(--bronze);
+        }
+
+        .podium-rank { font-family: 'Archivo Black'; font-size: 2.5rem; margin: 0; }
+        .first .podium-rank { color: var(--gold); }
+        .second .podium-rank { color: var(--silver); }
+        .third .podium-rank { color: var(--bronze); }
+
+        /* --- TABLA DE DATOS --- */
+        .table-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: var(--glass);
+            border: 1px solid var(--accent-blue);
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
             text-transform: uppercase;
-            background: linear-gradient(180deg, #fff 40%, var(--accent-blue) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 25px rgba(0, 212, 255, 0.6));
-            transform: skewX(-5deg);
+        }
+
+        th {
+            background: var(--accent-blue);
+            color: #000;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .status-msg {
+            text-align: center;
+            color: var(--accent-blue);
+            font-weight: 700;
+            padding: 20px;
+            letter-spacing: 2px;
         }
 
         /* --- IMÁGENES DECORATIVAS --- */
         .deco-img-container {
-            position: relative;
-            width: 100%;
             max-width: 900px;
             margin: 60px auto;
-            padding: 5px;
-            background: linear-gradient(135deg, var(--accent-blue), transparent, var(--racing-red));
-            clip-path: polygon(4% 0, 100% 0, 96% 100%, 0% 100%);
-            transition: 0.5s ease;
-        }
-
-        .deco-img-container:hover {
-            transform: scale(1.03) skewX(-2deg);
-            filter: drop-shadow(0 0 15px var(--accent-blue));
+            background: linear-gradient(45deg, var(--accent-blue), var(--racing-red));
+            padding: 3px;
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
         }
 
         .deco-img {
             width: 100%;
             display: block;
-            clip-path: polygon(4% 0, 100% 0, 96% 100%, 0% 100%);
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
         }
 
-        /* --- SECCIÓN DE RANKING (AVISO) --- */
-        .ranking-section {
-            padding: 100px 10%;
-            background: var(--glass);
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.1);
+        @media (max-width: 768px) {
+            .podium-container { flex-direction: column; align-items: center; }
+            .podium-item { order: initial !important; height: auto !important; width: 80%; }
         }
-
-        .status-box {
-            border: 1px dashed var(--accent-blue);
-            padding: 40px;
-            display: inline-block;
-            background: rgba(0, 212, 255, 0.05);
-            max-width: 600px;
-        }
-
-        .status-box h3 {
-            font-size: 3rem;
-            color: var(--accent-blue);
-            margin: 0;
-        }
-
-        .status-box p {
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-top: 10px;
-        }
-
-        /* --- BOTONES --- */
-        .btn-main {
-            padding: 18px 50px;
-            background: var(--accent-blue);
-            color: #000;
-            font-weight: 900;
-            text-transform: uppercase;
-            text-decoration: none;
-            clip-path: polygon(12% 0, 100% 0, 88% 100%, 0% 100%);
-            transition: 0.3s;
-            display: inline-block;
-            font-size: 1.1rem;
-        }
-
-        .btn-main:hover {
-            background: #fff;
-            transform: scale(1.1);
-            box-shadow: var(--border-glow);
-        }
-
     </style>
 </head>
 <body>
@@ -179,49 +177,62 @@
     </div>
 
     <nav>
-        <div class="logo">VENTUROVA<span> OPEN</span></div>
-        <div style="font-size: 0.7rem; background: var(--accent-blue); color: #000; padding: 3px 12px; font-weight: 900; font-style: italic;">RACING MASTER</div>
+        <img src="1000110971.jpg" alt="Logo" class="logo-img">
+        <div style="background: var(--accent-blue); color: #000; padding: 5px 15px; font-weight: 900;">RACING MASTER</div>
     </nav>
 
-    <section class="hero">
-        <h1>VENTUROVA<br>OPEN</h1>
-        <p style="letter-spacing: 12px; font-weight: 700; color: #ccc;">TEMPORADA OFICIAL 2025</p>
-        <a href="#inscripcion" class="btn-main" style="margin-top: 40px;">Unirse a la parrilla</a>
+    <section style="padding-top: 120px; text-align: center;">
+        <h1 style="font-family: 'Archivo Black'; font-size: clamp(3rem, 10vw, 6rem); margin: 0; font-style: italic;">VENTUROVA OPEN</h1>
+        <p style="letter-spacing: 10px; color: var(--accent-blue);">CLASIFICACIÓN DE ÉLITE</p>
     </section>
 
-    <section style="padding: 80px 10%; background: rgba(0,0,0,0.6);">
-        <h2 style="font-family: 'Archivo Black'; border-left: 6px solid var(--accent-blue); padding-left: 15px;">SOBRE EL TORNEO</h2>
-        <p style="font-size: 1.2rem; max-width: 800px;">Prepárate para la máxima competición de Racing Master. El Venturova Open reúne a los mejores pilotos para disputar el trono de la pista en desafíos de alta velocidad.</p>
-        
-        <div class="deco-img-container">
-            <img src="imagen1.jpg" class="deco-img" alt="Venturova Racing Image">
+    <section class="podium-container">
+        <div class="podium-item second">
+            <p class="podium-rank">2</p>
+            <p>N/A</p>
+            <small>ESPERANDO...</small>
+        </div>
+        <div class="podium-item first">
+            <p class="podium-rank">1</p>
+            <p>N/A</p>
+            <small>LÍDER ACTUAL</small>
+        </div>
+        <div class="podium-item third">
+            <p class="podium-rank">3</p>
+            <p>N/A</p>
+            <small>ESPERANDO...</small>
         </div>
     </section>
 
-    <section id="ranking" class="ranking-section">
-        <h2 style="font-family: 'Archivo Black'; margin-bottom: 50px;">CLASIFICACIÓN GLOBAL</h2>
-        
-        <div class="status-box">
-            <h3>N/A</h3>
-            <p>Aquí aparecerán los jugadores que empiecen a sumar puntos una vez inicien los torneos.</p>
-        </div>
-
-        <div class="deco-img-container" style="max-width: 600px; margin-top: 80px;">
-            <img src="imagen2.jpg" class="deco-img" alt="Competencia">
-        </div>
+    <section class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>POSICIÓN</th>
+                    <th>NOMBRE + ID</th>
+                    <th>PUNTOS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3" class="status-msg">
+                        LOS JUGADORES APARECERÁN AQUÍ AL INICIAR EL TORNEO
+                    </td>
+                </tr>
+                <tr><td>--</td><td>ESPERANDO COMPETIDOR...</td><td>0</td></tr>
+                <tr><td>--</td><td>ESPERANDO COMPETIDOR...</td><td>0</td></tr>
+            </tbody>
+        </table>
     </section>
 
-    <footer id="inscripcion" style="text-align: center; padding: 120px 20px;">
-        <h2 style="font-family: 'Archivo Black'; margin-bottom: 30px;">¿TIENES LO QUE SE NECESITA?</h2>
-        <a href="#" class="btn-main">REGISTRARSE</a>
-    </footer>
+    <div class="deco-img-container">
+        <img src="1000110967.png" class="deco-img" alt="Decoración Racing">
+    </div>
 
     <script>
-        // Lógica de secuencia de videos automática
         const videos = [document.getElementById('v1'), document.getElementById('v2'), document.getElementById('v3')];
         let currentVideo = 0;
-
-        videos.forEach((v, index) => {
+        videos.forEach((v) => {
             v.onended = () => {
                 v.classList.remove('active');
                 currentVideo = (currentVideo + 1) % videos.length;
