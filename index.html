@@ -11,7 +11,7 @@
             --gold: #ffd700;
             --silver: #e0e0e0;
             --bronze: #cd7f32;
-            --glass: rgba(0, 0, 0, 0.75);
+            --glass: rgba(0, 0, 0, 0.6);
         }
 
         body, html {
@@ -20,11 +20,9 @@
             background-color: #000;
             color: #fff;
             font-family: 'Rajdhani', sans-serif;
-            overflow-x: hidden;
-            height: 100%;
         }
 
-        /* --- VIDEOS DE FONDO A PANTALLA COMPLETA --- */
+        /* --- FONDO DE VIDEOS TOTAL (SIN FILTRO OSCURO) --- */
         #video-background {
             position: fixed;
             top: 0;
@@ -41,51 +39,32 @@
             left: 50%;
             min-width: 100%;
             min-height: 100%;
-            width: auto;
-            height: auto;
             transform: translate(-50%, -50%);
             object-fit: cover;
             opacity: 0;
-            transition: opacity 1.5s ease-in-out;
-            /* Filtro menos oscuro para que se vea bien el video */
-            filter: brightness(0.4) contrast(1.1);
+            transition: opacity 1s ease-in-out;
+            /* Se quitó el brillo bajo para que se vea claro */
+            filter: brightness(0.7) contrast(1.1);
         }
 
         video.active { opacity: 1; }
 
-        /* Capa para asegurar que el contenido sea legible */
+        /* Capa de protección para lectura */
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.2);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
             z-index: -1;
         }
 
-        /* --- NAVEGACIÓN --- */
-        nav {
-            background: rgba(0, 0, 0, 0.9);
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 5%;
-            position: fixed;
-            top: 0;
-            width: 90%;
-            z-index: 1000;
-            border-bottom: 2px solid var(--accent-blue);
-        }
-
-        .logo-img { height: 50px; }
-
-        /* --- CONTENIDO PRINCIPAL --- */
-        .main-content {
+        /* --- CONTENIDO --- */
+        .container {
             position: relative;
             z-index: 1;
-            padding-top: 100px;
+            padding-top: 80px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -93,21 +72,21 @@
 
         h1 {
             font-family: 'Archivo Black', sans-serif;
-            font-size: clamp(2.5rem, 10vw, 7rem);
-            margin: 0;
+            font-size: clamp(2.5rem, 8vw, 6rem);
             text-align: center;
+            line-height: 0.9;
+            transform: skewX(-5deg);
             background: linear-gradient(180deg, #fff, var(--accent-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            transform: skewX(-5deg);
         }
 
-        /* --- CARRUSEL DE IMÁGENES ROTATIVO --- */
+        /* --- SLIDER --- */
         .slider-container {
             width: 90%;
             max-width: 800px;
-            height: clamp(200px, 40vh, 400px);
-            margin: 30px 0;
+            height: 250px;
+            margin: 20px 0;
             border: 2px solid var(--accent-blue);
             position: relative;
             overflow: hidden;
@@ -115,56 +94,70 @@
         }
 
         .slider-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            opacity: 0;
-            transition: opacity 1s ease;
+            width: 100%; height: 100%; object-fit: cover;
+            position: absolute; opacity: 0; transition: 1s;
         }
 
         .slider-img.active { opacity: 1; }
 
-        /* --- PODIO --- */
+        /* --- PODIO ESCALONADO (1-2-3 Izquierda a Derecha) --- */
         .podium {
             display: flex;
             justify-content: center;
-            align-items: flex-end;
+            align-items: flex-start; /* Alineado arriba para que el 1 sea el más alto */
             gap: 10px;
-            margin: 40px 0;
-            width: 100%;
+            width: 95%;
+            margin: 30px 0;
         }
 
         .podium-item {
             background: var(--glass);
-            padding: 20px;
-            width: 28%;
-            max-width: 200px;
+            flex: 1;
+            max-width: 150px;
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 5px;
+            border: 2px solid;
             clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
         }
 
-        .first { order: 2; height: 220px; border-color: var(--gold); box-shadow: 0 0 15px var(--gold); }
-        .second { order: 1; height: 180px; border-color: var(--silver); }
-        .third { order: 3; height: 160px; border-color: var(--bronze); }
+        /* Estilo escalonado pedido */
+        .p1 { border-color: var(--gold); margin-top: 0; height: 160px; box-shadow: 0 0 15px var(--gold); }
+        .p2 { border-color: var(--silver); margin-top: 30px; height: 140px; }
+        .p3 { border-color: var(--bronze); margin-top: 60px; height: 120px; }
 
-        .rank-num { font-family: 'Archivo Black'; font-size: 2.5rem; margin: 0; }
+        .rank-num { font-family: 'Archivo Black'; font-size: 2rem; margin: 0; }
+
+        /* --- INFORMACIÓN DETALLADA --- */
+        .info-section {
+            width: 90%;
+            max-width: 900px;
+            background: var(--glass);
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid var(--accent-blue);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .info-card h3 { color: var(--accent-blue); margin-top: 0; font-family: 'Archivo Black'; }
 
         /* --- TABLA --- */
-        .table-container { width: 90%; max-width: 900px; margin-bottom: 50px; }
-        table { width: 100%; border-collapse: collapse; background: var(--glass); border: 1px solid var(--accent-blue); }
-        th { background: var(--accent-blue); color: #000; padding: 12px; }
-        td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; }
+        .table-wrap { width: 90%; max-width: 900px; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; background: var(--glass); }
+        th { background: var(--accent-blue); color: #000; padding: 10px; }
+        td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; }
 
-        /* IMAGEN FIJA ABAJO */
-        .visual-footer { width: 90%; max-width: 800px; margin-bottom: 50px; }
-        .visual-footer img { width: 100%; border: 1px solid var(--accent-blue); }
+        .visual-bottom { width: 90%; max-width: 800px; margin: 30px 0; border: 1px solid var(--accent-blue); }
 
         @media (max-width: 600px) {
-            .podium-item { width: 32%; padding: 10px 5px; }
-            .rank-num { font-size: 1.5rem; }
-            .first { height: 180px; }
+            .rank-num { font-size: 1.2rem; }
+            .p1 { height: 140px; }
+            .p2 { height: 120px; }
+            .p3 { height: 100px; }
         }
     </style>
 </head>
@@ -177,12 +170,8 @@
     </div>
     <div class="overlay"></div>
 
-    <nav>
-        <img src="logo.jpg" alt="Logo" class="logo-img">
-        <div style="background: var(--accent-blue); color: #000; padding: 5px 15px; font-weight: 900;">RACING MASTER</div>
-    </nav>
-
-    <div class="main-content">
+    <div class="container">
+        <img src="logo.jpg" style="height: 60px;" alt="Logo">
         <h1>VENTUROVA<br>OPEN</h1>
 
         <div class="slider-container">
@@ -196,51 +185,72 @@
         </div>
 
         <div class="podium">
-            <div class="podium-item second"><p class="rank-num" style="color:var(--silver)">2</p><p>N/A</p></div>
-            <div class="podium-item first"><p class="rank-num" style="color:var(--gold)">1</p><p>N/A</p></div>
-            <div class="podium-item third"><p class="rank-num" style="color:var(--bronze)">3</p><p>N/A</p></div>
+            <div class="podium-item p1">
+                <p class="rank-num" style="color:var(--gold)">1</p>
+                <p>N/A</p>
+                <small>LÍDER</small>
+            </div>
+            <div class="podium-item p2">
+                <p class="rank-num" style="color:var(--silver)">2</p>
+                <p>N/A</p>
+            </div>
+            <div class="podium-item p3">
+                <p class="rank-num" style="color:var(--bronze)">3</p>
+                <p>N/A</p>
+            </div>
         </div>
 
-        <div class="table-container">
+        <div class="table-wrap">
             <table>
-                <thead>
-                    <tr><th>POS</th><th>NOMBRE + ID</th><th>PUNTOS</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td colspan="3">AQUÍ APARECERÁN LOS JUGADORES...</td></tr>
-                </tbody>
+                <thead><tr><th>POS</th><th>PILOTO + ID</th><th>PUNTOS</th></tr></thead>
+                <tbody><tr><td colspan="3">CARGANDO DATOS DEL TORNEO...</td></tr></tbody>
             </table>
         </div>
 
-        <div class="visual-footer">
-            <img src="visual2.jpg" alt="Visual Final">
-        </div>
+        <section class="info-section">
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>REQUISITOS</h3>
+                    <p>• Nivel 15 de cuenta.<br>• Solo Clase S y A.<br>• Respeto total en pista.</p>
+                </div>
+                <div class="info-card">
+                    <h3>PREMIOS</h3>
+                    <p>• 1º: $50 USD<br>• 2º: $28 USD<br>• 3º: $15 USD</p>
+                </div>
+                <div class="info-card">
+                    <h3>CALENDARIO</h3>
+                    <p>• Inscripción: 01/Enero<br>• Clasificación: 15/Enero<br>• Final: 30/Enero</p>
+                </div>
+            </div>
+        </section>
 
-        <footer style="padding-bottom: 50px;">
-            <a href="#" style="background: var(--accent-blue); color: #000; padding: 15px 40px; text-decoration: none; font-weight: 900; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);">INSCRIBIRSE</a>
+        <img src="visual2.jpg" class="visual-bottom">
+
+        <footer style="padding-bottom: 60px;">
+            <a href="#" style="background:var(--accent-blue); color:#000; padding:15px 50px; text-decoration:none; font-weight:900; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);">REGISTRARSE AHORA</a>
         </footer>
     </div>
 
     <script>
-        // Lógica de Rotación de Videos
+        // Lógica de Videos
         const vids = [document.getElementById('v1'), document.getElementById('v2'), document.getElementById('v3')];
-        let currentVid = 0;
-        vids.forEach((v, i) => {
+        let curV = 0;
+        vids.forEach((v) => {
             v.onended = () => {
                 v.classList.remove('active');
-                currentVid = (currentVid + 1) % vids.length;
-                vids[currentVid].classList.add('active');
-                vids[currentVid].play();
+                curV = (curV + 1) % vids.length;
+                vids[curV].classList.add('active');
+                vids[curV].play();
             };
         });
 
-        // Lógica de Rotación de Imágenes
-        const slides = document.querySelectorAll('.slider-img');
-        let currentSlide = 0;
+        // Lógica de Imágenes
+        const imgs = document.querySelectorAll('.slider-img');
+        let curI = 0;
         setInterval(() => {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
+            imgs[curI].classList.remove('active');
+            curI = (curI + 1) % imgs.length;
+            imgs[curI].classList.add('active');
         }, 3000);
     </script>
 </body>
