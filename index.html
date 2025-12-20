@@ -12,7 +12,7 @@
             --gold: #ffd700;
             --silver: #e0e0e0;
             --bronze: #cd7f32;
-            --glass: rgba(0, 0, 0, 0.85);
+            --glass: rgba(0, 0, 0, 0.9);
         }
 
         body, html {
@@ -25,7 +25,7 @@
             scroll-behavior: smooth;
         }
 
-        /* --- VIDEO DE FONDO --- */
+        /* --- SISTEMA DE VIDEOS --- */
         #video-container {
             position: fixed;
             top: 0;
@@ -33,14 +33,14 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            overflow: hidden;
+            background: #000;
         }
 
         video {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(0.25);
+            filter: brightness(0.2);
             position: absolute;
             opacity: 0;
             transition: opacity 1.5s ease-in-out;
@@ -50,29 +50,73 @@
 
         /* --- NAVEGACIÓN --- */
         nav {
-            background: rgba(0, 0, 0, 0.9);
-            height: 70px;
+            background: rgba(0, 0, 0, 0.95);
+            height: 80px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 5%;
             position: fixed;
+            top: 0;
             width: 90%;
             z-index: 1000;
             border-bottom: 2px solid var(--accent-blue);
-            backdrop-filter: blur(15px);
         }
 
-        .logo-img { height: 50px; }
+        .logo-img { height: 60px; }
 
-        /* --- PODIO DE CLASIFICACIÓN --- */
+        /* --- HERO --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(3rem, 12vw, 8rem);
+            margin: 0;
+            background: linear-gradient(180deg, #fff 40%, var(--accent-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transform: skewX(-5deg);
+            line-height: 0.9;
+        }
+
+        /* --- SECCIONES DE INFORMACIÓN DETALLADA --- */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 50px 10%;
+            background: var(--glass);
+        }
+
+        .info-box {
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.03);
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+        }
+
+        .info-box h3 {
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            font-family: 'Archivo Black';
+            margin-top: 0;
+        }
+
+        /* --- PODIO --- */
         .podium-container {
             display: flex;
             justify-content: center;
             align-items: flex-end;
-            gap: 20px;
-            margin: 50px 0;
-            padding: 20px;
+            gap: 15px;
+            padding: 40px 5%;
+            margin-top: 30px;
         }
 
         .podium-item {
@@ -80,91 +124,39 @@
             border: 1px solid rgba(255,255,255,0.1);
             text-align: center;
             padding: 20px;
-            width: 200px;
+            width: 250px;
             clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
         }
 
-        /* Primero (Centro) */
-        .first {
-            order: 2;
-            height: 250px;
-            border: 2px solid var(--gold);
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
-            background: linear-gradient(to top, rgba(255, 215, 0, 0.1), transparent);
-        }
+        .first { order: 2; height: 320px; border: 2px solid var(--gold); box-shadow: 0 0 30px rgba(255, 215, 0, 0.2); }
+        .second { order: 1; height: 260px; border: 2px solid var(--silver); }
+        .third { order: 3; height: 230px; border: 2px solid var(--bronze); }
 
-        /* Segundo (Izquierda) */
-        .second {
-            order: 1;
-            height: 200px;
-            border: 2px solid var(--silver);
-        }
+        .rank-num { font-family: 'Archivo Black'; font-size: 3.5rem; margin: 0; }
 
-        /* Tercero (Derecha) */
-        .third {
-            order: 3;
-            height: 180px;
-            border: 2px solid var(--bronze);
-        }
-
-        .podium-rank { font-family: 'Archivo Black'; font-size: 2.5rem; margin: 0; }
-        .first .podium-rank { color: var(--gold); }
-        .second .podium-rank { color: var(--silver); }
-        .third .podium-rank { color: var(--bronze); }
-
-        /* --- TABLA DE DATOS --- */
-        .table-container {
-            max-width: 900px;
-            margin: 40px auto;
-            background: var(--glass);
-            border: 1px solid var(--accent-blue);
-            padding: 20px;
-        }
-
+        /* --- TABLA --- */
+        .table-section { padding: 50px 10%; background: rgba(0,0,0,0.7); }
         table {
             width: 100%;
             border-collapse: collapse;
-            text-transform: uppercase;
+            background: var(--glass);
+            border: 1px solid var(--accent-blue);
         }
+        th { background: var(--accent-blue); color: #000; padding: 15px; text-align: left; }
+        td { padding: 18px; border-bottom: 1px solid rgba(255,255,255,0.1); }
 
-        th {
-            background: var(--accent-blue);
-            color: #000;
-            padding: 12px;
-            text-align: left;
-        }
-
-        td {
-            padding: 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .status-msg {
-            text-align: center;
-            color: var(--accent-blue);
-            font-weight: 700;
-            padding: 20px;
-            letter-spacing: 2px;
-        }
-
-        /* --- IMÁGENES DECORATIVAS --- */
-        .deco-img-container {
+        .deco-container {
             max-width: 900px;
-            margin: 60px auto;
-            background: linear-gradient(45deg, var(--accent-blue), var(--racing-red));
-            padding: 3px;
+            margin: 50px auto;
+            border: 2px solid var(--accent-blue);
+            padding: 5px;
             clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
         }
-
-        .deco-img {
-            width: 100%;
-            display: block;
-            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
-        }
+        .deco-container img { width: 100%; display: block; clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%); }
 
         @media (max-width: 768px) {
             .podium-container { flex-direction: column; align-items: center; }
-            .podium-item { order: initial !important; height: auto !important; width: 80%; }
+            .podium-item { order: initial !important; width: 90%; height: auto !important; }
         }
     </style>
 </head>
@@ -177,34 +169,60 @@
     </div>
 
     <nav>
-        <img src="1000110971.jpg" alt="Logo" class="logo-img">
-        <div style="background: var(--accent-blue); color: #000; padding: 5px 15px; font-weight: 900;">RACING MASTER</div>
+        <img src="logo.jpg" alt="Logo" class="logo-img">
+        <div style="background: var(--accent-blue); color: #000; padding: 5px 15px; font-weight: 900; font-style: italic;">RACING MASTER</div>
     </nav>
 
-    <section style="padding-top: 120px; text-align: center;">
-        <h1 style="font-family: 'Archivo Black'; font-size: clamp(3rem, 10vw, 6rem); margin: 0; font-style: italic;">VENTUROVA OPEN</h1>
-        <p style="letter-spacing: 10px; color: var(--accent-blue);">CLASIFICACIÓN DE ÉLITE</p>
+    <section class="hero">
+        <h1>VENTUROVA<br>OPEN</h1>
+        <p style="letter-spacing: 15px; font-weight: 700; color: #ddd;">TORNEO OFICIAL 2025</p>
     </section>
 
-    <section class="podium-container">
-        <div class="podium-item second">
-            <p class="podium-rank">2</p>
-            <p>N/A</p>
-            <small>ESPERANDO...</small>
+    <section class="info-grid">
+        <div class="info-box">
+            <h3>Requisitos</h3>
+            <ul>
+                <li>Nivel mínimo: 15</li>
+                <li>Coches permitidos: Clase S y A</li>
+                <li>Conexión estable obligatoria</li>
+            </ul>
         </div>
-        <div class="podium-item first">
-            <p class="podium-rank">1</p>
-            <p>N/A</p>
-            <small>LÍDER ACTUAL</small>
+        <div class="info-box">
+            <h3>Premios</h3>
+            <p>1º Puesto: $50 USD</p>
+            <p>2º Puesto: $28 USD</p>
+            <p>3º Puesto: $15 USD</p>
         </div>
-        <div class="podium-item third">
-            <p class="podium-rank">3</p>
-            <p>N/A</p>
-            <small>ESPERANDO...</small>
+        <div class="info-box">
+            <h3>Fechas</h3>
+            <p>Inicio de inscripciones: 01 Enero</p>
+            <p>Clasificatorias: 15 Enero</p>
+            <p>Gran Final: 30 Enero</p>
         </div>
     </section>
 
-    <section class="table-container">
+    <section style="padding: 50px 10%; text-align: center; background: rgba(0,0,0,0.4);">
+        <h2 style="font-family: 'Archivo Black'; font-size: 2.5rem;">TOP PILOTOS</h2>
+        <div class="podium-container">
+            <div class="podium-item second">
+                <p class="rank-num" style="color:var(--silver)">2</p>
+                <p style="font-size: 1.5rem; margin: 10px 0;">N/A</p>
+                <small>ESPERANDO...</small>
+            </div>
+            <div class="podium-item first">
+                <p class="rank-num" style="color:var(--gold)">1</p>
+                <p style="font-size: 2rem; margin: 10px 0;">N/A</p>
+                <small>LÍDER ACTUAL</small>
+            </div>
+            <div class="podium-item third">
+                <p class="rank-num" style="color:var(--bronze)">3</p>
+                <p style="font-size: 1.5rem; margin: 10px 0;">N/A</p>
+                <small>ESPERANDO...</small>
+            </div>
+        </div>
+    </section>
+
+    <section class="table-section">
         <table>
             <thead>
                 <tr>
@@ -215,29 +233,31 @@
             </thead>
             <tbody>
                 <tr>
-                    <td colspan="3" class="status-msg">
-                        LOS JUGADORES APARECERÁN AQUÍ AL INICIAR EL TORNEO
+                    <td colspan="3" style="text-align: center; color: var(--accent-blue); padding: 40px;">
+                        AQUÍ APARECERÁN LOS JUGADORES QUE EMPIECEN A SUMAR PUNTOS UNA VEZ INICIEN LOS TORNEOS.
                     </td>
                 </tr>
-                <tr><td>--</td><td>ESPERANDO COMPETIDOR...</td><td>0</td></tr>
-                <tr><td>--</td><td>ESPERANDO COMPETIDOR...</td><td>0</td></tr>
             </tbody>
         </table>
     </section>
 
-    <div class="deco-img-container">
-        <img src="1000110967.png" class="deco-img" alt="Decoración Racing">
+    <div class="deco-container">
+        <img src="visual2.jpg" alt="Visual Torneo">
     </div>
 
+    <footer style="text-align: center; padding: 100px 0;">
+        <a href="#" style="background: var(--accent-blue); color: #000; padding: 20px 60px; text-decoration: none; font-weight: 900; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); font-size: 1.2rem;">REGISTRARSE</a>
+    </footer>
+
     <script>
-        const videos = [document.getElementById('v1'), document.getElementById('v2'), document.getElementById('v3')];
-        let currentVideo = 0;
-        videos.forEach((v) => {
+        const vids = [document.getElementById('v1'), document.getElementById('v2'), document.getElementById('v3')];
+        let current = 0;
+        vids.forEach((v) => {
             v.onended = () => {
                 v.classList.remove('active');
-                currentVideo = (currentVideo + 1) % videos.length;
-                videos[currentVideo].classList.add('active');
-                videos[currentVideo].play();
+                current = (current + 1) % vids.length;
+                vids[current].classList.add('active');
+                vids[current].play();
             };
         });
     </script>
