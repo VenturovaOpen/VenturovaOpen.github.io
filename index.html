@@ -12,7 +12,7 @@
             --gold: #ffd700;
             --silver: #e0e0e0;
             --bronze: #cd7f32;
-            --glass: rgba(0, 0, 0, 0.9);
+            --glass: rgba(0, 0, 0, 0.85);
         }
 
         body, html {
@@ -25,7 +25,7 @@
             scroll-behavior: smooth;
         }
 
-        /* --- SISTEMA DE VIDEOS --- */
+        /* --- VIDEOS DE FONDO (FIJOS Y RESPONSIVOS) --- */
         #video-container {
             position: fixed;
             top: 0;
@@ -40,7 +40,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(0.2);
+            filter: brightness(0.25);
             position: absolute;
             opacity: 0;
             transition: opacity 1.5s ease-in-out;
@@ -51,7 +51,7 @@
         /* --- NAVEGACIÓN --- */
         nav {
             background: rgba(0, 0, 0, 0.95);
-            height: 80px;
+            height: 70px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -63,100 +63,111 @@
             border-bottom: 2px solid var(--accent-blue);
         }
 
-        .logo-img { height: 60px; }
+        .logo-img { height: 50px; }
 
-        /* --- HERO --- */
+        /* --- HERO & SLIDER --- */
         .hero {
-            height: 100vh;
+            padding-top: 100px;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             text-align: center;
         }
 
         .hero h1 {
             font-family: 'Archivo Black', sans-serif;
-            font-size: clamp(3rem, 12vw, 8rem);
-            margin: 0;
-            background: linear-gradient(180deg, #fff 40%, var(--accent-blue) 100%);
+            font-size: clamp(2.5rem, 10vw, 7rem);
+            margin-bottom: 20px;
+            background: linear-gradient(180deg, #fff, var(--accent-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             transform: skewX(-5deg);
-            line-height: 0.9;
+            line-height: 1;
         }
 
-        /* --- SECCIONES DE INFORMACIÓN DETALLADA --- */
+        /* --- CARRUSEL DE IMÁGENES (ROTACIÓN) --- */
+        .slider-container {
+            width: 90%;
+            max-width: 800px;
+            height: 300px;
+            margin: 20px 0;
+            overflow: hidden;
+            border: 2px solid var(--accent-blue);
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
+            position: relative;
+        }
+
+        .slider-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .slider-img.active { opacity: 1; }
+
+        /* --- INFO GRID --- */
         .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
-            padding: 50px 10%;
+            padding: 40px 5%;
             background: var(--glass);
         }
 
         .info-box {
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            padding: 25px;
-            background: rgba(255, 255, 255, 0.03);
+            padding: 20px;
+            border: 1px solid var(--accent-blue);
+            background: rgba(0, 212, 255, 0.05);
             clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
         }
 
-        .info-box h3 {
-            color: var(--accent-blue);
-            text-transform: uppercase;
-            font-family: 'Archivo Black';
-            margin-top: 0;
-        }
-
-        /* --- PODIO --- */
+        /* --- PODIO (CORREGIDO PARA CELULAR) --- */
         .podium-container {
             display: flex;
             justify-content: center;
             align-items: flex-end;
-            gap: 15px;
-            padding: 40px 5%;
-            margin-top: 30px;
+            gap: 10px;
+            padding: 40px 2%;
         }
 
         .podium-item {
             background: var(--glass);
-            border: 1px solid rgba(255,255,255,0.1);
             text-align: center;
-            padding: 20px;
-            width: 250px;
+            padding: 15px;
+            width: 30%;
+            max-width: 200px;
             clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
         }
 
-        .first { order: 2; height: 320px; border: 2px solid var(--gold); box-shadow: 0 0 30px rgba(255, 215, 0, 0.2); }
-        .second { order: 1; height: 260px; border: 2px solid var(--silver); }
-        .third { order: 3; height: 230px; border: 2px solid var(--bronze); }
+        /* Prioridad visual */
+        .first { order: 2; height: 200px; border: 2px solid var(--gold); box-shadow: 0 0 20px var(--gold); }
+        .second { order: 1; height: 160px; border: 1px solid var(--silver); }
+        .third { order: 3; height: 140px; border: 1px solid var(--bronze); }
 
-        .rank-num { font-family: 'Archivo Black'; font-size: 3.5rem; margin: 0; }
+        .rank-num { font-family: 'Archivo Black'; font-size: 2rem; margin: 0; }
 
         /* --- TABLA --- */
-        .table-section { padding: 50px 10%; background: rgba(0,0,0,0.7); }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: var(--glass);
-            border: 1px solid var(--accent-blue);
-        }
-        th { background: var(--accent-blue); color: #000; padding: 15px; text-align: left; }
-        td { padding: 18px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .table-section { padding: 40px 5%; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; background: var(--glass); min-width: 500px; }
+        th { background: var(--accent-blue); color: #000; padding: 12px; text-align: left; }
+        td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); }
 
-        .deco-container {
-            max-width: 900px;
-            margin: 50px auto;
-            border: 2px solid var(--accent-blue);
-            padding: 5px;
-            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
-        }
-        .deco-container img { width: 100%; display: block; clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%); }
+        .visual-footer { max-width: 800px; margin: 40px auto; width: 90%; }
+        .visual-footer img { width: 100%; border: 1px solid var(--accent-blue); }
 
-        @media (max-width: 768px) {
-            .podium-container { flex-direction: column; align-items: center; }
-            .podium-item { order: initial !important; width: 90%; height: auto !important; }
+        /* AJUSTES MÓVIL */
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 3rem; }
+            .podium-container { align-items: center; gap: 5px; }
+            .rank-num { font-size: 1.5rem; }
+            .podium-item { width: 32%; padding: 10px 5px; font-size: 0.8rem; }
+            .first { height: 180px; }
+            .slider-container { height: 200px; }
         }
     </style>
 </head>
@@ -170,54 +181,46 @@
 
     <nav>
         <img src="logo.jpg" alt="Logo" class="logo-img">
-        <div style="background: var(--accent-blue); color: #000; padding: 5px 15px; font-weight: 900; font-style: italic;">RACING MASTER</div>
+        <div style="background: var(--accent-blue); color: #000; padding: 5px 10px; font-weight: 900; font-size: 0.8rem;">RACING MASTER</div>
     </nav>
 
     <section class="hero">
         <h1>VENTUROVA<br>OPEN</h1>
-        <p style="letter-spacing: 15px; font-weight: 700; color: #ddd;">TORNEO OFICIAL 2025</p>
+        
+        <div class="slider-container">
+            <img src="visual1.jpg" class="slider-img active" alt="Slide 1">
+            <img src="visual3.jpg" class="slider-img" alt="Slide 2">
+            <img src="logo.jpg" class="slider-img" alt="Slide 3">
+        </div>
+
+        <p style="letter-spacing: 5px; font-weight: 700;">CHAMPIONSHIP 2025</p>
     </section>
 
     <section class="info-grid">
         <div class="info-box">
-            <h3>Requisitos</h3>
-            <ul>
-                <li>Nivel mínimo: 15</li>
-                <li>Coches permitidos: Clase S y A</li>
-                <li>Conexión estable obligatoria</li>
-            </ul>
+            <h3 style="color:var(--accent-blue); margin:0;">REQUISITOS</h3>
+            <p>Nivel 15+ | Coches Clase S/A | Fair Play</p>
         </div>
         <div class="info-box">
-            <h3>Premios</h3>
-            <p>1º Puesto: $50 USD</p>
-            <p>2º Puesto: $28 USD</p>
-            <p>3º Puesto: $15 USD</p>
-        </div>
-        <div class="info-box">
-            <h3>Fechas</h3>
-            <p>Inicio de inscripciones: 01 Enero</p>
-            <p>Clasificatorias: 15 Enero</p>
-            <p>Gran Final: 30 Enero</p>
+            <h3 style="color:var(--accent-blue); margin:0;">PREMIOS</h3>
+            <p>1º $50 | 2º $28 | 3º $15 (USD)</p>
         </div>
     </section>
 
-    <section style="padding: 50px 10%; text-align: center; background: rgba(0,0,0,0.4);">
-        <h2 style="font-family: 'Archivo Black'; font-size: 2.5rem;">TOP PILOTOS</h2>
+    <section style="text-align: center; padding: 20px 0;">
+        <h2 style="font-family: 'Archivo Black';">TOP RANKING</h2>
         <div class="podium-container">
             <div class="podium-item second">
                 <p class="rank-num" style="color:var(--silver)">2</p>
-                <p style="font-size: 1.5rem; margin: 10px 0;">N/A</p>
-                <small>ESPERANDO...</small>
+                <p>N/A</p>
             </div>
             <div class="podium-item first">
                 <p class="rank-num" style="color:var(--gold)">1</p>
-                <p style="font-size: 2rem; margin: 10px 0;">N/A</p>
-                <small>LÍDER ACTUAL</small>
+                <p>N/A</p>
             </div>
             <div class="podium-item third">
                 <p class="rank-num" style="color:var(--bronze)">3</p>
-                <p style="font-size: 1.5rem; margin: 10px 0;">N/A</p>
-                <small>ESPERANDO...</small>
+                <p>N/A</p>
             </div>
         </div>
     </section>
@@ -226,40 +229,48 @@
         <table>
             <thead>
                 <tr>
-                    <th>POSICIÓN</th>
-                    <th>NOMBRE + ID</th>
-                    <th>PUNTOS</th>
+                    <th>POS</th>
+                    <th>PILOTO + ID</th>
+                    <th>PTS</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td colspan="3" style="text-align: center; color: var(--accent-blue); padding: 40px;">
-                        AQUÍ APARECERÁN LOS JUGADORES QUE EMPIECEN A SUMAR PUNTOS UNA VEZ INICIEN LOS TORNEOS.
-                    </td>
+                    <td colspan="3" style="text-align: center; padding: 30px;">ESPERANDO INICIO DEL TORNEO...</td>
                 </tr>
             </tbody>
         </table>
     </section>
 
-    <div class="deco-container">
-        <img src="visual2.jpg" alt="Visual Torneo">
+    <div class="visual-footer">
+        <img src="visual2.jpg" alt="Imagen final">
     </div>
 
-    <footer style="text-align: center; padding: 100px 0;">
-        <a href="#" style="background: var(--accent-blue); color: #000; padding: 20px 60px; text-decoration: none; font-weight: 900; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); font-size: 1.2rem;">REGISTRARSE</a>
+    <footer style="text-align: center; padding: 50px 0;">
+        <a href="#" style="background: var(--accent-blue); color: #000; padding: 15px 40px; text-decoration: none; font-weight: 900; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);">INSCRIBIRSE</a>
     </footer>
 
     <script>
+        // Secuencia de Videos
         const vids = [document.getElementById('v1'), document.getElementById('v2'), document.getElementById('v3')];
-        let current = 0;
+        let curVid = 0;
         vids.forEach((v) => {
             v.onended = () => {
                 v.classList.remove('active');
-                current = (current + 1) % vids.length;
-                vids[current].classList.add('active');
-                vids[current].play();
+                curVid = (curVid + 1) % vids.length;
+                vids[curVid].classList.add('active');
+                vids[curVid].play();
             };
         });
+
+        // Rotación de Imágenes (Slider)
+        const slides = document.querySelectorAll('.slider-img');
+        let curSlide = 0;
+        setInterval(() => {
+            slides[curSlide].classList.remove('active');
+            curSlide = (curSlide + 1) % slides.length;
+            slides[curSlide].classList.add('active');
+        }, 3000); // Cambia cada 3 segundos
     </script>
 </body>
 </html>
