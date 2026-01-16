@@ -1,257 +1,202 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Venturova Open | Racing Master</title>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Rajdhani:wght@600;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --accent-blue: #00d4ff;
-            --gold: #ffd700;
-            --silver: #e0e0e0;
-            --bronze: #cd7f32;
-            --glass: rgba(0, 0, 0, 0.6);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tumble Tax | Torneos</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 
-        body, html {
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-            color: #fff;
-            font-family: 'Rajdhani', sans-serif;
-        }
+<style>
+:root{
+    --accent:#00d4ff;
+    --black:#0b0b0b;
+    --glass:rgba(0,0,0,.6);
+}
 
-        /* --- FONDO DE VIDEOS TOTAL (SIN FILTRO OSCURO) --- */
-        #video-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            overflow: hidden;
-        }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Rajdhani',sans-serif;background:#000;color:#fff;overflow-x:hidden;scroll-behavior:smooth;}
 
-        video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            /* Se quitó el brillo bajo para que se vea claro */
-            filter: brightness(0.7) contrast(1.1);
-        }
+/* Loader */
+#loader{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+.spinner{
+  width:60px;
+  height:60px;
+  border:8px solid rgba(0,212,255,0.3);
+  border-top-color:#00d4ff;
+  border-radius:50%;
+  animation:spin 1.2s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
 
-        video.active { opacity: 1; }
+/* Fondo animado */
+#bgImage{
+    position:fixed;
+    inset:-10%;
+    z-index:-2;
+    background:url('visual.png') center center/cover no-repeat;
+    animation:bgMove 25s ease-in-out infinite alternate;
+    filter:brightness(0.65) contrast(1.1);
+}
+@keyframes bgMove{
+    0%{transform:scale(1) translateY(0);}
+    100%{transform:scale(1.1) translateY(-30px);}
+}
 
-        /* Capa de protección para lectura */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
-            z-index: -1;
-        }
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.45);
+    z-index:-1;
+}
 
-        /* --- CONTENIDO --- */
-        .container {
-            position: relative;
-            z-index: 1;
-            padding-top: 80px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+.container{
+    position:relative;
+    z-index:1;
+    padding:20px;
+    max-width:600px;
+    margin:0 auto;
+    text-align:center;
+}
 
-        h1 {
-            font-family: 'Archivo Black', sans-serif;
-            font-size: clamp(2.5rem, 8vw, 6rem);
-            text-align: center;
-            line-height: 0.9;
-            transform: skewX(-5deg);
-            background: linear-gradient(180deg, #fff, var(--accent-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+/* Logo */
+#logo{
+    width:140px;
+    height:140px;
+    display:block;
+    margin:20px auto;
+    border-radius:50%;
+    border:4px solid rgba(0,212,255,0.3);
+    box-shadow:0 0 25px rgba(0,212,255,0.6);
+    animation:logoFloat 4s ease-in-out infinite;
+    object-fit:cover;
+    opacity:0;
+}
+@keyframes logoFloat{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-10px);}
+}
 
-        /* --- SLIDER --- */
-        .slider-container {
-            width: 90%;
-            max-width: 800px;
-            height: 250px;
-            margin: 20px 0;
-            border: 2px solid var(--accent-blue);
-            position: relative;
-            overflow: hidden;
-            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
-        }
+/* Título */
+#title{
+    font-size:2.5rem;
+    color:var(--accent);
+    margin:15px 0;
+    opacity:0;
+    transform:scale(0.8);
+}
 
-        .slider-img {
-            width: 100%; height: 100%; object-fit: cover;
-            position: absolute; opacity: 0; transition: 1s;
-        }
+/* Cards */
+.card{
+    background:var(--glass);
+    backdrop-filter:blur(8px);
+    border-radius:20px;
+    padding:20px;
+    margin:20px 0;
+    opacity:0;
+    transform:translateY(50px);
+    transition:0.4s;
+}
 
-        .slider-img.active { opacity: 1; }
+/* Botón */
+.btn{
+    display:inline-block;
+    margin:15px 10px;
+    padding:15px 30px;
+    border-radius:30px;
+    background:var(--accent);
+    color:#000;
+    font-weight:700;
+    text-decoration:none;
+    transition:0.3s;
+}
+.btn:hover{transform:scale(1.08); box-shadow:0 0 25px var(--accent);}
 
-        /* --- PODIO ESCALONADO (1-2-3 Izquierda a Derecha) --- */
-        .podium {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start; /* Alineado arriba para que el 1 sea el más alto */
-            gap: 10px;
-            width: 95%;
-            margin: 30px 0;
-        }
-
-        .podium-item {
-            background: var(--glass);
-            flex: 1;
-            max-width: 150px;
-            text-align: center;
-            padding: 15px 5px;
-            border: 2px solid;
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
-        }
-
-        /* Estilo escalonado pedido */
-        .p1 { border-color: var(--gold); margin-top: 0; height: 160px; box-shadow: 0 0 15px var(--gold); }
-        .p2 { border-color: var(--silver); margin-top: 30px; height: 140px; }
-        .p3 { border-color: var(--bronze); margin-top: 60px; height: 120px; }
-
-        .rank-num { font-family: 'Archivo Black'; font-size: 2rem; margin: 0; }
-
-        /* --- INFORMACIÓN DETALLADA --- */
-        .info-section {
-            width: 90%;
-            max-width: 900px;
-            background: var(--glass);
-            padding: 20px;
-            margin: 20px 0;
-            border-left: 5px solid var(--accent-blue);
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .info-card h3 { color: var(--accent-blue); margin-top: 0; font-family: 'Archivo Black'; }
-
-        /* --- TABLA --- */
-        .table-wrap { width: 90%; max-width: 900px; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; background: var(--glass); }
-        th { background: var(--accent-blue); color: #000; padding: 10px; }
-        td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; }
-
-        .visual-bottom { width: 90%; max-width: 800px; margin: 30px 0; border: 1px solid var(--accent-blue); }
-
-        @media (max-width: 600px) {
-            .rank-num { font-size: 1.2rem; }
-            .p1 { height: 140px; }
-            .p2 { height: 120px; }
-            .p3 { height: 100px; }
-        }
-    </style>
+footer{text-align:center; padding:20px; opacity:.7;}
+</style>
 </head>
+
 <body>
 
-    <div id="video-background">
-        <video id="v1" class="active" autoplay muted playsinline src="video1.mp4"></video>
-        <video id="v2" autoplay muted playsinline src="video2.mp4"></video>
-        <video id="v3" autoplay muted playsinline src="video3.mp4"></video>
-    </div>
-    <div class="overlay"></div>
+<div id="loader">
+  <div class="spinner"></div>
+  <p>Cargando Tumble Tax...</p>
+</div>
 
-    <div class="container">
-        <img src="logo.jpg" style="height: 60px;" alt="Logo">
-        <h1>VENTUROVA<br>OPEN</h1>
+<img id="logo" src="logo1.jpeg" alt="Tumble Tax Logo">
+<div id="bgImage"></div>
+<div class="overlay"></div>
 
-        <div class="slider-container">
-            <img src="visual.png" class="slider-img active">
-            <img src="visual1.png" class="slider-img">
-            <img src="visual3.png" class="slider-img">
-            <img src="visual4.png" class="slider-img">
-            <img src="visual5.png" class="slider-img">
-            <img src="visual6.png" class="slider-img">
-            <img src="visual7.png" class="slider-img">
-        </div>
+<div class="container">
+<h1 id="title">Tumble Tax</h1>
 
-        <div class="podium">
-            <div class="podium-item p1">
-                <p class="rank-num" style="color:var(--gold)">1</p>
-                <p>N/A</p>
-                <small>LÍDER</small>
-            </div>
-            <div class="podium-item p2">
-                <p class="rank-num" style="color:var(--silver)">2</p>
-                <p>N/A</p>
-            </div>
-            <div class="podium-item p3">
-                <p class="rank-num" style="color:var(--bronze)">3</p>
-                <p>N/A</p>
-            </div>
-        </div>
+<div class="card">
+<h2>🎯 Nuestro Objetivo</h2>
+<p>Crear una comunidad fuerte y profesional donde los jugadores puedan disfrutar torneos competitivos, participar de forma justa y ganar recompensas reales.</p>
+</div>
 
-        <div class="table-wrap">
-            <table>
-                <thead><tr><th>POS</th><th>PILOTO + ID</th><th>PUNTOS</th></tr></thead>
-                <tbody><tr><td colspan="3">CARGANDO DATOS DEL TORNEO...</td></tr></tbody>
-            </table>
-        </div>
+<div class="card">
+<h2>📌 Información del Torneo</h2>
+<ul>
+<li>Modalidad: Battle Royale – Equipos</li>
+<li>Cupos: 12 equipos</li>
+<li>Inscripción: 15.000 COP por equipo</li>
+</ul>
+</div>
 
-        <section class="info-section">
-            <div class="info-grid">
-                <div class="info-card">
-                    <h3>REQUISITOS</h3>
-                    <p>• Nivel 15 de cuenta.<br>• Solo Clase S y A.<br>• Respeto total en pista.</p>
-                </div>
-                <div class="info-card">
-                    <h3>PREMIOS</h3>
-                    <p>• 1º: $50 USD<br>• 2º: $28 USD<br>• 3º: $15 USD</p>
-                </div>
-                <div class="info-card">
-                    <h3>CALENDARIO</h3>
-                    <p>• Inscripción: 01/Enero<br>• Clasificación: 15/Enero<br>• Final: 30/Enero</p>
-                </div>
-            </div>
-        </section>
+<div class="card">
+<h2>📅 Fecha y Horario</h2>
+<p>El torneo se realizará el <b>domingo 18 de enero</b>.</p>
+<p>Horario nocturno, desde las <b>9:00 p.m.</b> (hora Colombia).</p>
+</div>
 
-        <img src="visual2.jpg" class="visual-bottom">
+<div class="card">
+<h2>🏟️ Formato del Torneo</h2>
+<p>Se iniciará con una <b>sala de práctica</b>.</p>
+<p>Posteriormente se jugará la <b>sala avanzada</b>, que definirá los resultados finales.</p>
+</div>
 
-        <footer style="padding-bottom: 60px;">
-            <a href="#" style="background:var(--accent-blue); color:#000; padding:15px 50px; text-decoration:none; font-weight:900; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);">REGISTRARSE AHORA</a>
-        </footer>
-    </div>
+<div class="card">
+<h2>🏆 Premios</h2>
+<ul>
+<li>Equipo ganador: <b>100.000 COP</b></li>
+<li>Equipo con más kills: <b>40.000 COP</b></li>
+</ul>
+<p style="font-size:0.9rem; opacity:0.8;">
+En caso de no completarse los 12 equipos, los premios se redistribuirán de forma proporcional.
+</p>
+</div>
 
-    <script>
-        // Lógica de Videos
-        const vids = [document.getElementById('v1'), document.getElementById('v2'), document.getElementById('v3')];
-        let curV = 0;
-        vids.forEach((v) => {
-            v.onended = () => {
-                v.classList.remove('active');
-                curV = (curV + 1) % vids.length;
-                vids[curV].classList.add('active');
-                vids[curV].play();
-            };
-        });
+<div class="card">
+<h2>📩 Inscripción</h2>
+<p>La inscripción se realiza por mensaje privado.</p>
+</div>
 
-        // Lógica de Imágenes
-        const imgs = document.querySelectorAll('.slider-img');
-        let curI = 0;
-        setInterval(() => {
-            imgs[curI].classList.remove('active');
-            curI = (curI + 1) % imgs.length;
-            imgs[curI].classList.add('active');
-        }, 3000);
-    </script>
+</div>
+
+<footer>Tumble Tax © 2026 | Torneos</footer>
+
+<script>
+window.addEventListener('load', ()=>{
+  loader.style.display='none';
+  logo.style.opacity=1;
+  title.style.opacity=1;
+  document.querySelectorAll('.card').forEach((c,i)=>{
+    setTimeout(()=>{
+        c.style.opacity=1;
+        c.style.transform='translateY(0)';
+    },400+i*200);
+  });
+});
+</script>
+
 </body>
 </html>
